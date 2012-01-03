@@ -43,7 +43,8 @@ namespace Sharpcraft
         }
 
         
-        public bool Packet1LoginRequest(int version, string username)
+        // Packet 0x01
+        public bool PacketLoginRequest(int version, string username)
         {
             byte[] packetID = { 0x01, 0x00, 0x00 };
             stream.Write(packetID, 0, packetID.Length);
@@ -54,9 +55,12 @@ namespace Sharpcraft
 
             byte[] bteUsername = Encoding.BigEndianUnicode.GetBytes(username);
             stream.Write(bteUsername, 0, bteUsername.Length);
+
+            return true;
         }
 
-        public bool Packet2Handshake(string nickname)
+        // Packet 0x02
+        public bool PacketHandshake(string nickname)
         {
             {
                 byte[] packetID = { 0x02, 0x00, 0x08 };
