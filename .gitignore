@@ -1,0 +1,5 @@
+*.suo
+*.exe
+
+Sharpcraft/Sharpcraft/bin/
+Sharpcraft/SharpcraftContent/bin/
