@@ -8,78 +8,90 @@ using System.Collections.Generic;
 
 namespace Sharpcraft
 {
-    public enum EndianType
-    {
-        LittleEndian,
-        BigEndian
-    }
+	public enum EndianType
+	{
+		LittleEndian,
+		BigEndian
+	}
 
-    class Protocol
-    {
-    	readonly TcpClient _client;
-    	readonly NetworkStream _stream;
+	class Protocol
+	{
+		readonly TcpClient _client;
+		readonly NetworkStream _stream;
 
-        public Protocol(string server, int port)
-        {
-            _client = new TcpClient(server, port);
-            _stream = _client.GetStream();
-        }
+		public Protocol(string server, int port)
+		{
+			_client = new TcpClient(server, port);
+			_stream = _client.GetStream();
+		}
 
-        
-        public static Int32 GetInt32(byte[] buffer, int offset, EndianType byteOrder)
-        {
-        	if (byteOrder == EndianType.LittleEndian)
-                return buffer[offset + 1] << 8 | buffer[offset];
-        	return buffer[offset] << 8 | buffer[offset + 1];
-        }
+		
+		public static Int32 GetInt32(byte[] buffer, int offset, EndianType byteOrder)
+		{
+			if (byteOrder == EndianType.LittleEndian)
+				return buffer[offset + 1] << 8 | buffer[offset];
+			return buffer[offset] << 8 | buffer[offset + 1];
+		}
 
-    	public static Int64 GetInt64(byte[] buffer, int offset, EndianType byteOrder)
-    	{
-    		if (byteOrder == EndianType.LittleEndian)
-                return buffer[offset + 1] << 8 | buffer[offset];
-    		return buffer[offset] << 8 | buffer[offset + 1];
-    	}
+		public static Int64 GetInt64(byte[] buffer, int offset, EndianType byteOrder)
+		{
+			if (byteOrder == EndianType.LittleEndian)
+				return buffer[offset + 1] << 8 | buffer[offset];
+			return buffer[offset] << 8 | buffer[offset + 1];
+		}
 
+		// Packet 0x00
+		public void PacketKeepAlive(int id)
+		{
+			// NOTE: @Vijfhoek what is the format of PacketID?
 
-    	// Packet 0x01
-        public bool PacketLoginRequest(int version, string username)
-        {
-            byte[] packetID = { 0x01, 0x00, 0x00 };
-            _stream.Write(packetID, 0, packetID.Length);
+			throw new NotImplementedException("Fix PacketID?");
 
-            int beVersion = IPAddress.HostToNetworkOrder(version);
-            byte[] bteVersion = BitConverter.GetBytes(beVersion);
-            _stream.Write(bteVersion, 0, bteVersion.Length);
+			byte[] packetID = {0x00, 0x00, 0x00};
+			_stream.Write(packetID, 0, packetID.Length);
 
-            byte[] bteUsername = Encoding.BigEndianUnicode.GetBytes(username);
-            _stream.Write(bteUsername, 0, bteUsername.Length);
+			byte[] response = BitConverter.GetBytes(id);
+			_stream.Write(response, 0, response.Length);
+		}
 
-            return true;
-        }
+		// Packet 0x01
+		public bool PacketLoginRequest(int version, string username)
+		{
+			byte[] packetID = {0x01, 0x00, 0x00};
+			_stream.Write(packetID, 0, packetID.Length);
 
-        // Packet 0x02
-        public bool PacketHandshake(string nickname)
-        {
-            {
-                byte[] packetID = { 0x02, 0x00, 0x08 };
-                _stream.Write(packetID, 0, packetID.Length);
+			int beVersion = IPAddress.HostToNetworkOrder(version);
+			byte[] bteVersion = BitConverter.GetBytes(beVersion);
+			_stream.Write(bteVersion, 0, bteVersion.Length);
 
-                byte[] packet = Encoding.BigEndianUnicode.GetBytes(nickname);
-                _stream.Write(packet, 0, packet.Length);
-            }
+			byte[] bteUsername = Encoding.BigEndianUnicode.GetBytes(username);
+			_stream.Write(bteUsername, 0, bteUsername.Length);
 
-            {
-                byte[] packetID = new byte[3];
-                _stream.Read(packetID, 0, packetID.Length);
-                if (packetID[0] != 0x02) return false;
+			return true;
+		}
 
-                byte[] packet = new byte[2];
-                _stream.Read(packet, 0, packet.Length);
-                if (Encoding.BigEndianUnicode.GetString(packet) != "-") return false;
-            }
+		// Packet 0x02
+		public bool PacketHandshake(string nickname)
+		{
+			// NOTE: Why braces here? We can do without...
+			
+			byte[] packetID = {0x02, 0x00, 0x08};
+			_stream.Write(packetID, 0, packetID.Length);
 
-            return true;
-        }
-
-    }
+			byte[] packet = Encoding.BigEndianUnicode.GetBytes(nickname);
+			_stream.Write(packet, 0, packet.Length);
+			
+			packetID = new byte[3];
+			_stream.Read(packetID, 0, packetID.Length);
+			if (packetID[0] != 0x02)
+				return false;
+			
+			packet = new byte[2];
+			_stream.Read(packet, 0, packet.Length);
+			if (Encoding.BigEndianUnicode.GetString(packet) != "-")
+				return false;
+			
+			return true;
+		}
+	}
 }
