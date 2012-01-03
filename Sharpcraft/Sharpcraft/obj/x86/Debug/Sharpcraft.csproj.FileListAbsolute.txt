@@ -1,6 +1,0 @@
-c:\users\vijfhoek\documents\visual studio 2010\Projects\Sharpcraft\Sharpcraft\Sharpcraft\bin\x86\Debug\Sharpcraft.exe
-c:\users\vijfhoek\documents\visual studio 2010\Projects\Sharpcraft\Sharpcraft\Sharpcraft\bin\x86\Debug\Sharpcraft.pdb
-c:\users\vijfhoek\documents\visual studio 2010\Projects\Sharpcraft\Sharpcraft\Sharpcraft\obj\x86\Debug\ResolveAssemblyReference.cache
-c:\users\vijfhoek\documents\visual studio 2010\Projects\Sharpcraft\Sharpcraft\Sharpcraft\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
-c:\users\vijfhoek\documents\visual studio 2010\Projects\Sharpcraft\Sharpcraft\Sharpcraft\obj\x86\Debug\Sharpcraft.exe
-c:\users\vijfhoek\documents\visual studio 2010\Projects\Sharpcraft\Sharpcraft\Sharpcraft\obj\x86\Debug\Sharpcraft.pdb
