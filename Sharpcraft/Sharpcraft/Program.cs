@@ -11,10 +11,10 @@ namespace Sharpcraft
         /// </summary>
         static void Main(string[] args)
         {
-            Protocol prot = new Protocol("217.123.107.137", 25565);
-            prot.Packet2Handshake("vijfhoek2");
+            var prot = new Protocol("217.123.107.137", 25565);
+            prot.PacketHandshake("vijfhoek2");
 
-            using (Sharpcraft game = new Sharpcraft())
+            using (var game = new Sharpcraft())
             {
                 game.Run();
             } 
