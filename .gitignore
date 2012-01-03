@@ -1,6 +1,7 @@
 _ReSharper.Sharpcraft
 *.suo
-/Sharpcraft/Sharpcraft/obj
-/Sharpcraft/Sharpcraft/bin
-/Sharpcraft/SharpcraftContent/obj
-/Sharpcraft/SharpcraftContent/bin
+/Sharpcraft/bin
+/Sharpcraft/obj
+/SharpcraftContent/bin
+/SharpcraftContent/obj
+*.user
