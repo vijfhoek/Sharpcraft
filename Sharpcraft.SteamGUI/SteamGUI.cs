@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* 
+ * Sharpcraft.SteamGUI
+ * Copyright (c) 2012 by Sijmen Schoon and Adam Hellberg.
+ * All Rights Reserved.
+ */
+
+using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
 

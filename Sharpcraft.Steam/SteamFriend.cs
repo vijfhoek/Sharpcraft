@@ -1,4 +1,10 @@
-﻿using Steam4NET;
+﻿/* 
+ * Sharpcraft.Steam
+ * Copyright (c) 2012 by Sijmen Schoon and Adam Hellberg.
+ * All Rights Reserved.
+ */
+
+using Steam4NET;
 
 namespace Sharpcraft.Steam
 {
