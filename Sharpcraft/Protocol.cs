@@ -15,7 +15,12 @@ namespace ConsoleApplication1
         BigEndian
     }
 
-    public struct Packet1
+    public class Packet0
+    {
+        public Int32 keepAliveID;
+    }
+
+    public class Packet1
     {
         public Int32 entityID;
         public Int64 mapSeed;
@@ -24,6 +29,11 @@ namespace ConsoleApplication1
         public sbyte difficulty;
         public byte worldHeight;
         public byte maxPlayers;
+    }
+
+    public class Packet2
+    {
+        public string connectionHash;
     }
 
     public class Protocol
@@ -77,7 +87,7 @@ namespace ConsoleApplication1
             // Check if the response packet ID is 0x01
             if (stream.ReadByte() == 0x01)
             {
-                Packet1 packet1;
+                Packet1 packet1 = new Packet1();
 
                 // Get the player entity ID
                 byte[] bteEntityId = new byte[4];
@@ -93,7 +103,7 @@ namespace ConsoleApplication1
                 packet1.mapSeed = IPAddress.NetworkToHostOrder(BitConverter.ToInt64(bteMapSeed, 0));
 
                 // Get the gamemode
-                byte[] bteGamemode = new byte[8];
+                byte[] bteGamemode = new byte[4];
                 stream.Read(bteGamemode, 0, bteGamemode.Length);
                 packet1.gamemode = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(bteGamemode, 0));
 
