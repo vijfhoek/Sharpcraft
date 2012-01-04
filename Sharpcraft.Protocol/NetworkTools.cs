@@ -62,6 +62,11 @@ namespace Sharpcraft.Protocol
 			return IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bte, 0));
 		}
 
+		public void WriteBoolean(bool b)
+		{
+			_stream.WriteByte(Convert.ToByte(b));
+		}
+
 		public void WriteByte(byte i)
 		{
 			_stream.WriteByte(i);

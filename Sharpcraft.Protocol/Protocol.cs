@@ -65,7 +65,7 @@ namespace Sharpcraft.Protocol
 			var packetID = (byte)_stream.ReadByte();
 			Packet pack = null;
 
-			if (packetID == 0x00) // Keep alive
+			if (packetID == 0x00) // Keep Alive
 			{
 				var packet = new PacketKeepAlive {PacketID = 0x00};
 				packet.KeepAliveID = _tools.ReadInt32();
@@ -86,25 +86,25 @@ namespace Sharpcraft.Protocol
 
 				pack = packet;
 			}
-			else if (packetID == 0x02)
+			else if (packetID == 0x02) // Handshake
 			{
 				var packet = new PacketHandshakeSC {PacketID = 0x02};
 				packet.ConnectionHash = _tools.ReadString();
 				pack = packet;
 			}
-			else if (packetID == 0x03)
+			else if (packetID == 0x03) // Chat Message
 			{
 				var packet = new PacketChatMessage {PacketID = 0x03};
 				packet.Message = _tools.ReadString();
 				pack = packet;
 			}
-			else if (packetID == 0x04)
+			else if (packetID == 0x04) // Time Update
 			{
 				var packet = new PacketTimeUpdate {PacketID = 0x04};
 				packet.Time = _tools.ReadInt32();
 				pack = packet;
 			}
-			else if (packetID == 0x05)
+			else if (packetID == 0x05) // Entity Equipment
 			{
 				var packet = new PacketEntityEquipment {PacketID = 0x05};
 
@@ -115,7 +115,7 @@ namespace Sharpcraft.Protocol
 
 				pack = packet;
 			}
-			else if (packetID == 0x06)
+			else if (packetID == 0x06) // Spawn Position
 			{
 				var packet = new PacketSpawnPosition() {PacketID = 0x06};
 
@@ -133,13 +133,13 @@ namespace Sharpcraft.Protocol
 		{
 			byte packetID = packet.PacketID;
 
-			if (packetID == 0x00)
+			if (packetID == 0x00) // Keep Alive
 			{
 				var pack = (PacketKeepAlive)packet;
 				_tools.WriteByte(packetID);
 				_tools.WriteInt32(pack.KeepAliveID);
 			}
-			else if (packetID == 0x01)
+			else if (packetID == 0x01) // Login Request (Client -> Server)
 			{
 				var pack = (PacketLoginRequestCS)packet;
 				_tools.WriteByte(packetID);
@@ -152,9 +152,25 @@ namespace Sharpcraft.Protocol
 				_tools.WriteByte(0);						// Not Used
 				_tools.WriteByte(0);						// Not Used
 			}
-			else if (packetID == 0x02)
+			else if (packetID == 0x02) // Handshake (Client -> Server)
 			{
-
+				var pack = (PacketHandshakeCS)packet;
+				_tools.WriteByte(packetID);
+				_tools.WriteString(pack.Username);
+			}
+			else if (packetID == 0x03) // Chat Message
+			{
+				var pack = (PacketChatMessage)packet;
+				_tools.WriteByte(packetID);
+				_tools.WriteString(pack.Message);
+			}
+			else if (packetID == 0x07) // Use Entity
+			{
+				var pack = (PacketUseEntity)packet;
+				_tools.WriteByte(packetID);
+				_tools.WriteInt32(pack.AttackerID);
+				_tools.WriteInt32(pack.TargetID);
+				_tools.WriteBoolean(pack.IsLeftClick);
 			}
 
 			_stream.Flush();
