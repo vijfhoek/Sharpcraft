@@ -28,6 +28,8 @@ namespace Sharpcraft.Steam
 
 		public string GetStatus(bool pretty = false)
 		{
+			return SteamUtils.StateToStatus(GetState(), pretty);
+			// TODO: Remove below when we know above works
 			string state;
 			switch(GetState())
 			{

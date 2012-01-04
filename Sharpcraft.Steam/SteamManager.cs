@@ -18,22 +18,43 @@ namespace Sharpcraft.Steam
 
 		public static bool Init()
 		{
-			if (!Steamworks.Load())
-				throw new SteamException("Steamworks failed to load.", SteamExceptionType.SteamworksLoadFail);
+			try
+			{
+				if (!Steamworks.Load())
+					throw new SteamException("Steamworks failed to load.", SteamExceptionType.SteamworksLoadFail);
 
-			Client = Steamworks.CreateInterface<ISteamClient010>("SteamClient010");
-			if (Client == null)
-				throw new SteamException("Steamclient failed to load! Is the client running? (Sharpcraft.Steam.SteamManager.Client == null!)",
-				                         SteamExceptionType.SteamLoadFail);
+				Client = Steamworks.CreateInterface<ISteamClient010>("SteamClient010");
+				if (Client == null)
+					throw new SteamException("Steamclient failed to load! Is the client running? (Sharpcraft.Steam.SteamManager.Client == null!)",
+											 SteamExceptionType.SteamLoadFail);
 
-			Pipe = Client.CreateSteamPipe();
-			User = Client.ConnectToGlobalUser(Pipe);
+				Pipe = Client.CreateSteamPipe();
+				User = Client.ConnectToGlobalUser(Pipe);
 
-			Friends = Steamworks.CastInterface<ISteamFriends002>(Client.GetISteamFriends(User, Pipe, "SteamFriends002"));
+				Friends = Steamworks.CastInterface<ISteamFriends002>(Client.GetISteamFriends(User, Pipe, "SteamFriends002"));
 
-			FriendList = new SteamFriendList();
-
+				FriendList = new SteamFriendList();
+			}
+			catch (SteamException)
+			{
+				return false;
+			}
 			return true;
+		}
+
+		public static string GetName()
+		{
+			return Friends.GetPersonaName();
+		}
+
+		public static EPersonaState GetState()
+		{
+			return Friends.GetPersonaState();
+		}
+
+		public static string GetStatus(bool pretty = false)
+		{
+			return SteamUtils.StateToStatus(GetState(), pretty);
 		}
 	}
 }
