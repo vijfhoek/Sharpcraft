@@ -26,7 +26,7 @@ namespace Sharpcraft.Steam
 			return SteamManager.Friends.GetFriendPersonaState(SteamID);
 		}
 
-		public string GetStatus()
+		public string GetStatus(bool pretty = false)
 		{
 			string state;
 			switch(GetState())
@@ -37,7 +37,7 @@ namespace Sharpcraft.Steam
 				case EPersonaState.k_EPersonaStateBusy:
 					state = "busy";
 					break;
-				case EPersonaState.k_EPersonaStateMax:
+				case EPersonaState.k_EPersonaStateMax: // What is this, in-game?
 					state = "max";
 					break;
 				case EPersonaState.k_EPersonaStateOffline:
@@ -52,6 +52,12 @@ namespace Sharpcraft.Steam
 				default:
 					state = "undefined";
 					break;
+			}
+			if (pretty)
+			{
+				char[] a = state.ToCharArray();
+				a[0] = char.ToUpper(a[0]);
+				return new string(a);
 			}
 			return state;
 		}

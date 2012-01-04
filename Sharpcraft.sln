@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft", "Sharpcraft\Sharpcraft.csproj", "{BF8396CA-EFC5-4D99-8F43-9504D3927614}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Content", "SharpcraftContent\Sharpcraft.Content.contentproj", "{710A3BC6-FD38-4B2A-92A6-558D79553473}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Content", "Sharpcraft.Content\Sharpcraft.Content.contentproj", "{710A3BC6-FD38-4B2A-92A6-558D79553473}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Steam", "Sharpcraft.Steam\Sharpcraft.Steam.csproj", "{C3DF80BE-E42E-4CE2-9CA0-EBA36EFAD79F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EFCE1283-8A9D-4233-AC10-9C49071A67B6}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
