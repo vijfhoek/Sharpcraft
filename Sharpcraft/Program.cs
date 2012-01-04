@@ -2,6 +2,7 @@
 
 using System;
 using System.IO;
+using Sharpcraft.Protocol;
 
 namespace Sharpcraft
 {
@@ -15,6 +16,13 @@ namespace Sharpcraft
 		{
 			try
 			{
+				Protocol.Protocol prot = new Protocol.Protocol("localhost", 25565);
+
+				prot.PacketHandshake("Sharpcraft");
+				prot.GetPacket();
+				prot.PacketLoginRequest(22, "Sharpcraft");
+				prot.GetPacket();
+
 				using (var game = new Sharpcraft())
 				{
 					game.Run();

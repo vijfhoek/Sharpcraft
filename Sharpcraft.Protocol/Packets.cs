@@ -27,4 +27,22 @@ namespace Sharpcraft.Protocol
 	{
 		public string ConnectionHash;
 	}
+
+	public class Packet3 : Packet
+	{
+		public string Message;
+	}
+
+	public class Packet4 : Packet
+	{
+		public long Time;
+	}
+
+	public class Packet5 : Packet
+	{
+		public int EntityID;
+		public short Slot;
+		public short ItemID;
+		public short Damage;
+	}
 }

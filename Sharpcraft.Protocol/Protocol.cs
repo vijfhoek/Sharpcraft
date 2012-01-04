@@ -51,6 +51,46 @@ namespace Sharpcraft.Protocol
 			return str;
 		}
 
+		private string ReadString()
+		{
+			byte[] bteStringLength = { (byte)_stream.ReadByte(), (byte)_stream.ReadByte() };
+			short stringLength = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bteStringLength, 0));
+			string str = "";
+			for (short s = 0; s < stringLength; s++)
+			{
+				byte[] bte = { (byte)_stream.ReadByte(), (byte)_stream.ReadByte() };
+				str += Encoding.BigEndianUnicode.GetString(bte);
+			}
+
+			return str;
+		}
+
+		private Int16 ReadInt16()
+		{
+			var bte = new byte[2];
+			_stream.Read(bte, 0, bte.Length);
+			return IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bte, 0));
+		}
+
+		private Int32 ReadInt32()
+		{
+			var bte = new byte[4];
+			_stream.Read(bte, 0, bte.Length);
+			return IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bte, 0));
+		}
+
+		private Int64 ReadInt64()
+		{
+			var bte = new byte[8];
+			_stream.Read(bte, 0, bte.Length);
+			return IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bte, 0));
+		}
+
+		private void StreamSkip(int amount)
+		{
+			for (int i = 0; i < amount; i++)
+				_stream.ReadByte();
+		}
 
 		public Packet GetPacket()
 		{
@@ -60,45 +100,20 @@ namespace Sharpcraft.Protocol
 			if (packetID == 0x00) // Keep alive
 			{
 				var packet = new Packet0 {PacketID = 0x00};
-
-				var bteKeepAliveID = new byte[4];
-				_stream.Read(bteKeepAliveID, 0, bteKeepAliveID.Length);
-				packet.KeepAliveID = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(bteKeepAliveID, 0));
-
+				packet.KeepAliveID = ReadInt32();
 				pack = packet;
 			}
 			else if (packetID == 0x01) // Login Request
 			{
 				var packet = new Packet1 {PacketID = 0x01};
 
-				// Get the player entity ID
-				var bteEntityId = new byte[4];
-				_stream.Read(bteEntityId, 0, bteEntityId.Length);
-				packet.EntityID = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(bteEntityId, 0));
-
-				// Skip ahead 2 bytes
-				_stream.ReadByte(); _stream.ReadByte();
-
-				// Get the map seed
-				var bteMapSeed = new byte[8];
-				_stream.Read(bteMapSeed, 0, bteMapSeed.Length);
-				packet.MapSeed = IPAddress.NetworkToHostOrder(BitConverter.ToInt64(bteMapSeed, 0));
-
-				// Get the gamemode
-				var bteGamemode = new byte[4];
-				_stream.Read(bteGamemode, 0, bteGamemode.Length);
-				packet.Gamemode = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(bteGamemode, 0));
-
-				// Get the dimension
+				packet.EntityID = ReadInt32();
+				StreamSkip(2);
+				packet.MapSeed = ReadInt64();
+				packet.Gamemode = ReadInt32();
 				packet.Dimension = (sbyte)_stream.ReadByte();
-
-				// Get the difficulty
 				packet.Difficulty = (sbyte)_stream.ReadByte();
-
-				// Get the world height
 				packet.WorldHeight = (byte)_stream.ReadByte();
-
-				// Get the maximum amount of players
 				packet.MaxPlayers = (byte)_stream.ReadByte();
 
 				pack = packet;
@@ -106,15 +121,31 @@ namespace Sharpcraft.Protocol
 			else if (packetID == 0x02)
 			{
 				var packet = new Packet2 {PacketID = 0x02};
+				packet.ConnectionHash = ReadString();
+				pack = packet;
+			}
+			else if (packetID == 0x03)
+			{
+				var packet = new Packet3 {PacketID = 0x03};
+				packet.Message = ReadString();
+				pack = packet;
+			}
+			else if (packetID == 0x04)
+			{
+				var packet = new Packet4 {PacketID = 0x04};
+				packet.Time = ReadInt32();
+				pack = packet;
+			}
+			else if (packetID == 0x05)
+			{
+				var packet = new Packet5 {PacketID = 0x05};
 
-				// Get the connection hash
-				byte[] bteConnectionHashLength = { (byte)_stream.ReadByte(), (byte)_stream.ReadByte() };
-				short connectionHashLength = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bteConnectionHashLength, 0));
-				for (short s = 0; s < connectionHashLength; s++)
-				{
-					byte[] bte = { (byte)_stream.ReadByte(), (byte)_stream.ReadByte() };
-					packet.ConnectionHash += Encoding.BigEndianUnicode.GetString(bte);
-				}
+				packet.EntityID = ReadInt32();
+				packet.Slot = ReadInt16();
+				packet.ItemID = ReadInt16();
+				packet.Damage = ReadInt16();
+
+				pack = packet;
 			}
 
 			return pack;
