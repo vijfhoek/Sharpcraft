@@ -122,7 +122,7 @@
       <Project>{C3DF80BE-E42E-4CE2-9CA0-EBA36EFAD79F}</Project>
       <Name>Sharpcraft.Steam</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SharpcraftContent\Sharpcraft.Content.contentproj">
+    <ProjectReference Include="..\Sharpcraft.Content\Sharpcraft.Content.contentproj">
       <Name>Sharpcraft.Content %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
       <Project>{710A3BC6-FD38-4B2A-92A6-558D79553473}</Project>
