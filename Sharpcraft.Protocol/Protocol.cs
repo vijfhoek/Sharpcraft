@@ -17,11 +17,13 @@ namespace Sharpcraft.Protocol
 	{
 		private readonly TcpClient _client = new TcpClient();
 		private readonly NetworkStream _stream;
+		private readonly NetworkTools _tools;
 
 		public Protocol(string server, int port)
 		{
 			_client.Connect(server, port);
 			_stream = _client.GetStream();
+			_tools = new NetworkTools(_stream);
 		}
 
 
@@ -51,46 +53,7 @@ namespace Sharpcraft.Protocol
 			return str;
 		}
 
-		private string ReadString()
-		{
-			byte[] bteStringLength = { (byte)_stream.ReadByte(), (byte)_stream.ReadByte() };
-			short stringLength = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bteStringLength, 0));
-			string str = "";
-			for (short s = 0; s < stringLength; s++)
-			{
-				byte[] bte = { (byte)_stream.ReadByte(), (byte)_stream.ReadByte() };
-				str += Encoding.BigEndianUnicode.GetString(bte);
-			}
-
-			return str;
-		}
-
-		private Int16 ReadInt16()
-		{
-			var bte = new byte[2];
-			_stream.Read(bte, 0, bte.Length);
-			return IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bte, 0));
-		}
-
-		private Int32 ReadInt32()
-		{
-			var bte = new byte[4];
-			_stream.Read(bte, 0, bte.Length);
-			return IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bte, 0));
-		}
-
-		private Int64 ReadInt64()
-		{
-			var bte = new byte[8];
-			_stream.Read(bte, 0, bte.Length);
-			return IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bte, 0));
-		}
-
-		private void StreamSkip(int amount)
-		{
-			for (int i = 0; i < amount; i++)
-				_stream.ReadByte();
-		}
+		
 
 		public Packet GetPacket()
 		{
@@ -100,105 +63,118 @@ namespace Sharpcraft.Protocol
 			if (packetID == 0x00) // Keep alive
 			{
 				var packet = new Packet0 {PacketID = 0x00};
-				packet.KeepAliveID = ReadInt32();
+				packet.KeepAliveID = _tools.ReadInt32();
 				pack = packet;
 			}
 			else if (packetID == 0x01) // Login Request
 			{
 				var packet = new Packet1 {PacketID = 0x01};
 
-				packet.EntityID = ReadInt32();
-				StreamSkip(2);
-				packet.MapSeed = ReadInt64();
-				packet.Gamemode = ReadInt32();
-				packet.Dimension = (sbyte)_stream.ReadByte();
-				packet.Difficulty = (sbyte)_stream.ReadByte();
+				packet.EntityID = _tools.ReadInt32();
+				_tools.StreamSkip(2);
+				packet.MapSeed     = _tools.ReadInt64();
+				packet.Gamemode    = _tools.ReadInt32();
+				packet.Dimension   = (sbyte)_stream.ReadByte();
+				packet.Difficulty  = (sbyte)_stream.ReadByte();
 				packet.WorldHeight = (byte)_stream.ReadByte();
-				packet.MaxPlayers = (byte)_stream.ReadByte();
+				packet.MaxPlayers  = (byte)_stream.ReadByte();
 
 				pack = packet;
 			}
 			else if (packetID == 0x02)
 			{
 				var packet = new Packet2 {PacketID = 0x02};
-				packet.ConnectionHash = ReadString();
+				packet.ConnectionHash = _tools.ReadString();
 				pack = packet;
 			}
 			else if (packetID == 0x03)
 			{
 				var packet = new Packet3 {PacketID = 0x03};
-				packet.Message = ReadString();
+				packet.Message = _tools.ReadString();
 				pack = packet;
 			}
 			else if (packetID == 0x04)
 			{
 				var packet = new Packet4 {PacketID = 0x04};
-				packet.Time = ReadInt32();
+				packet.Time = _tools.ReadInt32();
 				pack = packet;
 			}
 			else if (packetID == 0x05)
 			{
 				var packet = new Packet5 {PacketID = 0x05};
 
-				packet.EntityID = ReadInt32();
-				packet.Slot = ReadInt16();
-				packet.ItemID = ReadInt16();
-				packet.Damage = ReadInt16();
+				packet.EntityID = _tools.ReadInt32();
+				packet.Slot     = _tools.ReadInt16();
+				packet.ItemID   = _tools.ReadInt16();
+				packet.Damage   = _tools.ReadInt16();
+
+				pack = packet;
+			}
+			else if (packetID == 0x06)
+			{
+				var packet = new Packet6() {PacketID = 0x06};
+
+				packet.X = _tools.ReadInt32();
+				packet.Y = _tools.ReadInt32();
+				packet.Z = _tools.ReadInt32();
 
 				pack = packet;
 			}
 
 			return pack;
 		}
-			
-		// Packet 0x01
-		public void PacketLoginRequest(int version, string username)
+		
+		// Packet 0x00
+		public void PacketKeepAlive(Int32 id)
 		{
-			// Write the Packet ID (0x01)
-			_stream.WriteByte(0x01);
+			_tools.WriteByte(0x00);			// Packet ID
+			_tools.WriteInt32(id);
+		}
 
-			// Write the protocol version (22 (0x16) for 1.0.0)
-			int beVersion = IPAddress.HostToNetworkOrder(version);
-			byte[] bteVersion = BitConverter.GetBytes(beVersion);
-			_stream.Write(bteVersion, 0, bteVersion.Length);
+		// Packet 0x01
+		public void PacketLoginRequest(Int32 version, string username)
+		{
+			_tools.WriteByte(0x01);			// Packet ID
+			_tools.WriteInt32(version);		// Protocol version (22 for 1.0.0)
+			_tools.WriteString(username);	// Username
+			_tools.WriteInt64(0);			// Not Used
+			_tools.WriteInt32(0);			// Not Used
+			_tools.WriteByte(0);			// Not Used
+			_tools.WriteByte(0);			// Not Used
+			_tools.WriteByte(0);			// Not Used
+			_tools.WriteByte(0);			// Not Used
 
-			// Write the username
-			_stream.Write(BitConverter.GetBytes(IPAddress.HostToNetworkOrder((short)username.Length)), 0, 2);
-			byte[] bteUsername = Encoding.BigEndianUnicode.GetBytes(username);
-			_stream.Write(bteUsername, 0, bteUsername.Length);
-
-			// Write NotUsed 1
-			byte[] bteNotUsed1 = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-			_stream.Write(bteNotUsed1, 0, bteNotUsed1.Length);
-
-			// Write NotUsed 2
-			byte[] bteNotUsed2 = { 0x00, 0x00, 0x00, 0x00 };
-			_stream.Write(bteNotUsed2, 0, bteNotUsed2.Length);
-
-			// Write NotUsed 3 through 6
-			_stream.WriteByte(0x00);
-			_stream.WriteByte(0x00);
-			_stream.WriteByte(0x00);
-			_stream.WriteByte(0x00);
-
-			// Flush the stream
 			_stream.Flush();
 		}
 
 		// Packet 0x02
 		public void PacketHandshake(string username)
 		{
-			// Send the packet ID
-			_stream.WriteByte(0x02);
+			_tools.WriteByte(0x02);			// Packet ID
+			_tools.WriteString(username);	// Username
 
-			// Write the username
-			_stream.Write(BitConverter.GetBytes(IPAddress.HostToNetworkOrder((short)username.Length)), 0, 2);
-			byte[] str = Encoding.BigEndianUnicode.GetBytes(username);
-			_stream.Write(str, 0, str.Length);
-
-			// Flush the stream
 			_stream.Flush();
 		}
 
+		// Packet 0x03
+		public void PacketChatMessage(string message)
+		{
+			_tools.WriteByte(0x03);			// Packet ID
+			_tools.WriteString(message);	// Message
+
+			_stream.Flush();
+		}
+
+		// Packet 0x04
+		public void PacketEntityEquipment(Int32 entityID, Int16 slot, Int16 itemID, Int16 damage)
+		{
+			_tools.WriteByte(0x04);			// Packet ID
+			_tools.WriteInt32(entityID);	// Entity ID
+			_tools.WriteInt16(slot);		// Slot
+			_tools.WriteInt16(itemID);		// Item ID
+			_tools.WriteInt16(damage);		// Damage
+
+			_stream.Flush();
+		}
 	}
 }
