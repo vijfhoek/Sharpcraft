@@ -23,9 +23,7 @@ namespace Sharpcraft
 		public Protocol(string server, int port)
 		{
 			client.Connect(server, port);
-			Thread.Sleep(256);
 			stream = client.GetStream();
-			Thread.Sleep(512);
 		}
 
 
