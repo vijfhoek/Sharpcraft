@@ -17,21 +17,28 @@ namespace Sharpcraft.Steam
 		{
 			_list = new List<SteamFriend>();
 			_updateTimer = new Timer(Update, null, 0, 60000);
+			SteamManager.OnSteamClose += SteamClose;
 		}
 
 		public event SteamFriendsEventHandler OnFriendsUpdate;
-		protected virtual void FriendsUpdate(object sender, SteamFriendsEventArgs e)
+		protected virtual void FriendsUpdate(SteamFriendsEventArgs e)
 		{
 			if (OnFriendsUpdate != null)
-				OnFriendsUpdate(sender, e);
+				OnFriendsUpdate(e);
 		}
 
 		private void Update(object state)
 		{
-			Console.WriteLine("Uodate running...");
+			Console.WriteLine("Update running...");
 			LoadFriends();
 			Console.WriteLine("Update complete!");
-			FriendsUpdate(null, new SteamFriendsEventArgs(SteamManager.GetName(), SteamManager.GetStatus(true), _list, _list.Count, GetFriendCount(true)));
+			FriendsUpdate(new SteamFriendsEventArgs(SteamManager.GetName(), SteamManager.GetStatus(true), _list, _list.Count, GetFriendCount(true)));
+		}
+
+		private void SteamClose()
+		{
+			_updateTimer.Dispose();
+			_list.Clear();
 		}
 
 		public void LoadFriends()

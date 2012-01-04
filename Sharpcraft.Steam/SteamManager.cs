@@ -1,20 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-
+using System.Threading;
 using Steam4NET;
 
 namespace Sharpcraft.Steam
 {
 	public static class SteamManager
 	{
+		private static Timer _steamWatcher;
+
 		internal static ISteamClient010 Client { get; private set; }
 		internal static ISteamFriends002 Friends { get; private set; }
 		internal static int Pipe { get; private set; }
 		internal static int User { get; private set; }
 
 		public static SteamFriendList FriendList { get; private set; }
+
+		public static event SteamCloseEventHandler OnSteamClose;
+		private static void SteamClose()
+		{
+			if (OnSteamClose != null)
+				OnSteamClose();
+		}
 
 		public static bool Init()
 		{
@@ -34,12 +42,26 @@ namespace Sharpcraft.Steam
 				Friends = Steamworks.CastInterface<ISteamFriends002>(Client.GetISteamFriends(User, Pipe, "SteamFriends002"));
 
 				FriendList = new SteamFriendList();
+
+				_steamWatcher = new Timer(SteamCheck, null, 0, 1000);
 			}
 			catch (SteamException)
 			{
 				return false;
 			}
 			return true;
+		}
+
+		private static void SteamCheck(object state)
+		{
+			bool found = Process.GetProcesses().Any(process => process.ProcessName.ToLower() == "steam");
+			if (!found)
+			{
+				Console.WriteLine("Steam process NOT RUNNING. Closing Steam components...");
+				SteamClose();
+				FriendList = null;
+				_steamWatcher.Dispose();
+			}
 		}
 
 		public static string GetName()

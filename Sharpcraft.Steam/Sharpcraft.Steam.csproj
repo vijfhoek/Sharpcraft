@@ -65,7 +65,6 @@
     <Compile Include="SteamFriendList.cs" />
     <Compile Include="SteamManager.cs" />
     <Compile Include="SteamFriend.cs" />
-    <Compile Include="SteamUser.cs" />
     <Compile Include="SteamUtils.cs" />
   </ItemGroup>
   <ItemGroup>

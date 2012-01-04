@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Sharpcraft.Steam
 {
@@ -24,5 +22,6 @@ namespace Sharpcraft.Steam
 		}
 	}
 
-	public delegate void SteamFriendsEventHandler(object sender, SteamFriendsEventArgs e);
+	public delegate void SteamCloseEventHandler();
+	public delegate void SteamFriendsEventHandler(SteamFriendsEventArgs e);
 }

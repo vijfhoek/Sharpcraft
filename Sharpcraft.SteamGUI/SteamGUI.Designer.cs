@@ -197,6 +197,7 @@
 			this.Name = "SteamGUI";
 			this.ShowIcon = false;
 			this.Text = "Steam GUI";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SteamGuiFormClosing);
 			this.userDataLayoutPanel.ResumeLayout(false);
 			this.userDataLayoutPanel.PerformLayout();
 			this.ResumeLayout(false);
