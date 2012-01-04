@@ -13,9 +13,8 @@ namespace Sharpcraft
 		{
 			try
 			{
-				// vijf ip: 217.123.107.137
 				var prot = new Protocol("localhost", 25565);
-				prot.PacketHandshake("vijfhoek2");
+				prot.PacketHandshake("Sharpcraft");
 
 				using (var game = new Sharpcraft())
 				{
