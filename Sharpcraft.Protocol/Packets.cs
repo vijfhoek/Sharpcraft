@@ -45,17 +45,17 @@ namespace Sharpcraft.Protocol
 		public string Username;
 	}
 
-	public class Packet3 : Packet
+	public class PacketChatMessage : Packet
 	{
 		public string Message;
 	}
 
-	public class Packet4 : Packet
+	public class PacketTimeUpdate : Packet
 	{
 		public Int64 Time;
 	}
 
-	public class Packet5 : Packet
+	public class PacketEntityEquipment : Packet
 	{
 		public Int32 EntityID;
 		public Int16 Slot;
@@ -63,7 +63,7 @@ namespace Sharpcraft.Protocol
 		public Int16 Damage;
 	}
 
-	public class Packet6 : Packet
+	public class PacketSpawnPosition : Packet
 	{
 		public Int32 X;
 		public Int32 Y;

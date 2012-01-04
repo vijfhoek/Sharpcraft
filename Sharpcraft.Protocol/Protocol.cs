@@ -94,19 +94,19 @@ namespace Sharpcraft.Protocol
 			}
 			else if (packetID == 0x03)
 			{
-				var packet = new Packet3 {PacketID = 0x03};
+				var packet = new PacketChatMessage {PacketID = 0x03};
 				packet.Message = _tools.ReadString();
 				pack = packet;
 			}
 			else if (packetID == 0x04)
 			{
-				var packet = new Packet4 {PacketID = 0x04};
+				var packet = new PacketTimeUpdate {PacketID = 0x04};
 				packet.Time = _tools.ReadInt32();
 				pack = packet;
 			}
 			else if (packetID == 0x05)
 			{
-				var packet = new Packet5 {PacketID = 0x05};
+				var packet = new PacketEntityEquipment {PacketID = 0x05};
 
 				packet.EntityID = _tools.ReadInt32();
 				packet.Slot     = _tools.ReadInt16();
@@ -117,7 +117,7 @@ namespace Sharpcraft.Protocol
 			}
 			else if (packetID == 0x06)
 			{
-				var packet = new Packet6() {PacketID = 0x06};
+				var packet = new PacketSpawnPosition() {PacketID = 0x06};
 
 				packet.X = _tools.ReadInt32();
 				packet.Y = _tools.ReadInt32();
