@@ -18,6 +18,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Protocol", "Shar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Logging", "Sharpcraft.Logging\Sharpcraft.Logging.csproj", "{6F2B8AE1-CE58-43C1-8E5F-66537E543172}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{5AF1004D-E333-45B5-96AB-723DC06D8058}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenSteamWorks", "OpenSteamWorks", "{037E2F06-2BE2-4572-8C9F-13F73FA791CA}"
+	ProjectSection(SolutionItems) = preProject
+		lib\OpenSteamWorks\Steam4NET.dll = lib\OpenSteamWorks\Steam4NET.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "log4net", "log4net", "{F386CBDF-AB1A-420C-B932-240B5FE290A0}"
+	ProjectSection(SolutionItems) = preProject
+		lib\log4net\log4net.dll = lib\log4net\log4net.dll
+		lib\log4net\log4net.xml = lib\log4net\log4net.xml
+		lib\log4net\log4net_license.txt = lib\log4net\log4net_license.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +101,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{037E2F06-2BE2-4572-8C9F-13F73FA791CA} = {5AF1004D-E333-45B5-96AB-723DC06D8058}
+		{F386CBDF-AB1A-420C-B932-240B5FE290A0} = {5AF1004D-E333-45B5-96AB-723DC06D8058}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		BuildVersion_UpdateFileVersion = False

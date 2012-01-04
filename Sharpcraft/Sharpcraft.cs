@@ -32,7 +32,7 @@ namespace Sharpcraft
 	/// </summary>
 	public class Sharpcraft : Game
 	{
-		private ILog _log;
+		private readonly ILog _log;
 
 		private GraphicsDeviceManager _graphics;
 		private SpriteBatch _spriteBatch;
