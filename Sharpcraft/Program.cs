@@ -1,3 +1,5 @@
+#define DEBUG
+
 using System;
 using System.IO;
 
@@ -25,10 +27,12 @@ namespace Sharpcraft
 				Console.WriteLine("Required file {0} was not found!", ex.FileName);
 				Console.WriteLine(ex.Message);
 			}
+#if !DEBUG
 			catch(Exception ex)
 			{
 				Console.WriteLine("Unexpected exception " + ex.GetType());
 			}
+#endif
 		}
 	}
 #endif
