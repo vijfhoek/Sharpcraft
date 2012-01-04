@@ -28,6 +28,38 @@ namespace Sharpcraft
 			Thread.Sleep(512);
 		}
 
+
+		public byte[] StringToBytes(string str)
+		{
+			List<Byte> bytes = new List<byte>();
+
+			byte[] strLength = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(str.Length));
+			foreach (byte bte in strLength)
+				bytes.Add(bte);
+
+			byte[] bteString = Encoding.BigEndianUnicode.GetBytes(str);
+			foreach (byte bte in bteString)
+				bytes.Add(bte);
+
+			return bytes.ToArray();
+		}
+
+		public string BytesToString(byte[] bytes) {
+			byte[] bteStrLength = { bytes[0], bytes[1] };
+			int strLength = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bteStrLength, 0));
+
+			string str = "";
+
+			for (short s = 1; s < strLength + 1; s++)
+			{
+				byte[] tmp = { bytes[s * 2], bytes[(s * 2) + 1] };
+				str += Encoding.BigEndianUnicode.GetString(tmp);
+			}
+
+			return str;
+		}
+
+
 		public Packet GetPacket()
 		{
 			byte packetID = (byte)stream.ReadByte();
@@ -36,7 +68,7 @@ namespace Sharpcraft
 			if (packetID == 0x00) // Keep alive
 			{
 				Packet0 packet = new Packet0();
-				packet.packetID = 0;
+				packet.packetID = 0x00;
 
 				byte[] bteKeepAliveID = new byte[4];
 				stream.Read(bteKeepAliveID, 0, bteKeepAliveID.Length);
@@ -47,6 +79,7 @@ namespace Sharpcraft
 			else if (packetID == 0x01) // Login Request
 			{
 				Packet1 packet = new Packet1();
+				packet.packetID = 0x01;
 
 				// Get the player entity ID
 				byte[] bteEntityId = new byte[4];
@@ -79,6 +112,20 @@ namespace Sharpcraft
 				packet.maxPlayers = (byte)stream.ReadByte();
 
 				pack = (Packet)packet;
+			}
+			else if (packetID == 0x02)
+			{
+				Packet2 packet = new Packet2();
+				packet.packetID = 0x02;
+
+				// Get the connection hash
+				byte[] bteConnectionHashLength = { (byte)stream.ReadByte(), (byte)stream.ReadByte() };
+				short connectionHashLength = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bteConnectionHashLength, 0));
+				for (short s = 0; s < connectionHashLength; s++)
+				{
+					byte[] bte = { (byte)stream.ReadByte(), (byte)stream.ReadByte() };
+					packet.connectionHash += Encoding.BigEndianUnicode.GetString(bte);
+				}
 			}
 
 			return pack;
