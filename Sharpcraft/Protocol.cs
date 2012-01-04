@@ -35,21 +35,6 @@ namespace Sharpcraft
             }
         }
 
-
-        public static Int32 GetInt32(byte[] buffer, int offset, EndianType byteOrder)
-        {
-            if (byteOrder == EndianType.LittleEndian)
-                return buffer[offset + 1] << 8 | buffer[offset];
-            return buffer[offset] << 8 | buffer[offset + 1];
-        }
-
-        public static Int64 GetInt64(byte[] buffer, int offset, EndianType byteOrder)
-        {
-            if (byteOrder == EndianType.LittleEndian)
-                return buffer[offset + 1] << 8 | buffer[offset];
-            return buffer[offset] << 8 | buffer[offset + 1];
-        }
-
         // Packet 0x00
         public void PacketKeepAlive(int id)
         {
