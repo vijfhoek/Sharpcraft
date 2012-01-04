@@ -59,7 +59,6 @@ namespace Sharpcraft.Protocol
 			return str;
 		}
 
-		
 
 		public Packet GetPacket()
 		{
@@ -68,13 +67,13 @@ namespace Sharpcraft.Protocol
 
 			if (packetID == 0x00) // Keep alive
 			{
-				var packet = new Packet0 {PacketID = 0x00};
+				var packet = new PacketKeepAlive {PacketID = 0x00};
 				packet.KeepAliveID = _tools.ReadInt32();
 				pack = packet;
 			}
 			else if (packetID == 0x01) // Login Request
 			{
-				var packet = new Packet1 {PacketID = 0x01};
+				var packet = new PacketLoginRequestSC {PacketID = 0x01};
 
 				packet.EntityID = _tools.ReadInt32();
 				_tools.StreamSkip(2);
@@ -89,7 +88,7 @@ namespace Sharpcraft.Protocol
 			}
 			else if (packetID == 0x02)
 			{
-				var packet = new Packet2 {PacketID = 0x02};
+				var packet = new PacketHandshakeSC {PacketID = 0x02};
 				packet.ConnectionHash = _tools.ReadString();
 				pack = packet;
 			}
@@ -129,12 +128,43 @@ namespace Sharpcraft.Protocol
 
 			return pack;
 		}
+
+		public void SendPacket(Packet packet)
+		{
+			byte packetID = packet.PacketID;
+
+			if (packetID == 0x00)
+			{
+				var pack = (PacketKeepAlive)packet;
+				_tools.WriteByte(packetID);
+				_tools.WriteInt32(pack.KeepAliveID);
+			}
+			else if (packetID == 0x01)
+			{
+				var pack = (PacketLoginRequestCS)packet;
+				_tools.WriteByte(packetID);
+				_tools.WriteInt32(pack.ProtocolVersion);
+				_tools.WriteString(pack.Username);
+				_tools.WriteInt64(0);						// Not Used
+				_tools.WriteInt32(0);						// Not Used
+				_tools.WriteByte(0);						// Not Used
+				_tools.WriteByte(0);						// Not Used
+				_tools.WriteByte(0);						// Not Used
+				_tools.WriteByte(0);						// Not Used
+			}
+			else if (packetID == 0x02)
+			{
+
+			}
+
+			_stream.Flush();
+		}
 		
 		// Packet 0x00
 		public void PacketKeepAlive(Int32 id)
 		{
 			_tools.WriteByte(0x00);			// Packet ID
-			_tools.WriteInt32(id);
+			_tools.WriteInt32(id);			
 		}
 
 		// Packet 0x01
