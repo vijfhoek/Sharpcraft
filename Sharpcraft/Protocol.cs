@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Net;
-using System.Net.Sockets;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Net;
+using System.Net.Sockets;
 using System.Collections;
-using System.Collections.Generic;
+using System.Threading;
 
 namespace Sharpcraft
 {
@@ -14,94 +15,123 @@ namespace Sharpcraft
 		BigEndian
 	}
 
-	class Protocol
+	public class Protocol
 	{
-		private readonly TcpClient _client;
-		private readonly NetworkStream _stream;
+		TcpClient client = new TcpClient();
+		NetworkStream stream = null;
 
 		public Protocol(string server, int port)
 		{
-			try
+			client.Connect(server, port);
+			Thread.Sleep(256);
+			stream = client.GetStream();
+			Thread.Sleep(512);
+		}
+
+		public Packet GetPacket()
+		{
+			byte packetID = (byte)stream.ReadByte();
+			Packet pack = null;
+
+			if (packetID == 0x00) // Keep alive
 			{
-				_client = new TcpClient(server, port);
-				_stream = _client.GetStream();
+				Packet0 packet = new Packet0();
+				packet.packetID = 0;
+
+				byte[] bteKeepAliveID = new byte[4];
+				stream.Read(bteKeepAliveID, 0, bteKeepAliveID.Length);
+				packet.keepAliveID = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(bteKeepAliveID, 0));
+
+				pack = (Packet)packet;
 			}
-			catch (Exception ex)
+			else if (packetID == 0x01) // Login Request
 			{
-				Console.WriteLine("Failed to connect, details:");
-				Console.WriteLine(ex.GetType());
-				Console.WriteLine(ex.Message);
-				Console.WriteLine(ex.StackTrace);
+				Packet1 packet = new Packet1();
+
+				// Get the player entity ID
+				byte[] bteEntityId = new byte[4];
+				stream.Read(bteEntityId, 0, bteEntityId.Length);
+				packet.entityID = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(bteEntityId, 0));
+
+				// Skip ahead 2 bytes
+				stream.ReadByte(); stream.ReadByte();
+
+				// Get the map seed
+				byte[] bteMapSeed = new byte[8];
+				stream.Read(bteMapSeed, 0, bteMapSeed.Length);
+				packet.mapSeed = IPAddress.NetworkToHostOrder(BitConverter.ToInt64(bteMapSeed, 0));
+
+				// Get the gamemode
+				byte[] bteGamemode = new byte[4];
+				stream.Read(bteGamemode, 0, bteGamemode.Length);
+				packet.gamemode = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(bteGamemode, 0));
+
+				// Get the dimension
+				packet.dimension = (sbyte)stream.ReadByte();
+
+				// Get the difficulty
+				packet.difficulty = (sbyte)stream.ReadByte();
+
+				// Get the world height
+				packet.worldHeight = (byte)stream.ReadByte();
+
+				// Get the maximum amount of players
+				packet.maxPlayers = (byte)stream.ReadByte();
+
+				pack = (Packet)packet;
 			}
+
+			return pack;
 		}
-
-		
-		public static Int32 GetInt32(byte[] buffer, int offset, EndianType byteOrder)
-		{
-			if (byteOrder == EndianType.LittleEndian)
-				return buffer[offset + 1] << 8 | buffer[offset];
-			return buffer[offset] << 8 | buffer[offset + 1];
-		}
-
-		public static Int64 GetInt64(byte[] buffer, int offset, EndianType byteOrder)
-		{
-			if (byteOrder == EndianType.LittleEndian)
-				return buffer[offset + 1] << 8 | buffer[offset];
-			return buffer[offset] << 8 | buffer[offset + 1];
-		}
-
-		// Packet 0x00
-		public void PacketKeepAlive(int id)
-		{
-			// NOTE: @Vijfhoek what is the format of PacketID?
-
-			throw new NotImplementedException("Fix PacketID?");
-
-			byte[] packetID = {0x00, 0x00, 0x00};
-			_stream.Write(packetID, 0, packetID.Length);
-
-			byte[] response = BitConverter.GetBytes(id);
-			_stream.Write(response, 0, response.Length);
-		}
-
+			
 		// Packet 0x01
-		public bool PacketLoginRequest(int version, string username)
+		public void PacketLoginRequest(int version, string username)
 		{
-			byte[] packetID = {0x01, 0x00, 0x00};
-			_stream.Write(packetID, 0, packetID.Length);
+			// Write the Packet ID (0x01)
+			stream.WriteByte(0x01);
 
+			// Write the protocol version (22 (0x16) for 1.0.0)
 			int beVersion = IPAddress.HostToNetworkOrder(version);
 			byte[] bteVersion = BitConverter.GetBytes(beVersion);
-			_stream.Write(bteVersion, 0, bteVersion.Length);
+			stream.Write(bteVersion, 0, bteVersion.Length);
 
+			// Write the username
+			stream.Write(BitConverter.GetBytes(IPAddress.HostToNetworkOrder((short)username.Length)), 0, 2);
 			byte[] bteUsername = Encoding.BigEndianUnicode.GetBytes(username);
-			_stream.Write(bteUsername, 0, bteUsername.Length);
+			stream.Write(bteUsername, 0, bteUsername.Length);
 
-			return true;
+			// Write NotUsed 1
+			byte[] bteNotUsed1 = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+			stream.Write(bteNotUsed1, 0, bteNotUsed1.Length);
+
+			// Write NotUsed 2
+			byte[] bteNotUsed2 = { 0x00, 0x00, 0x00, 0x00 };
+			stream.Write(bteNotUsed2, 0, bteNotUsed2.Length);
+
+			// Write NotUsed 3 through 6
+			stream.WriteByte(0x00);
+			stream.WriteByte(0x00);
+			stream.WriteByte(0x00);
+			stream.WriteByte(0x00);
+
+			// Flush the stream
+			stream.Flush();
 		}
 
 		// Packet 0x02
-		public bool PacketHandshake(string nickname)
+		public void PacketHandshake(string username)
 		{
-			// NOTE: Why braces here? We can do without...
-			
-			byte[] packetID = {0x02, 0x00, 0x08};
-			_stream.Write(packetID, 0, packetID.Length);
+			// Send the packet ID
+			stream.WriteByte(0x02);
 
-			byte[] packet = Encoding.BigEndianUnicode.GetBytes(nickname);
-			_stream.Write(packet, 0, packet.Length);
-			
-			packetID = new byte[3];
-			_stream.Read(packetID, 0, packetID.Length);
-			if (packetID[0] != 0x02)
-				return false;
-			
-			packet = new byte[2];
-			_stream.Read(packet, 0, packet.Length);
-			if (Encoding.BigEndianUnicode.GetString(packet) != "-")
-				return false;
-			
-			return true;
+			// Write the username
+			stream.Write(BitConverter.GetBytes(IPAddress.HostToNetworkOrder((short)username.Length)), 0, 2);
+			byte[] str = Encoding.BigEndianUnicode.GetBytes(username);
+			stream.Write(str, 0, str.Length);
+
+			// Flush the stream
+			stream.Flush();
 		}
+
 	}
 }
