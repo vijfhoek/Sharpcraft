@@ -1,4 +1,10 @@
-﻿namespace Sharpcraft.SteamGUI
+﻿/* 
+ * Sharpcraft.SteamGUI
+ * Copyright (c) 2012 by Sijmen Schoon and Adam Hellberg.
+ * All Rights Reserved.
+ */
+
+namespace Sharpcraft.SteamGUI
 {
 	partial class SteamGUI
 	{

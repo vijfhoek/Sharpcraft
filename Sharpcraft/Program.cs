@@ -1,3 +1,9 @@
+/* 
+ * Sharpcraft
+ * Copyright (c) 2012 by Sijmen Schoon and Adam Hellberg.
+ * All Rights Reserved.
+ */
+
 #define DEBUG
 
 using System;

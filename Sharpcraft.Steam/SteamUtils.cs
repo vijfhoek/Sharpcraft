@@ -1,4 +1,10 @@
-﻿using System.Text;
+﻿/* 
+ * Sharpcraft.Steam
+ * Copyright (c) 2012 by Sijmen Schoon and Adam Hellberg.
+ * All Rights Reserved.
+ */
+
+using System.Text;
 
 using Steam4NET;
 

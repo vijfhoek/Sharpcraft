@@ -6,6 +6,12 @@ Minecraft client in C#
 
 TODO: Add some cheesy text here.
 
+License
+-------
+
+All Rights Reserved until further notice.
+Copyright © 2012 by Sijmen Schoon (Vijfhoek) and Adam Hellberg (F16Gaming).
+
 Dependencies
 ------------
 
