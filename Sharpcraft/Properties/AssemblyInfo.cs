@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyProduct("Sharpcraft")]
 [assembly: AssemblyDescription("Minecraft client in C#")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyCopyright("Copyright © 2012 by Sijmen Schoon and Adam Hellberg.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,5 +31,5 @@ using System.Runtime.CompilerServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.1.16.1710")]
-[assembly: AssemblyFileVersion("0.1.16.1710")]
+[assembly: AssemblyVersion("0.1.18.1715")]
+[assembly: AssemblyFileVersion("0.1.18.1715")]

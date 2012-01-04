@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* 
+ * Sharpcraft.Protocol
+ * Copyright (c) 2012 by Sijmen Schoon and Adam Hellberg.
+ * All Rights Reserved.
+ */
+
+using System;
 
 namespace Sharpcraft.Protocol
 {
