@@ -7,12 +7,12 @@ namespace Sharpcraft.Protocol
 		public byte PacketID;
 	}
 
-	public class Packet0 : Packet
+	public class PacketKeepAlive : Packet
 	{
 		public Int32 KeepAliveID;
 	}
 
-	public class Packet1 : Packet
+	public class PacketLoginRequestSC : Packet
 	{
 		public Int32 EntityID;
 		public Int64 MapSeed;
@@ -23,9 +23,20 @@ namespace Sharpcraft.Protocol
 		public byte MaxPlayers;
 	}
 
-	public class Packet2 : Packet
+	public class PacketLoginRequestCS : Packet
+	{
+		public Int32 ProtocolVersion;
+		public string Username;
+	}
+
+	public class PacketHandshakeSC : Packet
 	{
 		public string ConnectionHash;
+	}
+
+	public class PacketHandshakeCS : Packet
+	{
+		public string Username;
 	}
 
 	public class Packet3 : Packet
