@@ -9,10 +9,12 @@ namespace Sharpcraft.Steam
 {
 	public static class SteamManager
 	{
-		internal static ISteamClient010 Client;
-		internal static ISteamFriends002 Friends;
-		internal static int Pipe;
-		internal static int User;
+		internal static ISteamClient010 Client { get; private set; }
+		internal static ISteamFriends002 Friends { get; private set; }
+		internal static int Pipe { get; private set; }
+		internal static int User { get; private set; }
+
+		public static SteamFriendList FriendList { get; private set; }
 
 		public static bool Init()
 		{
@@ -28,6 +30,8 @@ namespace Sharpcraft.Steam
 			User = Client.ConnectToGlobalUser(Pipe);
 
 			Friends = Steamworks.CastInterface<ISteamFriends002>(Client.GetISteamFriends(User, Pipe, "SteamFriends002"));
+
+			FriendList = new SteamFriendList();
 
 			return true;
 		}

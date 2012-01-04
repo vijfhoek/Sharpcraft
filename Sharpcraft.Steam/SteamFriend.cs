@@ -60,5 +60,17 @@ namespace Sharpcraft.Steam
 		{
 			return GetState() == EPersonaState.k_EPersonaStateOnline;
 		}
+
+		public void SendMessage(string message)
+		{
+			byte[] msg = SteamUtils.StringToByte(message);
+			SteamManager.Friends.SendMsgToFriend(SteamID, EChatEntryType.k_EChatEntryTypeChatMsg, msg, msg.Length);
+		}
+
+		public void SendEmote(string emote)
+		{
+			byte[] em = SteamUtils.StringToByte(emote);
+			SteamManager.Friends.SendMsgToFriend(SteamID, EChatEntryType.k_EChatEntryTypeEmote, em, em.Length);
+		}
 	}
 }
