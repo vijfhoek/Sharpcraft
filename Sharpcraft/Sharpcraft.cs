@@ -17,8 +17,8 @@ namespace Sharpcraft
 	/// </summary>
 	public class Sharpcraft : Game
 	{
-		GraphicsDeviceManager _graphics;
-		SpriteBatch _spriteBatch;
+		private GraphicsDeviceManager _graphics;
+		private SpriteBatch _spriteBatch;
 
 		public Sharpcraft()
 		{

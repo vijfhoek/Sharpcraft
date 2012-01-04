@@ -16,13 +16,23 @@ namespace Sharpcraft
 
 	class Protocol
 	{
-		readonly TcpClient _client;
-		readonly NetworkStream _stream;
+		private readonly TcpClient _client;
+		private readonly NetworkStream _stream;
 
 		public Protocol(string server, int port)
 		{
-			_client = new TcpClient(server, port);
-			_stream = _client.GetStream();
+			try
+			{
+				_client = new TcpClient(server, port);
+				_stream = _client.GetStream();
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine("Failed to connect, details:");
+				Console.WriteLine(ex.GetType());
+				Console.WriteLine(ex.Message);
+				Console.WriteLine(ex.StackTrace);
+			}
 		}
 
 		

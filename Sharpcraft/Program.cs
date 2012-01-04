@@ -15,7 +15,6 @@ namespace Sharpcraft
 			{
 				var prot = new Protocol("localhost", 25565);
 				prot.PacketHandshake("Sharpcraft");
-
 				using (var game = new Sharpcraft())
 				{
 					game.Run();
