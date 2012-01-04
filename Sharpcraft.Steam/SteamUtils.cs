@@ -28,7 +28,7 @@ namespace Sharpcraft.Steam
 				case EPersonaState.k_EPersonaStateBusy:
 					status = "busy";
 					break;
-				case EPersonaState.k_EPersonaStateMax: // What is this, in-game?
+				case EPersonaState.k_EPersonaStateMax: // What is this?
 					status = "max";
 					break;
 				case EPersonaState.k_EPersonaStateOffline:
