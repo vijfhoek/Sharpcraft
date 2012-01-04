@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Runtime.Serialization;
 
 namespace Sharpcraft.Steam
 {
+	[Serializable]
 	public class SteamException : Exception
 	{
 		public SteamExceptionType Type { get; private set; }
