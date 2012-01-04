@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Steam4NET;
+﻿using Steam4NET;
 
 namespace Sharpcraft.Steam
 {
@@ -28,38 +23,7 @@ namespace Sharpcraft.Steam
 
 		public string GetStatus(bool pretty = false)
 		{
-			string state;
-			switch(GetState())
-			{
-				case EPersonaState.k_EPersonaStateAway:
-					state = "away";
-					break;
-				case EPersonaState.k_EPersonaStateBusy:
-					state = "busy";
-					break;
-				case EPersonaState.k_EPersonaStateMax: // What is this, in-game?
-					state = "max";
-					break;
-				case EPersonaState.k_EPersonaStateOffline:
-					state = "offline";
-					break;
-				case EPersonaState.k_EPersonaStateOnline:
-					state = "online";
-					break;
-				case EPersonaState.k_EPersonaStateSnooze:
-					state = "snooze";
-					break;
-				default:
-					state = "undefined";
-					break;
-			}
-			if (pretty)
-			{
-				char[] a = state.ToCharArray();
-				a[0] = char.ToUpper(a[0]);
-				return new string(a);
-			}
-			return state;
+			return SteamUtils.StateToStatus(GetState(), pretty);
 		}
 
 		public bool IsOnline()

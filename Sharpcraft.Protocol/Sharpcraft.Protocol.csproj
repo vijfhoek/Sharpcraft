@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C3DF80BE-E42E-4CE2-9CA0-EBA36EFAD79F}</ProjectGuid>
+    <ProjectGuid>{6B60AF16-B510-4D54-BC50-CC232B6826AE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sharpcraft.Steam</RootNamespace>
-    <AssemblyName>Sharpcraft.Steam</AssemblyName>
+    <RootNamespace>Sharpcraft.Protocol</RootNamespace>
+    <AssemblyName>Sharpcraft.Protocol</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
@@ -46,9 +46,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Steam4NET">
-      <HintPath>.\Steam4NET.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -58,14 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Packets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SteamEvents.cs" />
-    <Compile Include="SteamException.cs" />
-    <Compile Include="SteamExceptionType.cs" />
-    <Compile Include="SteamFriendList.cs" />
-    <Compile Include="SteamManager.cs" />
-    <Compile Include="SteamFriend.cs" />
-    <Compile Include="SteamUtils.cs" />
+    <Compile Include="Protocol.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -92,7 +84,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.TimeStamp" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.Increment.TimeStamp" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

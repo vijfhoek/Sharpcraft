@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Windows.Forms;
 using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
@@ -9,6 +10,9 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.GamerServices;
+
+using Keys = Microsoft.Xna.Framework.Input.Keys;
+using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 
 using Sharpcraft.Steam;
 
@@ -41,8 +45,15 @@ namespace Sharpcraft
 			base.Initialize();
 
 			/* /!\ Steam hardcore loading action /!\ */
-			//SteamManager.Init();
-			//SteamManager.FriendList.LoadFriends();
+			if (SteamManager.Init())
+			{
+				//SteamManager.FriendList.LoadFriends(); // Should load automatically now
+				Application.EnableVisualStyles();
+				var steamGUI = new SteamGUI.SteamGUI();
+				steamGUI.Location = new System.Drawing.Point(Window.ClientBounds.Right, Window.ClientBounds.Top);
+				if (!steamGUI.Visible)
+					steamGUI.Show();
+			}
 		}
 
 		/// <summary>
