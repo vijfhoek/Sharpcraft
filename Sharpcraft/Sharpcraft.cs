@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.GamerServices;
 
+using Sharpcraft.Steam;
+
 namespace Sharpcraft
 {
 	/// <summary>
@@ -37,6 +39,10 @@ namespace Sharpcraft
 			// TODO: Add your initialization logic here
 
 			base.Initialize();
+
+			/* /!\ Steam hardcore loading action /!\ */
+			//SteamManager.Init();
+			//SteamManager.FriendList.LoadFriends();
 		}
 
 		/// <summary>
