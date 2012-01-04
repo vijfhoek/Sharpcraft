@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* 
+ * Sharpcraft.Logging
+ * Copyright (c) 2012 by Sijmen Schoon and Adam Hellberg.
+ * All Rights Reserved.
+ */
+
+using System;
 using System.IO;
 
 using log4net;
