@@ -11,8 +11,8 @@ namespace Sharpcraft
 		/// </summary>
 		static void Main(string[] args)
 		{
-			var prot = new Protocol("217.123.107.137", 25565);
-			prot.PacketHandshake("vijfhoek2");
+			var prot = new Protocol("localhost", 25565);
+			prot.PacketHandshake("Sharpcraft");
 
 			using (var game = new Sharpcraft())
 			{
