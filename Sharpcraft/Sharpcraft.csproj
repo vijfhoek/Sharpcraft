@@ -117,6 +117,10 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Sharpcraft.Steam\Sharpcraft.Steam.csproj">
+      <Project>{C3DF80BE-E42E-4CE2-9CA0-EBA36EFAD79F}</Project>
+      <Name>Sharpcraft.Steam</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpcraftContent\Sharpcraft.Content.contentproj">
       <Name>Sharpcraft.Content %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>

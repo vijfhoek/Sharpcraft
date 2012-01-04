@@ -7,25 +7,23 @@ using Steam4NET;
 
 namespace Sharpcraft.Steam
 {
-	public class SteamUser
+	public class SteamFriend
 	{
-		private readonly ISteamFriends002 _friends;
-
 		public readonly CSteamID SteamID;
 		
-		internal SteamUser(CSteamID steamID)
+		internal SteamFriend(CSteamID steamID)
 		{
 			SteamID = steamID;
 		}
 
 		public string GetName()
 		{
-			return _friends.GetFriendPersonaName(SteamID);
+			return SteamManager.Friends.GetFriendPersonaName(SteamID);
 		}
 
 		public EPersonaState GetState()
 		{
-			return _friends.GetFriendPersonaState(SteamID);
+			return SteamManager.Friends.GetFriendPersonaState(SteamID);
 		}
 
 		public string GetStatus()
@@ -61,6 +59,18 @@ namespace Sharpcraft.Steam
 		public bool IsOnline()
 		{
 			return GetState() == EPersonaState.k_EPersonaStateOnline;
+		}
+
+		public void SendMessage(string message)
+		{
+			byte[] msg = SteamUtils.StringToByte(message);
+			SteamManager.Friends.SendMsgToFriend(SteamID, EChatEntryType.k_EChatEntryTypeChatMsg, msg, msg.Length);
+		}
+
+		public void SendEmote(string emote)
+		{
+			byte[] em = SteamUtils.StringToByte(emote);
+			SteamManager.Friends.SendMsgToFriend(SteamID, EChatEntryType.k_EChatEntryTypeEmote, em, em.Length);
 		}
 	}
 }

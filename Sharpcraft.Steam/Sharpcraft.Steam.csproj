@@ -44,8 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SteamException.cs" />
+    <Compile Include="SteamExceptionType.cs" />
+    <Compile Include="SteamFriendList.cs" />
     <Compile Include="SteamManager.cs" />
-    <Compile Include="SteamUser.cs" />
+    <Compile Include="SteamFriend.cs" />
+    <Compile Include="SteamUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
