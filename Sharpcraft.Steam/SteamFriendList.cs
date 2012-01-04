@@ -11,19 +11,27 @@ using System.Collections.Generic;
 
 using Steam4NET;
 
+using log4net;
+
+using Sharpcraft.Logging;
+
 namespace Sharpcraft.Steam
 {
 	public class SteamFriendList
 	{
+		private ILog _log;
+
 		private readonly Timer _updateTimer;
 
 		private readonly List<SteamFriend> _list;
 
 		internal SteamFriendList()
 		{
+			_log = LoggerManager.GetLogger(this);
 			_list = new List<SteamFriend>();
 			_updateTimer = new Timer(Update, null, 0, 60000);
 			SteamManager.OnSteamClose += SteamClose;
+			_log.Info("SteamFriendList loaded!");
 		}
 
 		public event SteamFriendsEventHandler OnFriendsUpdate;
@@ -35,27 +43,31 @@ namespace Sharpcraft.Steam
 
 		private void Update(object state)
 		{
-			Console.WriteLine("Update running...");
+			_log.Info("Updating Steam friends...");
 			LoadFriends();
-			Console.WriteLine("Update complete!");
+			_log.Info("Steam friends updated!");
 			FriendsUpdate(new SteamFriendsEventArgs(SteamManager.GetName(), SteamManager.GetStatus(true), _list, _list.Count, GetFriendCount(true)));
 		}
 
 		private void SteamClose()
 		{
+			_log.Info("SteamClose event detected, disposing SteamFriendList components...");
 			_updateTimer.Dispose();
 			_list.Clear();
 		}
 
 		public void LoadFriends()
 		{
+			_log.Info("Loading Steam friends...");
 			_list.Clear();
-			for (int i = 0; i < SteamManager.Friends.GetFriendCount((int) EFriendFlags.k_EFriendFlagImmediate); i++)
+			int num = SteamManager.Friends.GetFriendCount((int) EFriendFlags.k_EFriendFlagImmediate);
+			for (int i = 0; i < num; i++)
 			{
 				var friend = new SteamFriend(SteamManager.Friends.GetFriendByIndex(i, (int) EFriendFlags.k_EFriendFlagImmediate));
 				_list.Add(friend);
-				Console.WriteLine("Added " + friend.GetName() + " (" + friend.GetStatus() + ")");
+				_log.Debug("Added " + friend.GetName() + " (" + friend.GetStatus() + ")");
 			}
+			_log.Info("Loaded " + num + " Steam friends!");
 		}
 
 		public List<SteamFriend> GetFriends()
