@@ -4,10 +4,10 @@
  * All Rights Reserved.
  */
 
-using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+
 using Steam4NET;
 
 using log4net;
@@ -24,10 +24,10 @@ namespace Sharpcraft.Steam
 
 		public static bool SteamLoaded { get; private set; }
 
-		internal static ISteamClient010 Client { get; private set; }
+		private static ISteamClient010 Client { get; set; }
 		internal static ISteamFriends002 Friends { get; private set; }
-		internal static int Pipe { get; private set; }
-		internal static int User { get; private set; }
+		private static int Pipe { get; set; }
+		private static int User { get; set; }
 
 		public static SteamFriendList FriendList { get; private set; }
 
@@ -70,9 +70,10 @@ namespace Sharpcraft.Steam
 
 				_steamWatcher = new Timer(SteamCheck, null, 0, 1000);
 			}
-			catch (SteamException)
+			catch (SteamException ex)
 			{
 				_log.Warn("Warning! SteamManager caught a SteamException exception, returning FALSE. Steam components will NOT LOAD!");
+				_log.Warn("The SteamException type was: " + System.Enum.GetName(typeof(SteamExceptionType), ex.Type));
 				return false;
 			}
 			_log.Info("SteamManager has been initialized!");

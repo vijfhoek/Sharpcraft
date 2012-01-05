@@ -4,7 +4,6 @@
  * All Rights Reserved.
  */
 
-using System;
 using System.Linq;
 using System.Threading;
 using System.Collections.Generic;
@@ -19,7 +18,7 @@ namespace Sharpcraft.Steam
 {
 	public class SteamFriendList
 	{
-		private ILog _log;
+		private readonly ILog _log;
 
 		private readonly Timer _updateTimer;
 
@@ -35,7 +34,7 @@ namespace Sharpcraft.Steam
 		}
 
 		public event SteamFriendsEventHandler OnFriendsUpdate;
-		protected virtual void FriendsUpdate(SteamFriendsEventArgs e)
+		private void FriendsUpdate(SteamFriendsEventArgs e)
 		{
 			if (OnFriendsUpdate != null)
 				OnFriendsUpdate(e);
@@ -56,7 +55,7 @@ namespace Sharpcraft.Steam
 			_list.Clear();
 		}
 
-		public void LoadFriends()
+		private void LoadFriends()
 		{
 			_log.Info("Loading Steam friends...");
 			_list.Clear();
@@ -70,7 +69,7 @@ namespace Sharpcraft.Steam
 			_log.Info("Loaded " + num + " Steam friends!");
 		}
 
-		public List<SteamFriend> GetFriends()
+		public IEnumerable<SteamFriend> GetFriends()
 		{
 			return _list;
 		}
