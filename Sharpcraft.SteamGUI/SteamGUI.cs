@@ -17,7 +17,7 @@ namespace Sharpcraft.SteamGUI
 {
 	public partial class SteamGUI : Form
 	{
-		private ILog _log;
+		private readonly ILog _log;
 
 		private bool _steamClosed;
 
@@ -87,7 +87,13 @@ namespace Sharpcraft.SteamGUI
 
 		private void FriendListSelectedIndexChanged(object sender, EventArgs e)
 		{
-			sendButton.Enabled = friendList.SelectedItems.Count > 0;
+			bool validSelection = friendList.SelectedItems.Count > 0;
+			SteamFriend friend = validSelection ? SteamManager.FriendList.GetFriendBySteamId(friendList.SelectedItems[0].Tag.ToString()) : null;
+			bool validFriend = friend != null && friend.IsOnline();
+			if (validSelection && validFriend)
+				sendButton.Enabled = true;
+			else
+				sendButton.Enabled = false;
 		}
 
 		private void SteamGuiFormClosing(object sender, FormClosingEventArgs e)

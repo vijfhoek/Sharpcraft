@@ -89,7 +89,7 @@ namespace Sharpcraft.Steam
 				_log.Info("Unloading Steam components...");
 				CallbackDispatcher.SpawnDispatchThread(Pipe);
 				_log.Info("Waiting for dispatch thread to finish...");
-				Thread.Sleep(5000); // Do we need this?
+				//Thread.Sleep(5000); // Do we need this?
 				CallbackDispatcher.StopDispatchThread(Pipe);
 				_log.Info("Steam dispatch thread stopped.");
 				_log.Info("Releasing Steam user and Steam client...");

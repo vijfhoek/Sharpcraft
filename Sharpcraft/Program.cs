@@ -8,6 +8,8 @@
 
 using System;
 using System.IO;
+using System.Reflection;
+
 using log4net;
 
 using Sharpcraft.Logging;
@@ -18,6 +20,11 @@ namespace Sharpcraft
 	static class Program
 	{
 		private static ILog _log;
+		private static string _version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+		private static string _loggingVersion = Assembly.GetAssembly(typeof (LoggerManager)).GetName().Version.ToString();
+		private static string _protocolVersion = Assembly.GetAssembly(typeof (Networking.Protocol)).GetName().Version.ToString();
+		private static string _steamVersion = Assembly.GetAssembly(typeof (Steam.SteamManager)).GetName().Version.ToString();
+		private static string _steamGUIVersion = Assembly.GetAssembly(typeof (SteamGUI.SteamGUI)).GetName().Version.ToString();
 
 		/// <summary>
 		/// The main entry point for the application.
@@ -35,11 +42,27 @@ namespace Sharpcraft
 			LoggerManager.LoadConfig(debug);
 			_log = LoggerManager.GetLogger(typeof (Program));
 			_log.Info("!!! APPLICATION LOAD !!!");
+			_log.Info("Detecting components...");
+			foreach (var file in Directory.GetFiles(Directory.GetCurrentDirectory()))
+			{
+				string ext = Path.GetExtension(file);
+				if (!string.IsNullOrEmpty(ext))
+				{
+					ext = ext.Substring(1);
+					if (ext == "dll" || ext == "exe")
+					{
+						string version = AssemblyName.GetAssemblyName(file).Version.ToString();
+						string name = Path.GetFileNameWithoutExtension(file);
+						_log.Info(name + " v" + version);
+					}
+				}
+			}
+			_log.Info("Components detected!");
 			_log.Info("Sharpcraft is loading...");
 			try
 			{
 				_log.Debug("Creating protocol...");
-				var protocol = new Protocol.Protocol("localhost", 25565);
+				var protocol = new Networking.Protocol("localhost", 25565);
 
 				_log.Debug("Sending handshake packet.");
 				protocol.PacketHandshake("Sharpcraft");

@@ -64,7 +64,7 @@ namespace Sharpcraft.Steam
 			{
 				var friend = new SteamFriend(SteamManager.Friends.GetFriendByIndex(i, (int) EFriendFlags.k_EFriendFlagImmediate));
 				_list.Add(friend);
-				_log.Debug("Added " + friend.GetName() + " (" + friend.GetStatus() + ")");
+				//_log.Debug("Added " + friend.GetName() + " (" + friend.GetStatus() + ")"); // Gets spammy
 			}
 			_log.Info("Loaded " + num + " Steam friends!");
 		}

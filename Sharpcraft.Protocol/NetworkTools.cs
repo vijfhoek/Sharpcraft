@@ -9,7 +9,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-namespace Sharpcraft.Protocol
+namespace Sharpcraft.Networking
 {
 	class NetworkTools
 	{

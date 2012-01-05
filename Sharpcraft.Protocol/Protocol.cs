@@ -15,7 +15,7 @@ using log4net;
 
 using Sharpcraft.Logging;
 
-namespace Sharpcraft.Protocol
+namespace Sharpcraft.Networking
 {
 	// NOTE: This is never used, Vijfhoek?
 	public enum EndianType
