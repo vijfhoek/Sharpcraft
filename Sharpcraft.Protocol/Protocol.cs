@@ -17,6 +17,7 @@ using Sharpcraft.Logging;
 
 namespace Sharpcraft.Protocol
 {
+	// NOTE: This is never used, Vijfhoek?
 	public enum EndianType
 	{
 		LittleEndian,
@@ -77,15 +78,13 @@ namespace Sharpcraft.Protocol
 
 			if (packetID == 0x00) // Keep alive
 			{
-				var packet = new PacketKeepAlive {PacketID = 0x00};
-				packet.KeepAliveID = _tools.ReadInt32();
+				var packet = new PacketKeepAlive {PacketID = 0x00, KeepAliveID = _tools.ReadInt32()};
 				pack = packet;
 			}
 			else if (packetID == 0x01) // Login Request
 			{
-				var packet = new PacketLoginRequestSC {PacketID = 0x01};
+				var packet = new PacketLoginRequestSC {PacketID = 0x01, EntityID = _tools.ReadInt32()};
 
-				packet.EntityID = _tools.ReadInt32();
 				_tools.StreamSkip(2);
 				packet.MapSeed     = _tools.ReadInt64();
 				packet.Gamemode    = _tools.ReadInt32();
@@ -98,40 +97,41 @@ namespace Sharpcraft.Protocol
 			}
 			else if (packetID == 0x02)
 			{
-				var packet = new PacketHandshakeSC {PacketID = 0x02};
-				packet.ConnectionHash = _tools.ReadString();
+				var packet = new PacketHandshakeSC {PacketID = 0x02, ConnectionHash = _tools.ReadString()};
 				pack = packet;
 			}
 			else if (packetID == 0x03)
 			{
-				var packet = new PacketChatMessage {PacketID = 0x03};
-				packet.Message = _tools.ReadString();
+				var packet = new PacketChatMessage {PacketID = 0x03, Message = _tools.ReadString()};
 				pack = packet;
 			}
 			else if (packetID == 0x04)
 			{
-				var packet = new PacketTimeUpdate {PacketID = 0x04};
-				packet.Time = _tools.ReadInt32();
+				var packet = new PacketTimeUpdate {PacketID = 0x04, Time = _tools.ReadInt32()};
 				pack = packet;
 			}
 			else if (packetID == 0x05)
 			{
-				var packet = new PacketEntityEquipment {PacketID = 0x05};
-
-				packet.EntityID = _tools.ReadInt32();
-				packet.Slot     = _tools.ReadInt16();
-				packet.ItemID   = _tools.ReadInt16();
-				packet.Damage   = _tools.ReadInt16();
+				var packet = new PacketEntityEquipment
+				{
+					PacketID = 0x05,
+					EntityID = _tools.ReadInt32(),
+					Slot = _tools.ReadInt16(),
+					ItemID = _tools.ReadInt16(),
+					Damage = _tools.ReadInt16()
+				};
 
 				pack = packet;
 			}
 			else if (packetID == 0x06)
 			{
-				var packet = new PacketSpawnPosition() {PacketID = 0x06};
-
-				packet.X = _tools.ReadInt32();
-				packet.Y = _tools.ReadInt32();
-				packet.Z = _tools.ReadInt32();
+				var packet = new PacketSpawnPosition
+				{
+					PacketID = 0x06,
+					X = _tools.ReadInt32(),
+					Y = _tools.ReadInt32(),
+					Z = _tools.ReadInt32()
+				};
 
 				pack = packet;
 			}
