@@ -69,4 +69,11 @@ namespace Sharpcraft.Networking
 		public Int32 Y;
 		public Int32 Z;
 	}
+
+	public class PacketUseEntity : Packet
+	{
+		public Int32 AttackerID;
+		public Int32 TargetID;
+		public bool IsLeftClick;
+	}
 }
