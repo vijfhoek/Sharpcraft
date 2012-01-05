@@ -66,8 +66,8 @@ namespace Sharpcraft
 				//SteamManager.FriendList.LoadFriends(); // Should load automatically now
 				Application.EnableVisualStyles();
 				_log.Info("Creating Steam GUI.");
+				// TODO: Find a way to set the start location of SteamGUI to be next to Game Window.
 				var steamGUI = new SteamGUI.SteamGUI();
-				steamGUI.Location = new System.Drawing.Point(Window.ClientBounds.Right, Window.ClientBounds.Top);
 				if (!steamGUI.Visible)
 					steamGUI.Show();
 				_log.Info("Steam components loaded!");
