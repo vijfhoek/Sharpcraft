@@ -7,9 +7,9 @@
 /Sharpcraft.Content/obj
 /Sharpcraft.Steam/bin
 /Sharpcraft.Steam/obj
-Sharpcraft.SteamGUI/bin
-Sharpcraft.SteamGUI/obj
-Sharpcraft.Protocol/bin
-Sharpcraft.Protocol/obj
-Sharpcraft.Logging/bin
-Sharpcraft.Logging/obj
+/Sharpcraft.SteamGUI/bin
+/Sharpcraft.SteamGUI/obj
+/Sharpcraft.Logging/bin
+/Sharpcraft.Logging/obj
+/Sharpcraft.Networking/obj
+/Sharpcraft.Networking/bin
