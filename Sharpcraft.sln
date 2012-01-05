@@ -9,12 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Steam", "Sharpcr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EFCE1283-8A9D-4233-AC10-9C49071A67B6}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.SteamGUI", "Sharpcraft.SteamGUI\Sharpcraft.SteamGUI.csproj", "{5B58612A-455C-4A60-8B2C-196F274E7EBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Protocol", "Sharpcraft.Protocol\Sharpcraft.Protocol.csproj", "{6B60AF16-B510-4D54-BC50-CC232B6826AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Networking", "Sharpcraft.Networking\Sharpcraft.Networking.csproj", "{6B60AF16-B510-4D54-BC50-CC232B6826AE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Logging", "Sharpcraft.Logging\Sharpcraft.Logging.csproj", "{6F2B8AE1-CE58-43C1-8E5F-66537E543172}"
 EndProject
@@ -107,8 +108,8 @@ Global
 		{F386CBDF-AB1A-420C-B932-240B5FE290A0} = {5AF1004D-E333-45B5-96AB-723DC06D8058}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_UpdateFileVersion = False
-		BuildVersion_UpdateAssemblyVersion = False
 		BuildVersion_BuildVersioningStyle = None.None.Increment.TimeStamp
+		BuildVersion_UpdateAssemblyVersion = False
+		BuildVersion_UpdateFileVersion = False
 	EndGlobalSection
 EndGlobal

@@ -6,7 +6,7 @@
 
 using System;
 
-namespace Sharpcraft.Protocol
+namespace Sharpcraft.Networking
 {
 	public class Packet
 	{

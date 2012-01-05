@@ -16,10 +16,11 @@ namespace Sharpcraft.Logging
 	{
 		private static bool _loaded;
 		private const string ConfigFile = @"configs\LoggerConfig.xml";
+		private const string DebugConfigFile = @"configs\LoggerDebugConfig.xml";
 
-		public static void LoadConfig()
+		public static void LoadConfig(bool debug = false)
 		{
-			XmlConfigurator.Configure(new FileInfo(ConfigFile));
+			XmlConfigurator.Configure(new FileInfo(debug ? DebugConfigFile : ConfigFile));
 			_loaded = true;
 		}
 
