@@ -17,45 +17,55 @@ namespace Sharpcraft
 #if WINDOWS || XBOX
 	static class Program
 	{
-		private static readonly ILog Log = LoggerManager.GetLogger(typeof(Program));
+		private static ILog _log;
 
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
 		static void Main(string[] args)
 		{
-			Log.Info("!!! APPLICATION LOAD !!!");
-			Log.Info("Sharpcraft is loading...");
+#if DEVELOPMENT
+			bool debug = true;
+#else
+			bool debug = false;
+#endif
+			if (args.Length > 0)
+				if (args[0].ToLower() == "debug")
+					debug = true;
+			LoggerManager.LoadConfig(debug);
+			_log = LoggerManager.GetLogger(typeof (Program));
+			_log.Info("!!! APPLICATION LOAD !!!");
+			_log.Info("Sharpcraft is loading...");
 			try
 			{
-				Log.Debug("Creating protocol...");
+				_log.Debug("Creating protocol...");
 				var protocol = new Protocol.Protocol("localhost", 25565);
 
-				Log.Debug("Sending handshake packet.");
+				_log.Debug("Sending handshake packet.");
 				protocol.PacketHandshake("Sharpcraft");
 				protocol.GetPacket();
-				Log.Debug("Sending login request.");
+				_log.Debug("Sending login request.");
 				protocol.PacketLoginRequest(22, "Sharpcraft");
 				protocol.GetPacket();
 
 				using (var game = new Sharpcraft())
 				{
-					Log.Debug("Running game (Game.Run()).");
+					_log.Debug("Running game (Game.Run()).");
 					game.Run();
 				}
-				Log.Info("!!! APPLICATION EXIT !!!");
+				_log.Info("!!! APPLICATION EXIT !!!");
 			}
 			catch(FileNotFoundException ex)
 			{
-				Log.Fatal("Required file \"" + ex.FileName + "\" not found! Application is exiting...");
+				_log.Fatal("Required file \"" + ex.FileName + "\" not found! Application is exiting...");
 				Environment.Exit(1);
 			}
 			catch(System.Net.Sockets.SocketException ex)
 			{
-				Log.Error("Failed to connect to target server, " + ex.GetType() + " was thrown.");
-				Log.Error(ex.GetType() + ": " + ex.Message);
-				Log.Error("Stack Trace:\n" + ex.StackTrace);
-				Log.Error("Exiting...");
+				_log.Error("Failed to connect to target server, " + ex.GetType() + " was thrown.");
+				_log.Error(ex.GetType() + ": " + ex.Message);
+				_log.Error("Stack Trace:\n" + ex.StackTrace);
+				_log.Error("Exiting...");
 				Environment.Exit(1);
 			}
 #if !DEVELOPMENT
