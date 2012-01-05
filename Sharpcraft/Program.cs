@@ -20,11 +20,6 @@ namespace Sharpcraft
 	static class Program
 	{
 		private static ILog _log;
-		private static string _version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-		private static string _loggingVersion = Assembly.GetAssembly(typeof (LoggerManager)).GetName().Version.ToString();
-		private static string _protocolVersion = Assembly.GetAssembly(typeof (Networking.Protocol)).GetName().Version.ToString();
-		private static string _steamVersion = Assembly.GetAssembly(typeof (Steam.SteamManager)).GetName().Version.ToString();
-		private static string _steamGUIVersion = Assembly.GetAssembly(typeof (SteamGUI.SteamGUI)).GetName().Version.ToString();
 
 		/// <summary>
 		/// The main entry point for the application.
