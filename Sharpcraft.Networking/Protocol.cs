@@ -11,8 +11,13 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 
-namespace Sharpcraft.Protocol
+using log4net;
+
+using Sharpcraft.Logging;
+
+namespace Sharpcraft.Networking
 {
+	// NOTE: This is never used, Vijfhoek?
 	public enum EndianType
 	{
 		LittleEndian,
@@ -21,14 +26,20 @@ namespace Sharpcraft.Protocol
 
 	public class Protocol
 	{
+		private readonly ILog _log;
+
 		private readonly TcpClient _client = new TcpClient();
 		private readonly NetworkStream _stream;
 		private readonly NetworkTools _tools;
 
 		public Protocol(string server, int port)
 		{
+			_log = LoggerManager.GetLogger(this);
+			_log.Debug("Connecting to server.");
 			_client.Connect(server, port);
+			_log.Debug("Getting stream.");
 			_stream = _client.GetStream();
+			_log.Debug("Initializing tools.");
 			_tools = new NetworkTools(_stream);
 		}
 
@@ -67,15 +78,13 @@ namespace Sharpcraft.Protocol
 
 			if (packetID == 0x00) // Keep Alive
 			{
-				var packet = new PacketKeepAlive {PacketID = 0x00};
-				packet.KeepAliveID = _tools.ReadInt32();
+				var packet = new PacketKeepAlive {PacketID = 0x00, KeepAliveID = _tools.ReadInt32()};
 				pack = packet;
 			}
 			else if (packetID == 0x01) // Login Request
 			{
-				var packet = new PacketLoginRequestSC {PacketID = 0x01};
+				var packet = new PacketLoginRequestSC {PacketID = 0x01, EntityID = _tools.ReadInt32()};
 
-				packet.EntityID = _tools.ReadInt32();
 				_tools.StreamSkip(2);
 				packet.MapSeed     = _tools.ReadInt64();
 				packet.Gamemode    = _tools.ReadInt32();
@@ -88,40 +97,41 @@ namespace Sharpcraft.Protocol
 			}
 			else if (packetID == 0x02) // Handshake
 			{
-				var packet = new PacketHandshakeSC {PacketID = 0x02};
-				packet.ConnectionHash = _tools.ReadString();
+				var packet = new PacketHandshakeSC {PacketID = 0x02, ConnectionHash = _tools.ReadString()};
 				pack = packet;
 			}
 			else if (packetID == 0x03) // Chat Message
 			{
-				var packet = new PacketChatMessage {PacketID = 0x03};
-				packet.Message = _tools.ReadString();
+				var packet = new PacketChatMessage {PacketID = 0x03, Message = _tools.ReadString()};
 				pack = packet;
 			}
 			else if (packetID == 0x04) // Time Update
 			{
-				var packet = new PacketTimeUpdate {PacketID = 0x04};
-				packet.Time = _tools.ReadInt32();
+				var packet = new PacketTimeUpdate {PacketID = 0x04, Time = _tools.ReadInt32()};
 				pack = packet;
 			}
 			else if (packetID == 0x05) // Entity Equipment
 			{
-				var packet = new PacketEntityEquipment {PacketID = 0x05};
-
-				packet.EntityID = _tools.ReadInt32();
-				packet.Slot     = _tools.ReadInt16();
-				packet.ItemID   = _tools.ReadInt16();
-				packet.Damage   = _tools.ReadInt16();
+				var packet = new PacketEntityEquipment
+				{
+					PacketID = 0x05,
+					EntityID = _tools.ReadInt32(),
+					Slot = _tools.ReadInt16(),
+					ItemID = _tools.ReadInt16(),
+					Damage = _tools.ReadInt16()
+				};
 
 				pack = packet;
 			}
 			else if (packetID == 0x06) // Spawn Position
 			{
-				var packet = new PacketSpawnPosition() {PacketID = 0x06};
-
-				packet.X = _tools.ReadInt32();
-				packet.Y = _tools.ReadInt32();
-				packet.Z = _tools.ReadInt32();
+				var packet = new PacketSpawnPosition
+				{
+					PacketID = 0x06,
+					X = _tools.ReadInt32(),
+					Y = _tools.ReadInt32(),
+					Z = _tools.ReadInt32()
+				};
 
 				pack = packet;
 			}
@@ -131,16 +141,20 @@ namespace Sharpcraft.Protocol
 
 		public void SendPacket(Packet packet)
 		{
+			_log.Debug("Sending packet (ID: " + packet.PacketID + ")");
+
 			byte packetID = packet.PacketID;
 
 			if (packetID == 0x00) // Keep Alive
 			{
+				_log.Debug("Sending KeepAlive packet.");
 				var pack = (PacketKeepAlive)packet;
 				_tools.WriteByte(packetID);
 				_tools.WriteInt32(pack.KeepAliveID);
 			}
 			else if (packetID == 0x01) // Login Request (Client -> Server)
 			{
+				_log.Debug("Sending Login Request packet.");
 				var pack = (PacketLoginRequestCS)packet;
 				_tools.WriteByte(packetID);
 				_tools.WriteInt32(pack.ProtocolVersion);
@@ -154,6 +168,7 @@ namespace Sharpcraft.Protocol
 			}
 			else if (packetID == 0x02) // Handshake (Client -> Server)
 			{
+				_log.Debug("Sending Handshake packet.");
 				var pack = (PacketHandshakeCS)packet;
 				_tools.WriteByte(packetID);
 				_tools.WriteString(pack.Username);
@@ -174,6 +189,7 @@ namespace Sharpcraft.Protocol
 			}
 
 			_stream.Flush();
+			_log.Debug("Packet sent!");
 		}
 		
 		// Packet 0x00

@@ -126,9 +126,9 @@
       <Project>{6F2B8AE1-CE58-43C1-8E5F-66537E543172}</Project>
       <Name>Sharpcraft.Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sharpcraft.Protocol\Sharpcraft.Protocol.csproj">
+    <ProjectReference Include="..\Sharpcraft.Networking\Sharpcraft.Networking.csproj">
       <Project>{6B60AF16-B510-4D54-BC50-CC232B6826AE}</Project>
-      <Name>Sharpcraft.Protocol</Name>
+      <Name>Sharpcraft.Networking</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sharpcraft.SteamGUI\Sharpcraft.SteamGUI.csproj">
       <Project>{5B58612A-455C-4A60-8B2C-196F274E7EBA}</Project>

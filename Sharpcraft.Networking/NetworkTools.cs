@@ -9,11 +9,11 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-namespace Sharpcraft.Protocol
+namespace Sharpcraft.Networking
 {
 	class NetworkTools
 	{
-		private NetworkStream _stream;
+		private readonly NetworkStream _stream;
 		public NetworkTools(NetworkStream stream)
 		{
 			_stream = stream;
@@ -21,12 +21,12 @@ namespace Sharpcraft.Protocol
 
 		public string ReadString()
 		{
-			byte[] bteStringLength = { (byte)_stream.ReadByte(), (byte)_stream.ReadByte() };
+			byte[] bteStringLength = {(byte) _stream.ReadByte(), (byte) _stream.ReadByte()};
 			short stringLength = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bteStringLength, 0));
 			string str = "";
 			for (short s = 0; s < stringLength; s++)
 			{
-				byte[] bte = { (byte)_stream.ReadByte(), (byte)_stream.ReadByte() };
+				byte[] bte = {(byte) _stream.ReadByte(), (byte) _stream.ReadByte()};
 				str += Encoding.BigEndianUnicode.GetString(bte);
 			}
 
@@ -35,7 +35,7 @@ namespace Sharpcraft.Protocol
 
 		public void WriteString(string s)
 		{
-			_stream.Write(BitConverter.GetBytes(IPAddress.HostToNetworkOrder((short)s.Length)), 0, 2);
+			_stream.Write(BitConverter.GetBytes(IPAddress.HostToNetworkOrder((short) s.Length)), 0, 2);
 			byte[] bteUsername = Encoding.BigEndianUnicode.GetBytes(s);
 			_stream.Write(bteUsername, 0, bteUsername.Length);
 		}
