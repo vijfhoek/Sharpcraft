@@ -11,6 +11,10 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 
+using log4net;
+
+using Sharpcraft.Logging;
+
 namespace Sharpcraft.Protocol
 {
 	public enum EndianType
@@ -21,14 +25,20 @@ namespace Sharpcraft.Protocol
 
 	public class Protocol
 	{
+		private readonly ILog _log;
+
 		private readonly TcpClient _client = new TcpClient();
 		private readonly NetworkStream _stream;
 		private readonly NetworkTools _tools;
 
 		public Protocol(string server, int port)
 		{
+			_log = LoggerManager.GetLogger(this);
+			_log.Debug("Connecting to server.");
 			_client.Connect(server, port);
+			_log.Debug("Getting stream.");
 			_stream = _client.GetStream();
+			_log.Debug("Initializing tools.");
 			_tools = new NetworkTools(_stream);
 		}
 
@@ -131,16 +141,20 @@ namespace Sharpcraft.Protocol
 
 		public void SendPacket(Packet packet)
 		{
+			_log.Debug("Sending packet (ID: " + packet.PacketID + ")");
+
 			byte packetID = packet.PacketID;
 
 			if (packetID == 0x00)
 			{
+				_log.Debug("Sending KeepAlive packet.");
 				var pack = (PacketKeepAlive)packet;
 				_tools.WriteByte(packetID);
 				_tools.WriteInt32(pack.KeepAliveID);
 			}
 			else if (packetID == 0x01)
 			{
+				_log.Debug("Sending Login Request packet.");
 				var pack = (PacketLoginRequestCS)packet;
 				_tools.WriteByte(packetID);
 				_tools.WriteInt32(pack.ProtocolVersion);
@@ -154,10 +168,11 @@ namespace Sharpcraft.Protocol
 			}
 			else if (packetID == 0x02)
 			{
-
+				_log.Debug("Sending Handshake packet.");
 			}
 
 			_stream.Flush();
+			_log.Debug("Packet sent!");
 		}
 		
 		// Packet 0x00
