@@ -41,15 +41,14 @@ namespace Sharpcraft
 			foreach (var file in Directory.GetFiles(Directory.GetCurrentDirectory()))
 			{
 				string ext = Path.GetExtension(file);
-				if (!string.IsNullOrEmpty(ext))
+				if (string.IsNullOrEmpty(ext))
+					continue;
+				ext = ext.Substring(1);
+				if (ext == "dll" || ext == "exe")
 				{
-					ext = ext.Substring(1);
-					if (ext == "dll" || ext == "exe")
-					{
-						string version = AssemblyName.GetAssemblyName(file).Version.ToString();
-						string name = Path.GetFileNameWithoutExtension(file);
-						_log.Info(name + " v" + version);
-					}
+					string version = AssemblyName.GetAssemblyName(file).Version.ToString();
+					string name = Path.GetFileNameWithoutExtension(file);
+					_log.Info(name + " v" + version);
 				}
 			}
 			_log.Info("Components detected!");
