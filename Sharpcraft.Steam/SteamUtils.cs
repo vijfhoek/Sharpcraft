@@ -26,7 +26,7 @@ namespace Sharpcraft.Steam
 		}
 
 		/// <summary>
-		/// Convert a <see cref="EPersonaState" /> to a string.
+		/// Convert an <see cref="EPersonaState" /> to a string.
 		/// </summary>
 		/// <param name="state">The state to convert.</param>
 		/// <param name="pretty">If <c>true</c>, capitalize the first letter of the string.</param>
