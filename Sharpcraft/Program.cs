@@ -20,12 +20,15 @@ namespace Sharpcraft
 	static class Program
 	{
 		private static ILog _log;
+		private const string ExceptionFile = @"logs\exception.log";
 
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
 		static void Main(string[] args)
 		{
+			bool cleanExit = true;
+
 #if DEVELOPMENT
 			bool debug = true;
 #else
@@ -70,12 +73,11 @@ namespace Sharpcraft
 					_log.Debug("Running game (Game.Run()).");
 					game.Run();
 				}
-				_log.Info("!!! APPLICATION EXIT !!!");
 			}
 			catch(FileNotFoundException ex)
 			{
 				_log.Fatal("Required file \"" + ex.FileName + "\" not found! Application is exiting...");
-				Environment.Exit(1);
+				cleanExit = false;
 			}
 			catch(System.Net.Sockets.SocketException ex)
 			{
@@ -83,19 +85,42 @@ namespace Sharpcraft
 				_log.Error(ex.GetType() + ": " + ex.Message);
 				_log.Error("Stack Trace:\n" + ex.StackTrace);
 				_log.Error("Exiting...");
-				Environment.Exit(1);
+				cleanExit = false;
 			}
-#if !DEVELOPMENT
 			catch(Exception ex)
 			{
-				Log.Fatal("Unknown exception " + ex.GetType() + " thrown. Details below:");
-				Log.Fatal("Exception " + ex.GetType());
-				Log.Fatal("Message: " + ex.Message);
-				Log.Fatal("Stack Trace:\n" + ex.StackTrace);
-				Log.Fatal("Cannot continue application execution, exiting...");
-				Environment.Exit(1);
+				_log.Fatal("Unknown exception " + ex.GetType() + " thrown. Writing exception info to logs\\exception.log");
+				WriteExceptionToFile(ex);
+				cleanExit = false;
+				throw;
+				//Environment.Exit(1);
 			}
-#endif
+			finally
+			{
+				_log.Info("Clean Exit: " + (cleanExit ? "TRUE" : "FALSE"));
+				_log.Info("!!! APPLICATION EXIT !!!"); 
+			}
+		}
+
+		private static void WriteExceptionToFile(Exception ex)
+		{
+			try
+			{
+				var writer = new StreamWriter(ExceptionFile, false);
+				string date = DateTime.Now.ToString();
+				writer.WriteLine("Fatal exception occurred at " + date);
+				writer.WriteLine("The exception thrown was " + ex.GetType());
+				writer.WriteLine("ToString() => " + ex);
+				writer.WriteLine("Exception message: " + ex.Message);
+				writer.WriteLine("Stack Trace:\n" + ex.StackTrace);
+				writer.WriteLine("\nDone writing exception info.");
+				writer.Flush();
+				writer.Close();
+			}
+			catch(IOException)
+			{
+				_log.Error("Unable to write exception info to file.");
+			}
 		}
 	}
 #endif
