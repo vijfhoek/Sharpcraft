@@ -4,11 +4,12 @@
  * All Rights Reserved.
  */
 
-#define DEVELOPMENT
-
 using System;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
+
+using Microsoft.Win32.SafeHandles;
 
 using log4net;
 
@@ -19,6 +20,20 @@ namespace Sharpcraft
 #if WINDOWS || XBOX
 	static class Program
 	{
+		[DllImport("kernel32", EntryPoint = "GetStdHandle", SetLastError = true, CharSet = CharSet.Auto,
+			CallingConvention = CallingConvention.StdCall)]
+		private static extern IntPtr GetStdHandle(int nStdHandle);
+
+		[DllImport("kernel32", EntryPoint = "AllocConsole", SetLastError = true, CharSet = CharSet.Auto,
+			CallingConvention = CallingConvention.StdCall)]
+		private static extern bool AllocConsole();
+
+		[DllImport("kernel32")]
+		private static extern int FreeConsole();
+
+		private const int STD_OUTPUT_HANDLE = -11;
+		private const int CODE_PAGE = 437;
+
 		private static ILog _log;
 		private const string ExceptionFile = @"logs\exception.log";
 
@@ -29,7 +44,7 @@ namespace Sharpcraft
 		{
 			bool cleanExit = true;
 
-#if DEVELOPMENT
+#if DEBUG
 			bool debug = true;
 #else
 			bool debug = false;
@@ -37,6 +52,17 @@ namespace Sharpcraft
 			if (args.Length > 0)
 				if (args[0].ToLower() == "debug")
 					debug = true;
+
+			if (debug && !System.Diagnostics.Debugger.IsAttached)
+			{
+				AllocConsole();
+				IntPtr stdHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+				var safeFileHandle = new SafeFileHandle(stdHandle, true);
+				var fileStream = new FileStream(safeFileHandle, FileAccess.Write);
+				var encoding = System.Text.Encoding.GetEncoding(CODE_PAGE);
+				var stdOut = new StreamWriter(fileStream, encoding) {AutoFlush = true};
+				Console.SetOut(stdOut);
+			}
 			LoggerManager.LoadConfig(debug);
 			_log = LoggerManager.GetLogger(typeof (Program));
 			_log.Info("!!! APPLICATION LOAD !!!");
@@ -99,7 +125,8 @@ namespace Sharpcraft
 			finally
 			{
 				_log.Info("Clean Exit: " + (cleanExit ? "TRUE" : "FALSE"));
-				_log.Info("!!! APPLICATION EXIT !!!"); 
+				_log.Info("!!! APPLICATION EXIT !!!");
+				FreeConsole();
 			}
 		}
 

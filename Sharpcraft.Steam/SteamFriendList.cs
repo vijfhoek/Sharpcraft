@@ -42,7 +42,7 @@ namespace Sharpcraft.Steam
 
 		private void Update(object state)
 		{
-			_log.Info("Updating Steam friends...");
+			_log.Debug("Updating Steam friends...");
 			LoadFriends();
 			_log.Info("Steam friends updated!");
 			FriendsUpdate(new SteamFriendsEventArgs(SteamManager.GetName(), SteamManager.GetStatus(true), _list, _list.Count, GetFriendCount(true)));
@@ -57,7 +57,7 @@ namespace Sharpcraft.Steam
 
 		private void LoadFriends()
 		{
-			_log.Info("Loading Steam friends...");
+			_log.Debug("Loading Steam friends...");
 			_list.Clear();
 			int num = SteamManager.Friends.GetFriendCount((int) EFriendFlags.k_EFriendFlagImmediate);
 			for (int i = 0; i < num; i++)
