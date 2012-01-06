@@ -28,7 +28,8 @@ namespace Sharpcraft
 			CallingConvention = CallingConvention.StdCall)]
 		private static extern bool AllocConsole();
 
-		[DllImport("kernel32")]
+		[DllImport("kernel32", EntryPoint = "FreeConsole", SetLastError = true, CharSet = CharSet.Auto,
+			CallingConvention = CallingConvention.StdCall)]
 		private static extern int FreeConsole();
 
 		private const int STD_OUTPUT_HANDLE = -11;
