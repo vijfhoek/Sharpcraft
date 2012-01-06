@@ -92,8 +92,9 @@ namespace Sharpcraft
 				_log.Fatal("Unknown exception " + ex.GetType() + " thrown. Writing exception info to logs\\exception.log");
 				WriteExceptionToFile(ex);
 				cleanExit = false;
+#if DEVELOPMENT
 				throw;
-				//Environment.Exit(1);
+#endif
 			}
 			finally
 			{
