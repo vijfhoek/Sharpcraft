@@ -102,5 +102,10 @@ namespace Sharpcraft.SteamGUI
 			if (!_steamClosed)
 				SteamManager.FriendList.OnFriendsUpdate -= UpdateData;
 		}
+
+		private void SteamGuiFormClosed(object sender, FormClosedEventArgs e)
+		{
+			_log.Info("SteamGUI has closed: " + e.CloseReason);
+		}
 	}
 }
