@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "log4net", "log4net", "{F386
 		lib\log4net\log4net_license.txt = lib\log4net\log4net_license.txt
 	EndProjectSection
 EndProject
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Sharpcraft.Documentation", "Sharpcraft.Documentation\Sharpcraft.Documentation.shfbproj", "{D4AC8811-A6DB-4722-9B82-9534FB3D9F40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,16 @@ Global
 		{6F2B8AE1-CE58-43C1-8E5F-66537E543172}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6F2B8AE1-CE58-43C1-8E5F-66537E543172}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6F2B8AE1-CE58-43C1-8E5F-66537E543172}.Release|x86.ActiveCfg = Release|Any CPU
+		{D4AC8811-A6DB-4722-9B82-9534FB3D9F40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4AC8811-A6DB-4722-9B82-9534FB3D9F40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4AC8811-A6DB-4722-9B82-9534FB3D9F40}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D4AC8811-A6DB-4722-9B82-9534FB3D9F40}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D4AC8811-A6DB-4722-9B82-9534FB3D9F40}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D4AC8811-A6DB-4722-9B82-9534FB3D9F40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4AC8811-A6DB-4722-9B82-9534FB3D9F40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4AC8811-A6DB-4722-9B82-9534FB3D9F40}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D4AC8811-A6DB-4722-9B82-9534FB3D9F40}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D4AC8811-A6DB-4722-9B82-9534FB3D9F40}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,8 +120,8 @@ Global
 		{F386CBDF-AB1A-420C-B932-240B5FE290A0} = {5AF1004D-E333-45B5-96AB-723DC06D8058}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_BuildVersioningStyle = None.None.Increment.TimeStamp
-		BuildVersion_UpdateAssemblyVersion = False
 		BuildVersion_UpdateFileVersion = False
+		BuildVersion_UpdateAssemblyVersion = False
+		BuildVersion_BuildVersioningStyle = None.None.Increment.TimeStamp
 	EndGlobalSection
 EndGlobal
