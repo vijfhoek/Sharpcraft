@@ -18,24 +18,57 @@ using Sharpcraft.Logging;
 namespace Sharpcraft
 {
 #if WINDOWS || XBOX
+	/// <summary>
+	/// Main class for Sharpcraft, all initial loading is done here.
+	/// </summary>
 	static class Program
 	{
+		/// <summary>
+		/// Retrieves a handle to the specified standard device (standard input, standard output, or standard error).
+		/// </summary>
+		/// <param name="nStdHandle">The standard device.</param>
+		/// <returns>If the function succeeds, the return value is a handle to the specified device, or a redirected handle set by a previous call to SetStdHandle.
+		/// If the function fails, the return value is INVALID_HANDLE_VALUE.</returns>
+		/// <remarks>Documentation from MSDN.</remarks>
 		[DllImport("kernel32", EntryPoint = "GetStdHandle", SetLastError = true, CharSet = CharSet.Auto,
 			CallingConvention = CallingConvention.StdCall)]
 		private static extern IntPtr GetStdHandle(int nStdHandle);
 
+		/// <summary>
+		/// Allocates a new console for the calling process.
+		/// </summary>
+		/// <returns><c>true</c> if function succeeds, <c>false</c> otherwise.</returns>
+		/// <remarks>Documentation from MSDN.</remarks>
 		[DllImport("kernel32", EntryPoint = "AllocConsole", SetLastError = true, CharSet = CharSet.Auto,
 			CallingConvention = CallingConvention.StdCall)]
 		private static extern bool AllocConsole();
 
+		/// <summary>
+		/// Detaches the calling process from its console.
+		/// </summary>
+		/// <returns>If the function succeeds, the return value is nonzero.
+		/// If the function fails, the return value is zero.</returns>
+		/// <remarks>Documentation from MSDN.</remarks>
 		[DllImport("kernel32", EntryPoint = "FreeConsole", SetLastError = true, CharSet = CharSet.Auto,
 			CallingConvention = CallingConvention.StdCall)]
 		private static extern int FreeConsole();
 
+		/// <summary>
+		/// The standard output device.
+		/// </summary>
 		private const int STD_OUTPUT_HANDLE = -11;
+		/// <summary>
+		/// Code page to use for console.
+		/// </summary>
 		private const int CODE_PAGE = 437;
 
+		/// <summary>
+		/// Log object for this class.
+		/// </summary>
 		private static ILog _log;
+		/// <summary>
+		/// File to write all unhandled exceptions to.
+		/// </summary>
 		private const string ExceptionFile = @"logs\exception.log";
 
 		/// <summary>
@@ -131,6 +164,12 @@ namespace Sharpcraft
 			}
 		}
 
+		/// <summary>
+		/// Writes exception info to file.
+		/// </summary>
+		/// <param name="ex">The exception to write.</param>
+		/// <remarks>This is generally only used for unhandled/fatal exceptions
+		/// that will cause the application to exit.</remarks>
 		private static void WriteExceptionToFile(Exception ex)
 		{
 			try

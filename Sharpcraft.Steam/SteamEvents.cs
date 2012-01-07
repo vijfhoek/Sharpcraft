@@ -54,7 +54,13 @@ namespace Sharpcraft.Steam
 		}
 	}
 
-	
+	/// <summary>
+	/// SteamClose event handler.
+	/// </summary>
 	public delegate void SteamCloseEventHandler();
+	/// <summary>
+	/// SteamFriends event handler.
+	/// </summary>
+	/// <param name="e"><see cref="SteamFriendsEventArgs" /> associated with the event.</param>
 	public delegate void SteamFriendsEventHandler(SteamFriendsEventArgs e);
 }

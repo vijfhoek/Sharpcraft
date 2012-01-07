@@ -28,15 +28,28 @@ using Sharpcraft.Logging;
 namespace Sharpcraft
 {
 	/// <summary>
-	/// This is the main type for your game
+	/// Main class of Sharpcraft, this is the game itself.
 	/// </summary>
+	/// <remarks>Most documentation in this class comes from XNA.</remarks>
 	public class Sharpcraft : Game
 	{
+		/// <summary>
+		/// Log object for this class.
+		/// </summary>
 		private readonly ILog _log;
 
+		/// <summary>
+		/// The graphics device manager.
+		/// </summary>
 		private GraphicsDeviceManager _graphics;
+		/// <summary>
+		/// Sprite batch.
+		/// </summary>
 		private SpriteBatch _spriteBatch;
 
+		/// <summary>
+		/// Initializes a new instance of Sharpcraft.
+		/// </summary>
 		public Sharpcraft()
 		{
 			_log = LoggerManager.GetLogger(this);
