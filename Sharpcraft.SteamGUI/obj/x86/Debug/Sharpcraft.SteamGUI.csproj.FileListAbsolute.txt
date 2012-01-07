@@ -1,0 +1,5 @@
+C:\Users\Vijfhoek\Documents\Visual Studio 2010\Projects\Sharpcraft\Sharpcraft.SteamGUI\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Vijfhoek\Documents\Visual Studio 2010\Projects\Sharpcraft\Sharpcraft.SteamGUI\obj\x86\Debug\Sharpcraft.SteamGUI.Properties.Resources.resources
+C:\Users\Vijfhoek\Documents\Visual Studio 2010\Projects\Sharpcraft\Sharpcraft.SteamGUI\obj\x86\Debug\Sharpcraft.SteamGUI.SteamGUI.resources
+C:\Users\Vijfhoek\Documents\Visual Studio 2010\Projects\Sharpcraft\Sharpcraft.SteamGUI\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Vijfhoek\Documents\Visual Studio 2010\Projects\Sharpcraft\Sharpcraft.SteamGUI\obj\x86\Debug\GenerateResource.write.1.tlog
