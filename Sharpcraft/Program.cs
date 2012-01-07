@@ -13,7 +13,6 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 
-//using Sharpcraft.Forms;
 using Sharpcraft.Logging;
 
 namespace Sharpcraft
