@@ -89,16 +89,6 @@ namespace Sharpcraft
 			{
 				_log.Info("Steam not installed or not running, Steam functionality will NOT be available.");
 			}
-
-			_log.Debug("Creating protocol...");
-			var protocol = new Protocol("localhost", 25565);
-
-			_log.Debug("Sending handshake packet.");
-			protocol.PacketHandshake("Sharpcraft");
-			protocol.GetPacket();
-			_log.Debug("Sending login request.");
-			protocol.PacketLoginRequest(22, "Sharpcraft");
-			protocol.GetPacket();
 		}
 
 		/// <summary>
