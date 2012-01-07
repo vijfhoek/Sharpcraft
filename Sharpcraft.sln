@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Forms", "Sharpcraft.SteamGUI\Sharpcraft.Forms.csproj", "{5B58612A-455C-4A60-8B2C-196F274E7EBA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Forms", "Sharpcraft.Forms\Sharpcraft.Forms.csproj", "{5B58612A-455C-4A60-8B2C-196F274E7EBA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Networking", "Sharpcraft.Networking\Sharpcraft.Networking.csproj", "{6B60AF16-B510-4D54-BC50-CC232B6826AE}"
 EndProject
