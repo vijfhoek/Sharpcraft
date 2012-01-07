@@ -46,14 +46,21 @@ namespace Sharpcraft
 		/// </summary>
 		private SpriteBatch _spriteBatch;
 
+		private bool _gameMenuOpen;
+		private bool _inServer = true;
+
 		/// <summary>
 		/// Initializes a new instance of Sharpcraft.
 		/// </summary>
 		public Sharpcraft()
 		{
 			_log = LogManager.GetLogger(this);
+			
 			_log.Debug("Initializing graphics device.");
 			_graphics = new GraphicsDeviceManager(this);
+			_graphics.PreferredBackBufferWidth = 1280;
+			_graphics.PreferredBackBufferHeight = 720;
+
 			_log.Debug("Setting content directory.");
 			Content.RootDirectory = "content";
 		}
@@ -127,8 +134,9 @@ namespace Sharpcraft
 			// Allows the game to exit
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
 				Exit();
-			if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-				Exit();
+
+			if (Keyboard.GetState().IsKeyDown(Keys.Escape) && !_gameMenuOpen && _inServer)
+				_gameMenuOpen = true;
 
 			// TODO: Add your update logic here
 
