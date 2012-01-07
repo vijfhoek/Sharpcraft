@@ -4,7 +4,7 @@
  * All Rights Reserved.
  */
 
-namespace Sharpcraft.SteamGUI
+namespace Sharpcraft.Forms
 {
 	partial class SteamGUI
 	{
@@ -204,6 +204,7 @@ namespace Sharpcraft.SteamGUI
 			this.ShowIcon = false;
 			this.Text = "Steam GUI";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SteamGuiFormClosing);
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SteamGuiFormClosed);
 			this.userDataLayoutPanel.ResumeLayout(false);
 			this.userDataLayoutPanel.PerformLayout();
 			this.ResumeLayout(false);

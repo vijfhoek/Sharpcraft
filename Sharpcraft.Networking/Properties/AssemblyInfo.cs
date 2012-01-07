@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Sharpcraft.SteamGUI")]
+[assembly: AssemblyTitle("Sharpcraft.Protocol")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Sharpcraft.SteamGUI")]
+[assembly: AssemblyProduct("Sharpcraft.Protocol")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("bac3c5d3-15cd-40fe-b5d7-9859f382a59e")]
+[assembly: Guid("3d696562-c562-4fd1-8753-733cf6cf5d29")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.1.5.1841")]
-[assembly: AssemblyFileVersion("0.1.5.1841")]
+[assembly: AssemblyVersion("0.1.11.1236")]
+[assembly: AssemblyFileVersion("0.1.11.1236")]
