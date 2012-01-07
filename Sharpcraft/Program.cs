@@ -12,6 +12,7 @@ using System.IO;
 using log4net;
 
 using Sharpcraft.Logging;
+using Sharpcraft.Protocol;
 
 namespace Sharpcraft
 {
@@ -33,10 +34,17 @@ namespace Sharpcraft
 				var protocol = new Protocol.Protocol("localhost", 25565);
 
 				_log.Debug("Sending handshake packet.");
-				protocol.PacketHandshake("Sharpcraft");
+				var packetHandshakeCS = new PacketHandshakeCS();
+				packetHandshakeCS.Username = "Sharpcraft";
+				protocol.SendPacket(packetHandshakeCS);
+
 				protocol.GetPacket();
+
 				_log.Debug("Sending login request.");
-				protocol.PacketLoginRequest(22, "Sharpcraft");
+				var packetLoginRequestCS = new PacketLoginRequestCS();
+				packetLoginRequestCS.ProtocolVersion = 22;
+				packetLoginRequestCS.Username = "Sharpcraft";
+
 				protocol.GetPacket();
 
 				using (var game = new Sharpcraft())
