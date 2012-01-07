@@ -1,4 +1,4 @@
-﻿namespace Sharpcraft.Forms
+﻿namespace Sharpcraft
 {
 	partial class Launcher
 	{
@@ -46,7 +46,7 @@
 			// 
 			// InterfacePanel
 			// 
-			this.InterfacePanel.BackColor = System.Drawing.Color.Transparent;
+			this.InterfacePanel.BackColor = System.Drawing.Color.FromArgb(155, System.Drawing.Color.White);
 			this.InterfacePanel.Controls.Add(this.NewsPanel);
 			this.InterfacePanel.Controls.Add(this.LoginPanel);
 			this.InterfacePanel.Dock = System.Windows.Forms.DockStyle.Right;

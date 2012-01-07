@@ -13,7 +13,7 @@ using Microsoft.Win32.SafeHandles;
 
 using log4net;
 
-using Sharpcraft.Forms;
+//using Sharpcraft.Forms;
 using Sharpcraft.Logging;
 
 namespace Sharpcraft
@@ -71,6 +71,9 @@ namespace Sharpcraft
 		/// File to write all unhandled exceptions to.
 		/// </summary>
 		private const string ExceptionFile = @"logs\exception.log";
+
+		private static Launcher _launcher;
+		private static Sharpcraft _game;
 
 		/// <summary>
 		/// The main entry point for the application.
@@ -134,8 +137,9 @@ namespace Sharpcraft
 				Application.SetCompatibleTextRenderingDefault(false);
 
 				_log.Debug("Running game (Game.Run()).");
-				//new Sharpcraft().Run();
-				Application.Run(new Launcher());
+				_game = new Sharpcraft();
+				_launcher = new Launcher();
+				Application.Run(_launcher);
 			}
 			catch(FileNotFoundException ex)
 			{

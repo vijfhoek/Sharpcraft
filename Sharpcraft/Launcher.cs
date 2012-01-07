@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Sharpcraft.Forms
+namespace Sharpcraft
 {
 	public partial class Launcher : Form
 	{
@@ -12,7 +12,6 @@ namespace Sharpcraft.Forms
 		public Launcher()
 		{
 			InitializeComponent();
-			InterfacePanel.BackColor = Color.FromArgb(155, Color.White);
 			PassBox.PasswordChar = (char) 0x25CF;
 			UpdateForm();
 		}

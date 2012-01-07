@@ -42,6 +42,7 @@
       <DocumentationSource sourceFile="..\Sharpcraft.Logging\Sharpcraft.Logging.csproj" />
       <DocumentationSource sourceFile="..\Sharpcraft.Networking\Sharpcraft.Networking.csproj" />
       <DocumentationSource sourceFile="..\Sharpcraft.Steam\Sharpcraft.Steam.csproj" />
+      <DocumentationSource sourceFile="..\Sharpcraft.Forms\Sharpcraft.Forms.csproj" />
     </DocumentationSources>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="False" xmlns="" />
