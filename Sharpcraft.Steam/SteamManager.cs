@@ -34,6 +34,9 @@ namespace Sharpcraft.Steam
 		/// </summary>
 		public static bool SteamLoaded { get; private set; }
 
+		/// <summary>
+		/// Whether or not the <see cref="SteamClose" /> event has been sent.
+		/// </summary>
 		private static bool _steamCloseSent;
 
 		/// <summary>

@@ -63,6 +63,9 @@ namespace Sharpcraft
 		/// </summary>
 		private const int CODE_PAGE = 437;
 
+		/// <summary>
+		/// The application context.
+		/// </summary>
 		private static ApplicationContext _context;
 
 		/// <summary>
@@ -74,6 +77,9 @@ namespace Sharpcraft
 		/// </summary>
 		private const string ExceptionFile = @"logs\exception.log";
 
+		/// <summary>
+		/// The game launcher.
+		/// </summary>
 		private static Launcher _launcher;
 
 		/// <summary>
@@ -166,6 +172,9 @@ namespace Sharpcraft
 			}
 		}
 
+		/// <summary>
+		/// Quits the application.
+		/// </summary>
 		public static void Quit()
 		{
 			_context.ExitThread();
