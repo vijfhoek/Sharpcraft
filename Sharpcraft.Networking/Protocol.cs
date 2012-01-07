@@ -124,7 +124,7 @@ namespace Sharpcraft.Networking
 			}
 			else if (packetID == 0x06) // Spawn Position
 			{
-				var packet = new PacketSpawnPosition
+				var packet = new SpawnPositionPacket
 				{
 					PacketID = 0x06,
 					X = _tools.ReadInt32(),
@@ -147,14 +147,14 @@ namespace Sharpcraft.Networking
 			if (packetID == 0x00) // Keep Alive
 			{
 				_log.Debug("Sending KeepAlive packet.");
-				var pack = (PacketKeepAlive)packet;
+				var pack = (KeepAlivePacket)packet;
 				_tools.WriteByte(packetID);
 				_tools.WriteInt32(pack.KeepAliveID);
 			}
 			else if (packetID == 0x01) // Login Request (Client -> Server)
 			{
 				_log.Debug("Sending Login Request packet.");
-				var pack = (PacketLoginRequestCS)packet;
+				var pack = (LoginRequestPacketCS)packet;
 				_tools.WriteByte(packetID);
 				_tools.WriteInt32(pack.ProtocolVersion);
 				_tools.WriteString(pack.Username);
@@ -168,19 +168,19 @@ namespace Sharpcraft.Networking
 			else if (packetID == 0x02) // Handshake (Client -> Server)
 			{
 				_log.Debug("Sending Handshake packet.");
-				var pack = (PacketHandshakeCS)packet;
+				var pack = (HandshakePacketCS)packet;
 				_tools.WriteByte(packetID);
 				_tools.WriteString(pack.Username);
 			}
 			else if (packetID == 0x03) // Chat Message
 			{
-				var pack = (PacketChatMessage)packet;
+				var pack = (ChatMessagePacket)packet;
 				_tools.WriteByte(packetID);
 				_tools.WriteString(pack.Message);
 			}
 			else if (packetID == 0x07) // Use Entity
 			{
-				var pack = (PacketUseEntity)packet;
+				var pack = (UseEntityPacket)packet;
 				_tools.WriteByte(packetID);
 				_tools.WriteInt32(pack.AttackerID);
 				_tools.WriteInt32(pack.TargetID);
@@ -189,59 +189,6 @@ namespace Sharpcraft.Networking
 
 			_stream.Flush();
 			_log.Debug("Packet sent!");
-		}
-
-		// Packet 0x00
-		public void PacketKeepAlive(Int32 id)
-		{
-			_tools.WriteByte(0x00);			// Packet ID
-			_tools.WriteInt32(id);
-		}
-
-		// Packet 0x01
-		public void PacketLoginRequest(Int32 version, string username)
-		{
-			_tools.WriteByte(0x01);			// Packet ID
-			_tools.WriteInt32(version);		// Protocol version (22 for 1.0.0)
-			_tools.WriteString(username);	// Username
-			_tools.WriteInt64(0);			// Not Used
-			_tools.WriteInt32(0);			// Not Used
-			_tools.WriteByte(0);			// Not Used
-			_tools.WriteByte(0);			// Not Used
-			_tools.WriteByte(0);			// Not Used
-			_tools.WriteByte(0);			// Not Used
-
-			_stream.Flush();
-		}
-
-		// Packet 0x02
-		public void PacketHandshake(string username)
-		{
-			_tools.WriteByte(0x02);			// Packet ID
-			_tools.WriteString(username);	// Username
-
-			_stream.Flush();
-		}
-
-		// Packet 0x03
-		public void PacketChatMessage(string message)
-		{
-			_tools.WriteByte(0x03);			// Packet ID
-			_tools.WriteString(message);	// Message
-
-			_stream.Flush();
-		}
-
-		// Packet 0x04
-		public void PacketEntityEquipment(Int32 entityID, Int16 slot, Int16 itemID, Int16 damage)
-		{
-			_tools.WriteByte(0x04);			// Packet ID
-			_tools.WriteInt32(entityID);	// Entity ID
-			_tools.WriteInt16(slot);		// Slot
-			_tools.WriteInt16(itemID);		// Item ID
-			_tools.WriteInt16(damage);		// Damage
-
-			_stream.Flush();
 		}
 	}
 }
