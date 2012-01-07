@@ -15,7 +15,6 @@ using Microsoft.Win32.SafeHandles;
 
 //using Sharpcraft.Forms;
 using Sharpcraft.Logging;
-using Sharpcraft.Protocol;
 
 namespace Sharpcraft
 {
@@ -105,41 +104,20 @@ namespace Sharpcraft
 				var safeFileHandle = new SafeFileHandle(stdHandle, true);
 				var fileStream = new FileStream(safeFileHandle, FileAccess.Write);
 				var encoding = System.Text.Encoding.GetEncoding(CODE_PAGE);
-				var stdOut = new StreamWriter(fileStream, encoding) {AutoFlush = true};
+				var stdOut = new StreamWriter(fileStream, encoding) { AutoFlush = true };
 				Console.SetOut(stdOut);
 			}
 			LogManager.LoadConfig(debug);
-			_log = LogManager.GetLogger(typeof (Program));
+			_log = LogManager.GetLogger(typeof(Program));
 			_log.Info("!!! APPLICATION LOAD !!!");
 			_log.Info("Detecting components...");
 			foreach (var file in Directory.GetFiles(Directory.GetCurrentDirectory()))
 			{
-<<<<<<< HEAD
-				_log.Debug("Creating protocol...");
-				var protocol = new Protocol.Protocol("localhost", 25565);
-
-				_log.Debug("Sending handshake packet.");
-				var packetHandshakeCS = new PacketHandshakeCS();
-				packetHandshakeCS.Username = "Sharpcraft";
-				protocol.SendPacket(packetHandshakeCS);
-
-				protocol.GetPacket();
-
-				_log.Debug("Sending login request.");
-				var packetLoginRequestCS = new PacketLoginRequestCS();
-				packetLoginRequestCS.ProtocolVersion = 22;
-				packetLoginRequestCS.Username = "Sharpcraft";
-
-				protocol.GetPacket();
-
-				using (var game = new Sharpcraft())
-=======
 				string ext = Path.GetExtension(file);
 				if (string.IsNullOrEmpty(ext))
 					continue;
 				ext = ext.Substring(1);
 				if (ext == "dll" || ext == "exe")
->>>>>>> 0931227a66c4afb8254f3d61cf45ceff65f523c2
 				{
 					string version = AssemblyName.GetAssemblyName(file).Version.ToString();
 					string name = Path.GetFileNameWithoutExtension(file);
@@ -163,11 +141,11 @@ namespace Sharpcraft
 				_log.Info("Launcher has returned execution to main thread.");
 #endif
 			}
-			catch(FileNotFoundException ex)
+			catch (FileNotFoundException ex)
 			{
 				_log.Fatal("Required file \"" + ex.FileName + "\" not found! Application is exiting...");
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				_log.Fatal("Unknown exception " + ex.GetType() + " thrown. Writing exception info to logs\\exception.log");
 				WriteExceptionToFile(ex);
@@ -223,7 +201,7 @@ namespace Sharpcraft
 				writer.Flush();
 				writer.Close();
 			}
-			catch(IOException)
+			catch (IOException)
 			{
 				_log.Error("Unable to write exception info to file.");
 			}
