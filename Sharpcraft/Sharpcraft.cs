@@ -24,6 +24,7 @@ using log4net;
 using Sharpcraft.Steam;
 using Sharpcraft.Forms;
 using Sharpcraft.Logging;
+using Sharpcraft.Networking;
 
 namespace Sharpcraft
 {
@@ -68,6 +69,7 @@ namespace Sharpcraft
 		protected override void Initialize()
 		{
 			_log.Debug("Initialize();");
+			_log.Info("Sharpcraft is initializing!");
 			// TODO: Add your initialization logic here
 
 			base.Initialize();
@@ -89,6 +91,16 @@ namespace Sharpcraft
 			{
 				_log.Info("Steam not installed or not running, Steam functionality will NOT be available.");
 			}
+
+			_log.Debug("Creating protocol...");
+			var protocol = new Protocol("localhost", 25565);
+
+			_log.Debug("Sending handshake packet.");
+			protocol.PacketHandshake("Sharpcraft");
+			protocol.GetPacket();
+			_log.Debug("Sending login request.");
+			protocol.PacketLoginRequest(22, "Sharpcraft");
+			protocol.GetPacket();
 		}
 
 		/// <summary>
@@ -98,6 +110,7 @@ namespace Sharpcraft
 		protected override void LoadContent()
 		{
 			_log.Debug("LoadContent();");
+			_log.Info("!!! GAME LOAD !!!");
 			// Create a new SpriteBatch, which can be used to draw textures.
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -110,7 +123,7 @@ namespace Sharpcraft
 		/// </summary>
 		protected override void UnloadContent()
 		{
-			_log.Info("!!! APPLICATION UNLOAD !!!");
+			_log.Info("!!! GAME UNLOAD !!!");
 			_log.Debug("UnloadContent();");
 			// TODO: Unload any non ContentManager content here
 			SteamManager.Close();

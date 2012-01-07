@@ -29,12 +29,12 @@ namespace Sharpcraft.Steam
 		/// <summary>
 		/// Timer used to update the friend list.
 		/// </summary>
-		private readonly Timer _updateTimer;
+		private Timer _updateTimer;
 
 		/// <summary>
 		/// List containing all the user's friends.
 		/// </summary>
-		private readonly List<SteamFriend> _list;
+		private List<SteamFriend> _list;
 
 		/// <summary>
 		/// Initialize a new <c>SteamFriendList</c>.
@@ -81,7 +81,9 @@ namespace Sharpcraft.Steam
 		{
 			_log.Info("SteamClose event detected, disposing SteamFriendList components...");
 			_updateTimer.Dispose();
+			_updateTimer = null;
 			_list.Clear();
+			_list = null;
 		}
 
 		/// <summary>

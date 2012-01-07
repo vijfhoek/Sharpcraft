@@ -4,6 +4,8 @@
  * All Rights Reserved.
  */
 
+//#define SC_DIRECT
+
 using System;
 using System.IO;
 using System.Reflection;
@@ -63,6 +65,8 @@ namespace Sharpcraft
 		/// </summary>
 		private const int CODE_PAGE = 437;
 
+		private static ApplicationContext _context;
+
 		/// <summary>
 		/// Log object for this class.
 		/// </summary>
@@ -73,7 +77,6 @@ namespace Sharpcraft
 		private const string ExceptionFile = @"logs\exception.log";
 
 		private static Launcher _launcher;
-		private static Sharpcraft _game;
 
 		/// <summary>
 		/// The main entry point for the application.
@@ -81,8 +84,6 @@ namespace Sharpcraft
 		/// <param name="args">Command Line Arguments.</param>
 		static void Main(string[] args)
 		{
-			bool cleanExit = true;
-
 #if DEBUG
 			bool debug = true;
 #else
@@ -123,52 +124,53 @@ namespace Sharpcraft
 			_log.Info("Sharpcraft is loading...");
 			try
 			{
-				_log.Debug("Creating protocol...");
-				//var protocol = new Networking.Protocol("localhost", 25565);
-
-				_log.Debug("Sending handshake packet.");
-				//protocol.PacketHandshake("Sharpcraft");
-				//protocol.GetPacket();
-				_log.Debug("Sending login request.");
-				//protocol.PacketLoginRequest(22, "Sharpcraft");
-				//protocol.GetPacket();
-
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
-
-				_log.Debug("Running game (Game.Run()).");
-				_game = new Sharpcraft();
+#if SC_DIRECT
+				new Sharpcraft().Run();
+#else
+				_log.Debug("Starting launcher...");
 				_launcher = new Launcher();
-				Application.Run(_launcher);
+				_launcher.Show();
+				_context = new ApplicationContext(_launcher);
+				Application.Run(_context);
+				_log.Info("Launcher has returned execution to main thread.");
+#endif
 			}
 			catch(FileNotFoundException ex)
 			{
 				_log.Fatal("Required file \"" + ex.FileName + "\" not found! Application is exiting...");
-				cleanExit = false;
-			}
-			catch(System.Net.Sockets.SocketException ex)
-			{
-				_log.Error("Failed to connect to target server, " + ex.GetType() + " was thrown.");
-				_log.Error(ex.GetType() + ": " + ex.Message);
-				_log.Error("Stack Trace:\n" + ex.StackTrace);
-				_log.Error("Exiting...");
-				cleanExit = false;
 			}
 			catch(Exception ex)
 			{
 				_log.Fatal("Unknown exception " + ex.GetType() + " thrown. Writing exception info to logs\\exception.log");
 				WriteExceptionToFile(ex);
-				cleanExit = false;
 #if DEBUG
 				throw;
 #endif
 			}
 			finally
 			{
-				_log.Info("Clean Exit: " + (cleanExit ? "TRUE" : "FALSE"));
+				if (_launcher != null)
+				{
+					_log.Debug("Closing launcher.");
+					_launcher.Close();
+					_launcher.Dispose();
+					_launcher = null;
+					_log.Info("Launcher closed.");
+				}
+				if (debug)
+				{
+					_log.Debug("Closing debug console.");
+					FreeConsole();
+				}
 				_log.Info("!!! APPLICATION EXIT !!!");
-				FreeConsole();
 			}
+		}
+
+		public static void Quit()
+		{
+			_context.ExitThread();
 		}
 
 		/// <summary>

@@ -36,6 +36,8 @@ namespace Sharpcraft.Steam
 		/// </summary>
 		public static bool SteamLoaded { get; private set; }
 
+		private static bool _steamCloseSent;
+
 		/// <summary>
 		/// The interface for the Steam client.
 		/// </summary>
@@ -67,9 +69,17 @@ namespace Sharpcraft.Steam
 		/// </summary>
 		private static void SteamClose()
 		{
+			_log.Debug("SteamClose();");
+			if (_steamCloseSent)
+			{
+				_log.Debug("SteamClose event already sent, aborting.");
+				return;
+			}
+			_steamCloseSent = true;
 			_log.Debug("SteamClose event sending!");
 			if (OnSteamClose != null)
 				OnSteamClose();
+			_log.Debug("SteamClose(); ## END ##");
 		}
 
 		/// <summary>
@@ -128,14 +138,16 @@ namespace Sharpcraft.Steam
 			if (SteamLoaded)
 			{
 				_log.Info("Unloading Steam components...");
+				SteamClose();
 				CallbackDispatcher.SpawnDispatchThread(Pipe);
 				_log.Info("Waiting for dispatch thread to finish...");
-				//Thread.Sleep(5000); // Do we need this?
 				CallbackDispatcher.StopDispatchThread(Pipe);
 				_log.Info("Steam dispatch thread stopped.");
 				_log.Info("Releasing Steam user and Steam client...");
 				Client.ReleaseUser(Pipe, User);
 				Client.ReleaseSteamPipe(Pipe);
+				Friends = null;
+				Client = null;
 				_log.Info("Steam components unloaded, setting SteamLoaded to FALSE.");
 				SteamLoaded = false;
 			}

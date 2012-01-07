@@ -46,7 +46,7 @@
 			// 
 			// InterfacePanel
 			// 
-			this.InterfacePanel.BackColor = System.Drawing.Color.FromArgb(155, System.Drawing.Color.White);
+			this.InterfacePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
 			this.InterfacePanel.Controls.Add(this.NewsPanel);
 			this.InterfacePanel.Controls.Add(this.LoginPanel);
 			this.InterfacePanel.Dock = System.Windows.Forms.DockStyle.Right;
@@ -173,6 +173,7 @@
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
 			this.ClientSize = new System.Drawing.Size(794, 472);
 			this.Controls.Add(this.InterfacePanel);
+			this.DoubleBuffered = true;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
@@ -180,6 +181,7 @@
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Sharpcraft Launcher";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LauncherFormClosed);
 			this.InterfacePanel.ResumeLayout(false);
 			this.NewsPanel.ResumeLayout(false);
 			this.LoginPanel.ResumeLayout(false);
