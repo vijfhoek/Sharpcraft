@@ -4,7 +4,7 @@
  * All Rights Reserved.
  */
 
-namespace Sharpcraft.SteamGUI
+namespace Sharpcraft.Forms
 {
 	partial class SteamGUI
 	{

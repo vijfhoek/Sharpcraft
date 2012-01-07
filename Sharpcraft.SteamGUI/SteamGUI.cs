@@ -7,13 +7,11 @@
 using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
-
 using Sharpcraft.Steam;
 using Sharpcraft.Logging;
-
 using log4net;
 
-namespace Sharpcraft.SteamGUI
+namespace Sharpcraft.Forms
 {
 	/// <summary>
 	/// GUI for <see cref="Steam" /> with friend list and a send message button.

@@ -7,12 +7,13 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Windows.Forms;
 using System.Runtime.InteropServices;
-
 using Microsoft.Win32.SafeHandles;
 
 using log4net;
 
+using Sharpcraft.Forms;
 using Sharpcraft.Logging;
 
 namespace Sharpcraft
@@ -74,6 +75,7 @@ namespace Sharpcraft
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
+		/// <param name="args">Command Line Arguments.</param>
 		static void Main(string[] args)
 		{
 			bool cleanExit = true;
@@ -119,20 +121,21 @@ namespace Sharpcraft
 			try
 			{
 				_log.Debug("Creating protocol...");
-				var protocol = new Networking.Protocol("localhost", 25565);
+				//var protocol = new Networking.Protocol("localhost", 25565);
 
 				_log.Debug("Sending handshake packet.");
-				protocol.PacketHandshake("Sharpcraft");
-				protocol.GetPacket();
+				//protocol.PacketHandshake("Sharpcraft");
+				//protocol.GetPacket();
 				_log.Debug("Sending login request.");
-				protocol.PacketLoginRequest(22, "Sharpcraft");
-				protocol.GetPacket();
+				//protocol.PacketLoginRequest(22, "Sharpcraft");
+				//protocol.GetPacket();
 
-				using (var game = new Sharpcraft())
-				{
-					_log.Debug("Running game (Game.Run()).");
-					game.Run();
-				}
+				Application.EnableVisualStyles();
+				Application.SetCompatibleTextRenderingDefault(false);
+
+				_log.Debug("Running game (Game.Run()).");
+				//new Sharpcraft().Run();
+				Application.Run(new Launcher());
 			}
 			catch(FileNotFoundException ex)
 			{

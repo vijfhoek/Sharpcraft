@@ -15,10 +15,10 @@
     <RootNamespace>Sharpcraft.Documentation</RootNamespace>
     <Name>Sharpcraft.Documentation</Name>
     <!-- SHFB properties -->
-    <OutputPath>help\</OutputPath>
+    <OutputPath>..\docs\</OutputPath>
     <HtmlHelpName>Sharpcraft.Documentation</HtmlHelpName>
     <Language>en-US</Language>
-    <HelpFileFormat>HtmlHelp1</HelpFileFormat>
+    <HelpFileFormat>Website</HelpFileFormat>
     <IndentHtml>False</IndentHtml>
     <FrameworkVersion>.NET 4.0.30319</FrameworkVersion>
     <KeepLogFile>True</KeepLogFile>
@@ -34,7 +34,7 @@
     <HelpTitle>Sharpcraft - Minecraft client in C# | Documentation</HelpTitle>
     <CopyrightText>Copyright &amp;#169%3b 2012 by Sijmen Schoon and Adam Hellberg. All Rights Reserved. Documentation generated with Sandcastle via Sandcastle Help File Builder %28SHFB%29.</CopyrightText>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
-    <ProjectSummary>&amp;lt%3bp&amp;gt%3bPreliminary documentation, only Sharpcraft.Steam has been documented so far. Check the project page at &amp;lt%3ba href=&amp;quot%3bhttps://github.com/Vijfhoek/Sharpcraft&amp;quot%3b&amp;gt%3bVijfhoek&amp;#39%3bs GitHub&amp;lt%3b/a&amp;gt%3b and &amp;lt%3ba href=&amp;quot%3bhttps://github.com/F16Gaming/Sharpcraft&amp;quot%3b&amp;gt%3bF16Gaming&amp;#39%3bs GitHub&amp;lt%3b/a&amp;gt%3b.&amp;lt%3b/p&amp;gt%3b</ProjectSummary>
+    <ProjectSummary>&amp;lt%3bp&amp;gt%3b&amp;lt%3bb&amp;gt%3bPreliminary documentation&amp;lt%3b/b&amp;gt%3b. Check the project page at &amp;lt%3ba href=&amp;quot%3bhttps://github.com/Vijfhoek/Sharpcraft&amp;quot%3b&amp;gt%3bVijfhoek&amp;#39%3bs GitHub&amp;lt%3b/a&amp;gt%3b and &amp;lt%3ba href=&amp;quot%3bhttps://github.com/F16Gaming/Sharpcraft&amp;quot%3b&amp;gt%3bF16Gaming&amp;#39%3bs GitHub&amp;lt%3b/a&amp;gt%3b.&amp;lt%3b/p&amp;gt%3b</ProjectSummary>
     <VisibleItems>InheritedMembers, InheritedFrameworkMembers, Internals, Privates, Protected, SealedProtected, PrivateFields</VisibleItems>
     <WorkingPath>working\</WorkingPath>
     <DocumentationSources>
@@ -42,7 +42,6 @@
       <DocumentationSource sourceFile="..\Sharpcraft.Logging\Sharpcraft.Logging.csproj" />
       <DocumentationSource sourceFile="..\Sharpcraft.Networking\Sharpcraft.Networking.csproj" />
       <DocumentationSource sourceFile="..\Sharpcraft.Steam\Sharpcraft.Steam.csproj" />
-      <DocumentationSource sourceFile="..\Sharpcraft.SteamGUI\Sharpcraft.SteamGUI.csproj" />
     </DocumentationSources>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="False" xmlns="" />
@@ -52,9 +51,10 @@
       <NamespaceSummaryItem name="Sharpcraft.Steam" isDocumented="True" xmlns="">Steam components for Sharpcraft.</NamespaceSummaryItem>
       <NamespaceSummaryItem name="Sharpcraft.SteamGUI" isDocumented="True" xmlns="">GUI for Sharpcraft.Steam.</NamespaceSummaryItem>
     </NamespaceSummaries>
-    <FooterText>&amp;lt%3ba href=&amp;quot%3bhttps://github.com/Vijfhoek/Sharpcraft&amp;quot%3b&amp;gt%3bSharpcraft on GitHub&amp;lt%3b/a&amp;gt%3b | &amp;lt%3ba href=&amp;quot%3bhttps://github.com/F16Gaming/Sharpcraft&amp;gt%3bF16Gaming&amp;#39%3bs fork&amp;lt%3b/a&amp;gt%3b</FooterText>
+    <FooterText>&amp;lt%3ba href=&amp;quot%3bhttps://github.com/Vijfhoek/Sharpcraft&amp;quot%3b&amp;gt%3bSharpcraft on GitHub&amp;lt%3b/a&amp;gt%3b | &amp;lt%3ba href=&amp;quot%3bhttps://github.com/F16Gaming/Sharpcraft&amp;quot%3b&amp;gt%3bF16Gaming&amp;#39%3bs fork&amp;lt%3b/a&amp;gt%3b</FooterText>
     <HeaderText>Join us on &amp;lt%3ba href=&amp;quot%3birc://irc.kottnet.net:6667/#CSharp&amp;quot%3b&amp;gt%3bKottNet&amp;#39%3bs IRC&amp;lt%3b/a&amp;gt%3b!</HeaderText>
-    <CopyrightHref>https://github.com/Vijfhoek/Sharpcraft</CopyrightHref>
+    <CopyrightHref>
+    </CopyrightHref>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in
        order for Visual Studio to perform the build.  The others are optional

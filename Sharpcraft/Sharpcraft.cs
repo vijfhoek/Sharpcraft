@@ -6,7 +6,6 @@
 
 using System;
 using System.Linq;
-using System.Windows.Forms;
 using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
@@ -23,6 +22,7 @@ using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using log4net;
 
 using Sharpcraft.Steam;
+using Sharpcraft.Forms;
 using Sharpcraft.Logging;
 
 namespace Sharpcraft
@@ -56,7 +56,7 @@ namespace Sharpcraft
 			_log.Debug("Initializing graphics device.");
 			_graphics = new GraphicsDeviceManager(this);
 			_log.Debug("Setting content directory.");
-			Content.RootDirectory = "Content";
+			Content.RootDirectory = "content";
 		}
 
 		/// <summary>
@@ -77,10 +77,10 @@ namespace Sharpcraft
 			if (SteamManager.Init())
 			{
 				//SteamManager.FriendList.LoadFriends(); // Should load automatically now
-				Application.EnableVisualStyles();
+				//Application.EnableVisualStyles();
 				_log.Info("Creating Steam GUI.");
 				// TODO: Find a way to set the start location of SteamGUI to be next to Game Window.
-				var steamGUI = new SteamGUI.SteamGUI();
+				var steamGUI = new SteamGUI();
 				if (!steamGUI.Visible)
 					steamGUI.Show();
 				_log.Info("Steam components loaded!");
