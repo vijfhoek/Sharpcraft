@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Threading;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 using Sharpcraft.Logging;
@@ -12,15 +13,38 @@ namespace Sharpcraft
 	/// </summary>
 	public partial class Launcher : Form
 	{
+		/// <summary>
+		/// Void delegate for use with invoke.
+		/// </summary>
 		private delegate void VoidDelegate();
 
+		/// <summary>
+		/// Log object for this class.
+		/// </summary>
 		private readonly log4net.ILog _log;
 
+		/// <summary>
+		/// Sharpcraft game object.
+		/// </summary>
 		private Sharpcraft _game;
+		/// <summary>
+		/// Whether or not the game is currently running.
+		/// </summary>
 		private bool _gameRunning;
+		/// <summary>
+		/// Thread for the game to run in.
+		/// </summary>
 		private Thread _gameThread;
 
+		/// <summary>
+		/// Whether or not the username box is "inactive".
+		/// (Has no text and is out of focus).
+		/// </summary>
 		private bool _userBoxInactive = true;
+		/// <summary>
+		/// Whether or not the password box is "inactive".
+		/// (Has no text and is out of focus).
+		/// </summary>
 		private bool _passBoxInactive = true;
 
 		/// <summary>
@@ -35,6 +59,10 @@ namespace Sharpcraft
 			_log.Info("Launcher initialized.");
 		}
 
+		/// <summary>
+		/// Checks the username and password boxes to determine if they are valid.
+		/// </summary>
+		/// <returns><c>true</c> if valid, <c>false</c> otherwise.</returns>
 		private bool ValidLogin()
 		{
 			bool validUser = !_userBoxInactive && !string.IsNullOrEmpty(UserBox.Text);
@@ -42,11 +70,19 @@ namespace Sharpcraft
 			return validUser && validPass;
 		}
 
+		/// <summary>
+		/// Updates the form controls.
+		/// </summary>
 		private void UpdateForm()
 		{
 			LoginButton.Enabled = ValidLogin();
 		}
 
+		/// <summary>
+		/// Handler for when the username box gets focus-
+		/// </summary>
+		/// <param name="sender">N/A (Not Used) (See MSDN)</param>
+		/// <param name="e">N/A (Not Used) (See MSDN)</param>
 		private void UserBoxEnter(object sender, EventArgs e)
 		{
 			if (_userBoxInactive)
@@ -58,11 +94,21 @@ namespace Sharpcraft
 			UpdateForm();
 		}
 
+		/// <summary>
+		/// Handler for when the text in the username box changes.
+		/// </summary>
+		/// <param name="sender">N/A (Not Used) (See MSDN)</param>
+		/// <param name="e">N/A (Not Used) (See MSDN)</param>
 		private void UserBoxTextChanged(object sender, EventArgs e)
 		{
 			UpdateForm();
 		}
 
+		/// <summary>
+		/// Handler for when the username box loses focus.
+		/// </summary>
+		/// <param name="sender">N/A (Not Used) (See MSDN)</param>
+		/// <param name="e">N/A (Not Used) (See MSDN)</param>
 		private void UserBoxLeave(object sender, EventArgs e)
 		{
 			if (string.IsNullOrEmpty(UserBox.Text))
@@ -74,6 +120,11 @@ namespace Sharpcraft
 			UpdateForm();
 		}
 
+		/// <summary>
+		/// Handler for when the password box gains focus.
+		/// </summary>
+		/// <param name="sender">N/A (Not Used) (See MSDN)</param>
+		/// <param name="e">N/A (Not Used) (See MSDN)</param>
 		private void PassBoxEnter(object sender, EventArgs e)
 		{
 			if (_passBoxInactive)
@@ -85,11 +136,21 @@ namespace Sharpcraft
 			UpdateForm();
 		}
 
+		/// <summary>
+		/// Handler for when the text in the password box changes.
+		/// </summary>
+		/// <param name="sender">N/A (Not Used) (See MSDN)</param>
+		/// <param name="e">N/A (Not Used) (See MSDN)</param>
 		private void PassBoxTextChanged(object sender, EventArgs e)
 		{
 			UpdateForm();
 		}
 
+		/// <summary>
+		/// Handler for when the password box loses focus.
+		/// </summary>
+		/// <param name="sender">N/A (Not Used) (See MSDN)</param>
+		/// <param name="e">N/A (Not Used) (See MSDN)</param>
 		private void PassBoxLeave(object sender, EventArgs e)
 		{
 			if (string.IsNullOrEmpty(PassBox.Text))
@@ -101,6 +162,11 @@ namespace Sharpcraft
 			UpdateForm();
 		}
 
+		/// <summary>
+		/// Handler for when user presses the login button.
+		/// </summary>
+		/// <param name="sender">N/A (Not Used) (See MSDN)</param>
+		/// <param name="e">N/A (Not Used) (See MSDN)</param>
 		private void LoginButtonClick(object sender, EventArgs e)
 		{
 			_log.Debug("Login button clicked.");
@@ -144,11 +210,20 @@ namespace Sharpcraft
 			}
 		}
 
+		/// <summary>
+		/// Handler for when user clicks the "Register" link.
+		/// </summary>
+		/// <param name="sender">N/A (Not Used) (See MSDN)</param>
+		/// <param name="e">N/A (Not Used) (See MSDN)</param>
+		/// <remarks>Opens the URL "http://www.minecraft.net/register" using <see cref="Process" />.Start();</remarks>
 		private void RegisterLinkLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			System.Diagnostics.Process.Start("http://www.minecraft.net/register");
+			Process.Start("http://www.minecraft.net/register");
 		}
 
+		/// <summary>
+		/// Runs the game.
+		/// </summary>
 		private void RunGame()
 		{
 			_log.Debug("RunGame();");
@@ -161,6 +236,11 @@ namespace Sharpcraft
 			_log.Debug("RunGame(); ## END ##");
 		}
 
+		/// <summary>
+		/// Event handler for Game.Exiting event.
+		/// </summary>
+		/// <param name="sender">N/A (Not Used)</param>
+		/// <param name="e">N/A (Not Used)</param>
 		private void GameExit(object sender, EventArgs e)
 		{
 			_log.Info("Game exit detected, shutting down all components...");
@@ -172,6 +252,9 @@ namespace Sharpcraft
 				Close();
 		}
 
+		/// <summary>
+		/// Close the game and unload components.
+		/// </summary>
 		private void CloseGame()
 		{
 			_log.Info("Unloading game components...");
@@ -187,6 +270,11 @@ namespace Sharpcraft
 			_log.Info("Game components unloaded!");
 		}
 
+		/// <summary>
+		/// Fires when the launcher closes, sends close request to main program and exits application.
+		/// </summary>
+		/// <param name="sender">N/A (Not Used) (See MSDN)</param>
+		/// <param name="e">N/A (Not Used) (See MSDN)</param>
 		private void LauncherFormClosed(object sender, FormClosedEventArgs e)
 		{
 			Program.Quit();
