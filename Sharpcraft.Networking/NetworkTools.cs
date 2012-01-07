@@ -11,9 +11,13 @@ using System.Text;
 
 namespace Sharpcraft.Networking
 {
+	/// <summary>
+	/// Provides various networking tools.
+	/// </summary>
 	class NetworkTools
 	{
 		private readonly NetworkStream _stream;
+
 		public NetworkTools(NetworkStream stream)
 		{
 			_stream = stream;

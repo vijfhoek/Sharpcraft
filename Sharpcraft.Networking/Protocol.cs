@@ -11,8 +11,6 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 
-using log4net;
-
 using Sharpcraft.Logging;
 
 namespace Sharpcraft.Networking
@@ -26,7 +24,7 @@ namespace Sharpcraft.Networking
 
 	public class Protocol
 	{
-		private readonly ILog _log;
+		private readonly log4net.ILog _log;
 
 		private readonly TcpClient _client = new TcpClient();
 		private readonly NetworkStream _stream;
@@ -34,7 +32,7 @@ namespace Sharpcraft.Networking
 
 		public Protocol(string server, int port)
 		{
-			_log = LoggerManager.GetLogger(this);
+			_log = LogManager.GetLogger(this);
 			_log.Debug("Connecting to server.");
 			_client.Connect(server, port);
 			_log.Debug("Getting stream.");
