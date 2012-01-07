@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Sharpcraft.Forms
@@ -14,8 +8,14 @@ namespace Sharpcraft.Forms
 	/// </summary>
 	public partial class ExceptionDialog : Form
 	{
+		/// <summary>
+		/// The exception thrown.
+		/// </summary>
 		private readonly Exception _exception;
 
+		/// <summary>
+		/// The format passed to string.Format when constructing the exception message.
+		/// </summary>
 		private const string ExceptionLabelFormat = "Exception occurred in {0} ({1}), the exception thrown was {2} ({3}). More details below.";
 
 		/// <summary>
@@ -35,6 +35,11 @@ namespace Sharpcraft.Forms
 			ExceptionStackTrace.Text = _exception.StackTrace;
 		}
 
+		/// <summary>
+		/// Handler for the close button, closes the form.
+		/// </summary>
+		/// <param name="sender">N/A (Not Used) (See MSDN)</param>
+		/// <param name="e">N/A (Not Used) (See MSDN)</param>
 		private void CloseButtonClick(object sender, EventArgs e)
 		{
 			Close();
