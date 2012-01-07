@@ -59,7 +59,7 @@ namespace Sharpcraft.Logging
 		{
 			if (!_loaded)
 				LoadConfig();
-			return LogManager.GetLogger(sender.GetType().ToString() == "System.RuntimeType" ? (Type) sender : sender.GetType());
+			return log4net.LogManager.GetLogger(sender.GetType().ToString() == "System.RuntimeType" ? (Type) sender : sender.GetType());
 		}
 	}
 }
