@@ -45,13 +45,13 @@
       <DocumentationSource sourceFile="..\Sharpcraft.Forms\Sharpcraft.Forms.csproj" />
     </DocumentationSources>
     <NamespaceSummaries>
-      <NamespaceSummaryItem name="(global)" isDocumented="False" xmlns="" />
-      <NamespaceSummaryItem name="Sharpcraft" isDocumented="True" xmlns="">The main project, Sharpcraft.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Sharpcraft.Logging" isDocumented="True" xmlns="">Logging tools for Sharpcraft.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Sharpcraft.Networking" isDocumented="True" xmlns="">Networking utilities for Sharpcraft.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Sharpcraft.Steam" isDocumented="True" xmlns="">Steam components for Sharpcraft.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Sharpcraft.SteamGUI" isDocumented="True" xmlns="">GUI for Sharpcraft.Steam.</NamespaceSummaryItem>
-    </NamespaceSummaries>
+      <NamespaceSummaryItem name="(global)" isDocumented="False" />
+<NamespaceSummaryItem name="Sharpcraft" isDocumented="True">The main project, Sharpcraft.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Sharpcraft.Logging" isDocumented="True">Logging tools for Sharpcraft.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Sharpcraft.Networking" isDocumented="True">Networking utilities for Sharpcraft.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Sharpcraft.Steam" isDocumented="True">Steam components for Sharpcraft.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Sharpcraft.SteamGUI" isDocumented="True">GUI for Sharpcraft.Steam.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Sharpcraft.Forms" isDocumented="True">Forms, dialogs and the likes.</NamespaceSummaryItem></NamespaceSummaries>
     <FooterText>&amp;lt%3ba href=&amp;quot%3bhttps://github.com/Vijfhoek/Sharpcraft&amp;quot%3b&amp;gt%3bSharpcraft on GitHub&amp;lt%3b/a&amp;gt%3b | &amp;lt%3ba href=&amp;quot%3bhttps://github.com/F16Gaming/Sharpcraft&amp;quot%3b&amp;gt%3bF16Gaming&amp;#39%3bs fork&amp;lt%3b/a&amp;gt%3b</FooterText>
     <HeaderText>Join us on &amp;lt%3ba href=&amp;quot%3birc://irc.kottnet.net:6667/#CSharp&amp;quot%3b&amp;gt%3bKottNet&amp;#39%3bs IRC&amp;lt%3b/a&amp;gt%3b!</HeaderText>
     <CopyrightHref>
