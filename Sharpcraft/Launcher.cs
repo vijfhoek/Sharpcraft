@@ -169,13 +169,9 @@ namespace Sharpcraft
 			CloseGame();
 			_log.Debug("Closing launcher...");
 			if (InvokeRequired)
-			{
 				Invoke((VoidDelegate) (Close));
-			}
 			else
-			{
 				Close();
-			}
 		}
 
 		private void CloseGame()
