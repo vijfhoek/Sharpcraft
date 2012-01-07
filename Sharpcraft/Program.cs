@@ -13,8 +13,6 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 
-using log4net;
-
 //using Sharpcraft.Forms;
 using Sharpcraft.Logging;
 
@@ -70,7 +68,7 @@ namespace Sharpcraft
 		/// <summary>
 		/// Log object for this class.
 		/// </summary>
-		private static ILog _log;
+		private static log4net.ILog _log;
 		/// <summary>
 		/// File to write all unhandled exceptions to.
 		/// </summary>
@@ -103,8 +101,8 @@ namespace Sharpcraft
 				var stdOut = new StreamWriter(fileStream, encoding) {AutoFlush = true};
 				Console.SetOut(stdOut);
 			}
-			LoggerManager.LoadConfig(debug);
-			_log = LoggerManager.GetLogger(typeof (Program));
+			LogManager.LoadConfig(debug);
+			_log = LogManager.GetLogger(typeof (Program));
 			_log.Info("!!! APPLICATION LOAD !!!");
 			_log.Info("Detecting components...");
 			foreach (var file in Directory.GetFiles(Directory.GetCurrentDirectory()))

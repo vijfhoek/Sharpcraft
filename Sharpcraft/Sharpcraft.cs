@@ -19,8 +19,6 @@ using Microsoft.Xna.Framework.GamerServices;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 
-using log4net;
-
 using Sharpcraft.Steam;
 using Sharpcraft.Forms;
 using Sharpcraft.Logging;
@@ -37,7 +35,7 @@ namespace Sharpcraft
 		/// <summary>
 		/// Log object for this class.
 		/// </summary>
-		private readonly ILog _log;
+		private readonly log4net.ILog _log;
 
 		/// <summary>
 		/// The graphics device manager.
@@ -53,7 +51,7 @@ namespace Sharpcraft
 		/// </summary>
 		public Sharpcraft()
 		{
-			_log = LoggerManager.GetLogger(this);
+			_log = LogManager.GetLogger(this);
 			_log.Debug("Initializing graphics device.");
 			_graphics = new GraphicsDeviceManager(this);
 			_log.Debug("Setting content directory.");

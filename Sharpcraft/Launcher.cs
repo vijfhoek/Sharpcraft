@@ -3,8 +3,6 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 
-using log4net;
-
 using Sharpcraft.Logging;
 
 namespace Sharpcraft
@@ -16,7 +14,7 @@ namespace Sharpcraft
 	{
 		private delegate void VoidDelegate();
 
-		private readonly ILog _log;
+		private readonly log4net.ILog _log;
 
 		private Sharpcraft _game;
 		private bool _gameRunning;
@@ -31,7 +29,7 @@ namespace Sharpcraft
 		public Launcher()
 		{
 			InitializeComponent();
-			_log = LoggerManager.GetLogger(this);
+			_log = LogManager.GetLogger(this);
 			PassBox.PasswordChar = (char) 0x25CF;
 			UpdateForm();
 			_log.Info("Launcher initialized.");

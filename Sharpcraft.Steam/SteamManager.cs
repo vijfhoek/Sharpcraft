@@ -10,8 +10,6 @@ using System.Threading;
 
 using Steam4NET;
 
-using log4net;
-
 using Sharpcraft.Logging;
 
 namespace Sharpcraft.Steam
@@ -24,7 +22,7 @@ namespace Sharpcraft.Steam
 		/// <summary>
 		/// Log object for this class.
 		/// </summary>
-		private static ILog _log;
+		private static log4net.ILog _log;
 
 		/// <summary>
 		/// Timer for checking Steam process status.
@@ -89,7 +87,7 @@ namespace Sharpcraft.Steam
 		/// <returns><c>true</c> if everything initialized properly, <c>false</c> otherwise.</returns>
 		public static bool Init()
 		{
-			_log = LoggerManager.GetLogger(typeof(SteamManager));
+			_log = LogManager.GetLogger(typeof(SteamManager));
 			try
 			{
 				if (!Steamworks.Load())

@@ -10,8 +10,6 @@ using System.Collections.Generic;
 
 using Steam4NET;
 
-using log4net;
-
 using Sharpcraft.Logging;
 
 namespace Sharpcraft.Steam
@@ -24,7 +22,7 @@ namespace Sharpcraft.Steam
 		/// <summary>
 		/// The log object for this class.
 		/// </summary>
-		private readonly ILog _log;
+		private readonly log4net.ILog _log;
 
 		/// <summary>
 		/// Timer used to update the friend list.
@@ -41,7 +39,7 @@ namespace Sharpcraft.Steam
 		/// </summary>
 		internal SteamFriendList()
 		{
-			_log = LoggerManager.GetLogger(this);
+			_log = LogManager.GetLogger(this);
 			_list = new List<SteamFriend>();
 			_updateTimer = new Timer(Update, null, 0, 60000);
 			SteamManager.OnSteamClose += SteamClose;

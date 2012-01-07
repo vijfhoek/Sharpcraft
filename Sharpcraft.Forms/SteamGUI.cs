@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using Sharpcraft.Steam;
 using Sharpcraft.Logging;
-using log4net;
 
 namespace Sharpcraft.Forms
 {
@@ -21,7 +20,7 @@ namespace Sharpcraft.Forms
 		/// <summary>
 		/// Logger object for this class.
 		/// </summary>
-		private readonly ILog _log;
+		private readonly log4net.ILog _log;
 
 		/// <summary>
 		/// Bool indicating whether or not the Steam client has closed.
@@ -44,7 +43,7 @@ namespace Sharpcraft.Forms
 		public SteamGUI()
 		{
 			InitializeComponent();
-			_log = LoggerManager.GetLogger(this);
+			_log = LogManager.GetLogger(this);
 			_log.Info("SteamGUI is initializing...");
 			_steamClosed = false;
 			sendButton.Enabled = false;

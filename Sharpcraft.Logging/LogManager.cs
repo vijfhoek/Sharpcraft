@@ -18,7 +18,7 @@ namespace Sharpcraft.Logging
 	/// <remarks>Using the default config files,
 	/// the log files will be contained withing the "log" subfolder.
 	/// The format of the log file names will be "Sharpcraft_yyyy-mm-dd.log".</remarks>
-	public static class LoggerManager
+	public static class LogManager
 	{
 		/// <summary>
 		/// <c>bool</c> indicating whether or not the configuration file has been loaded.
