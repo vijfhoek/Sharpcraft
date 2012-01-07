@@ -13,12 +13,12 @@ namespace Sharpcraft.Networking
 		public byte PacketID;
 	}
 
-	public class PacketKeepAlive : Packet
+	public class KeepAlivePacket : Packet
 	{
 		public Int32 KeepAliveID;
 	}
 
-	public class PacketLoginRequestSC : Packet
+	public class LoginRequestPacketSC : Packet
 	{
 		public Int32 EntityID;
 		public Int64 MapSeed;
@@ -29,33 +29,33 @@ namespace Sharpcraft.Networking
 		public byte MaxPlayers;
 	}
 
-	public class PacketLoginRequestCS : Packet
+	public class LoginRequestPacketCS : Packet
 	{
 		public Int32 ProtocolVersion;
 		public string Username;
 	}
 
-	public class PacketHandshakeSC : Packet
+	public class HandshakePacketSC : Packet
 	{
 		public string ConnectionHash;
 	}
 
-	public class PacketHandshakeCS : Packet
+	public class HandshakePacketCS : Packet
 	{
 		public string Username;
 	}
 
-	public class PacketChatMessage : Packet
+	public class ChatMessagePacket : Packet
 	{
 		public string Message;
 	}
 
-	public class PacketTimeUpdate : Packet
+	public class TimeUpdatePacket : Packet
 	{
 		public Int64 Time;
 	}
 
-	public class PacketEntityEquipment : Packet
+	public class EntityEquipmentPacket : Packet
 	{
 		public Int32 EntityID;
 		public Int16 Slot;
@@ -63,14 +63,14 @@ namespace Sharpcraft.Networking
 		public Int16 Damage;
 	}
 
-	public class PacketSpawnPosition : Packet
+	public class SpawnPositionPacket : Packet
 	{
 		public Int32 X;
 		public Int32 Y;
 		public Int32 Z;
 	}
 
-	public class PacketUseEntity : Packet
+	public class UseEntityPacket : Packet
 	{
 		public Int32 AttackerID;
 		public Int32 TargetID;
