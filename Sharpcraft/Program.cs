@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 
-//using Sharpcraft.Forms;
+using Sharpcraft.Forms;
 using Sharpcraft.Logging;
 
 namespace Sharpcraft
@@ -149,6 +149,7 @@ namespace Sharpcraft
 			{
 				_log.Fatal("Unknown exception " + ex.GetType() + " thrown. Writing exception info to logs\\exception.log");
 				WriteExceptionToFile(ex);
+				new ExceptionDialog(ex).ShowDialog();
 #if DEBUG
 				throw;
 #endif

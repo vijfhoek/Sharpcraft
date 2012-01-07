@@ -132,7 +132,7 @@
 			// 
 			this.RememberCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.RememberCheckbox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.RememberCheckbox.Location = new System.Drawing.Point(59, 77);
+			this.RememberCheckbox.Location = new System.Drawing.Point(59, 80);
 			this.RememberCheckbox.Name = "RememberCheckbox";
 			this.RememberCheckbox.Size = new System.Drawing.Size(142, 17);
 			this.RememberCheckbox.TabIndex = 3;
