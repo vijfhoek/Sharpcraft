@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 
 using Sharpcraft.Logging;
+using Sharpcraft.Networking;
 
 namespace Sharpcraft
 {
@@ -36,6 +37,10 @@ namespace Sharpcraft
 		/// </summary>
 		private Thread _gameThread;
 
+		private readonly Authenticator _auth;
+		private User _user;
+		private const int McVersion = 50;
+
 		/// <summary>
 		/// Whether or not the username box is "inactive".
 		/// (Has no text and is out of focus).
@@ -55,6 +60,7 @@ namespace Sharpcraft
 			InitializeComponent();
 			_log = LogManager.GetLogger(this);
 			PassBox.PasswordChar = (char) 0x25CF;
+			_auth = new Authenticator(McVersion);
 			UpdateForm();
 			_log.Info("Launcher initialized.");
 		}
@@ -172,13 +178,23 @@ namespace Sharpcraft
 			_log.Debug("Login button clicked.");
 			if (!ValidLogin() || _gameRunning)
 				return;
+			_user = new User(UserBox.Text);
+			LoginResult result = _auth.Login(_user.GetName(), PassBox.Text);
+			if (!result.Success)
+			{
+				MessageBox.Show("Failed to login!\n" + result.Result, "Login Failed",
+								MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+			_log.Info("Login succeeded! Got result: " + result.Result);
+			_user.SetName(result.RealName);
+			_user.SetSessionID(result.SessionID);
 			_log.Debug("Disabling launcher");
 			Enabled = false;
 			_log.Debug("Hiding launcher.");
 			Hide();
 			try
 			{
-				// Authenticate user here
 				_log.Debug("Creating game thread.");
 				_gameThread = new Thread(RunGame);
 				//_gameThread.Name = "SharpcraftClientThread";
@@ -227,7 +243,7 @@ namespace Sharpcraft
 		private void RunGame()
 		{
 			_log.Debug("RunGame();");
-			_game = new Sharpcraft();
+			_game = new Sharpcraft(_user);
 			_log.Debug("Registering to Game.Exiting event.");
 			_game.Exiting += GameExit;
 			_gameRunning = true;

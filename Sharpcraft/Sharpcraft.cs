@@ -46,14 +46,22 @@ namespace Sharpcraft
 		/// </summary>
 		private SpriteBatch _spriteBatch;
 
+		private bool _gameMenuOpen;
+		private bool _menuToggling;
+		private bool _inServer = true;
+
+		private User _user;
+
 		/// <summary>
 		/// Initializes a new instance of Sharpcraft.
 		/// </summary>
-		public Sharpcraft()
+		public Sharpcraft(User user)
 		{
 			_log = LogManager.GetLogger(this);
 			_log.Debug("Initializing graphics device.");
 			_graphics = new GraphicsDeviceManager(this);
+			_graphics.PreferredBackBufferWidth = 1280;
+			_graphics.PreferredBackBufferHeight = 720;
 			_log.Debug("Setting content directory.");
 			Content.RootDirectory = "content";
 		}
@@ -141,11 +149,22 @@ namespace Sharpcraft
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
 				Exit();
 			if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-				Exit();
+				ToggleGameMenu();
+			if (Keyboard.GetState().IsKeyUp(Keys.Escape))
+				_menuToggling = false;
 
 			// TODO: Add your update logic here
 
 			base.Update(gameTime);
+		}
+
+		private void ToggleGameMenu()
+		{
+			if (!_inServer || _menuToggling)
+				return;
+			_menuToggling = true;
+			_gameMenuOpen = !_gameMenuOpen;
+			_log.Debug("Game menu is now " + (_gameMenuOpen ? "open" : "closed"));
 		}
 
 		/// <summary>
