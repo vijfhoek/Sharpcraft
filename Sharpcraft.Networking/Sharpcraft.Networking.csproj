@@ -59,7 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MinecraftNet.cs" />
+    <Compile Include="Authenticator.cs" />
     <Compile Include="NetworkTools.cs" />
     <Compile Include="Packets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

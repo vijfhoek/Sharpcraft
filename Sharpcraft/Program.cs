@@ -104,11 +104,11 @@ namespace Sharpcraft
 				var safeFileHandle = new SafeFileHandle(stdHandle, true);
 				var fileStream = new FileStream(safeFileHandle, FileAccess.Write);
 				var encoding = System.Text.Encoding.GetEncoding(CODE_PAGE);
-				var stdOut = new StreamWriter(fileStream, encoding) { AutoFlush = true };
+				var stdOut = new StreamWriter(fileStream, encoding) {AutoFlush = true};
 				Console.SetOut(stdOut);
 			}
 			LogManager.LoadConfig(debug);
-			_log = LogManager.GetLogger(typeof(Program));
+			_log = LogManager.GetLogger(typeof (Program));
 			_log.Info("!!! APPLICATION LOAD !!!");
 			_log.Info("Detecting components...");
 			foreach (var file in Directory.GetFiles(Directory.GetCurrentDirectory()))
@@ -141,11 +141,11 @@ namespace Sharpcraft
 				_log.Info("Launcher has returned execution to main thread.");
 #endif
 			}
-			catch (FileNotFoundException ex)
+			catch(FileNotFoundException ex)
 			{
 				_log.Fatal("Required file \"" + ex.FileName + "\" not found! Application is exiting...");
 			}
-			catch (Exception ex)
+			catch(Exception ex)
 			{
 				_log.Fatal("Unknown exception " + ex.GetType() + " thrown. Writing exception info to logs\\exception.log");
 				WriteExceptionToFile(ex);
@@ -202,7 +202,7 @@ namespace Sharpcraft
 				writer.Flush();
 				writer.Close();
 			}
-			catch (IOException)
+			catch(IOException)
 			{
 				_log.Error("Unable to write exception info to file.");
 			}

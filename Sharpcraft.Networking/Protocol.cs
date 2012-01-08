@@ -78,12 +78,12 @@ namespace Sharpcraft.Networking
 				var packet = new LoginRequestPacketSC { PacketID = 0x01, EntityID = _tools.ReadInt32() };
 
 				_tools.StreamSkip(2);
-				packet.MapSeed = _tools.ReadInt64();
-				packet.Gamemode = _tools.ReadInt32();
-				packet.Dimension = (sbyte)_stream.ReadByte();
-				packet.Difficulty = (sbyte)_stream.ReadByte();
+				packet.MapSeed     = _tools.ReadInt64();
+				packet.Gamemode    = _tools.ReadInt32();
+				packet.Dimension   = (sbyte)_stream.ReadByte();
+				packet.Difficulty  = (sbyte)_stream.ReadByte();
 				packet.WorldHeight = (byte)_stream.ReadByte();
-				packet.MaxPlayers = (byte)_stream.ReadByte();
+				packet.MaxPlayers  = (byte)_stream.ReadByte();
 
 				pack = packet;
 			}
