@@ -15,13 +15,6 @@ using Sharpcraft.Logging;
 
 namespace Sharpcraft.Networking
 {
-	// NOTE: This is never used, Vijfhoek?
-	public enum EndianType
-	{
-		LittleEndian,
-		BigEndian
-	}
-
 	public class Protocol
 	{
 		private readonly log4net.ILog _log;

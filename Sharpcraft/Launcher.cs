@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 
 using Sharpcraft.Logging;
+using Sharpcraft.Networking;
 
 namespace Sharpcraft
 {
@@ -22,6 +23,13 @@ namespace Sharpcraft
 		/// Log object for this class.
 		/// </summary>
 		private readonly log4net.ILog _log;
+
+
+		/// <summary>
+		/// MinecraftNet object to send login requests and
+		/// other things to minecraft.net
+		/// </summary>
+		private readonly MinecraftNet _minecraftNet;
 
 		/// <summary>
 		/// Sharpcraft game object.
@@ -57,6 +65,7 @@ namespace Sharpcraft
 			PassBox.PasswordChar = (char) 0x25CF;
 			UpdateForm();
 			_log.Info("Launcher initialized.");
+			_minecraftNet = new MinecraftNet();
 		}
 
 		/// <summary>
@@ -68,6 +77,18 @@ namespace Sharpcraft
 			bool validUser = !_userBoxInactive && !string.IsNullOrEmpty(UserBox.Text);
 			bool validPass = !_passBoxInactive && !string.IsNullOrEmpty(PassBox.Text);
 			return validUser && validPass;
+		}
+
+		/// <summary>
+		/// Checks the username and password boxes to determine if they are registered.
+		/// </summary>
+		/// <returns><c>true</c> if valid, <c>false</c> otherwise.</returns>
+		private bool RegisteredLogin()
+		{
+			_minecraftNet.Login(UserBox.Text, PassBox.Text, 50);
+			
+			// Return true for now
+			return true;
 		}
 
 		/// <summary>
@@ -172,7 +193,9 @@ namespace Sharpcraft
 			_log.Debug("Login button clicked.");
 			if (!ValidLogin() || _gameRunning)
 				return;
-			_log.Debug("Disabling launcher");
+			if (!RegisteredLogin())
+				return;
+			_log.Debug("Disabling launcher.");
 			Enabled = false;
 			_log.Debug("Hiding launcher.");
 			Hide();
