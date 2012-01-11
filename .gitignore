@@ -15,8 +15,8 @@
 /Sharpcraft.Networking/bin
 /Sharpcraft.Documentation/obj
 /Sharpcraft.Documentation/working
+/Sharpcraft.Website/Sharpcraft.Website.Publish.xml
 
-Sharpcraft.Website/Sharpcraft.Website.Publish.xml
 /boilerplate_custom
 /html5_boilerplate
 /packages
