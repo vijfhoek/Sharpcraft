@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Net;
 using System.Text;
-
 using Sharpcraft.Logging;
 
 namespace Sharpcraft.Networking
@@ -34,6 +33,13 @@ namespace Sharpcraft.Networking
 		/// </summary>
 		public readonly string SessionID;
 
+		/// <summary>
+		/// Initializes a new instance of the <c>LoginResult</c> struct.
+		/// </summary>
+		/// <param name="success">Whether or not the login succeeded.</param>
+		/// <param name="result">The result string, as returned from the minecraft servers.</param>
+		/// <param name="realName">The user's real username.</param>
+		/// <param name="sessionId">The user's session ID.</param>
 		internal LoginResult(bool success, string result, string realName = null, string sessionId = null)
 		{
 			Success = success;
@@ -80,6 +86,21 @@ namespace Sharpcraft.Networking
 		}
 
 		/// <summary>
+		/// The login event, fires when login succeeds or fails.
+		/// </summary>
+		public event LoginEventHandler OnLoginEvent;
+
+		/// <summary>
+		/// Fires the login event.
+		/// </summary>
+		/// <param name="e">The <see cref="LoginEventArgs" /> for the event.</param>
+		private void LoginEvent(LoginEventArgs e)
+		{
+			if (OnLoginEvent != null)
+				OnLoginEvent(e);
+		}
+
+		/// <summary>
 		/// Sends a login request to the minecraft authentication server
 		/// and returns the response from it.
 		/// </summary>
@@ -117,7 +138,9 @@ namespace Sharpcraft.Networking
 			if (responseStream == null)
 			{
 				_log.Warn("Response stream was NULL. Login failed.");
-				return new LoginResult(false, "Response stream was NULL. Login failed.");
+				var result = new LoginResult(false, "Response stream was NULL. Login failed.");
+				LoginEvent(new LoginEventArgs(result));
+				return result;
 			}
 			var reader = new StreamReader(responseStream);
 			string responseString = reader.ReadToEnd();
@@ -130,10 +153,12 @@ namespace Sharpcraft.Networking
 			{
 				_log.Warn("Incorrect response format, expected 4 fields of data, got " + responseArray.Length);
 				_log.Warn("Login failed.");
-				return new LoginResult(false, "Invalid response data size, expected 4, got "
-									+ responseArray.Length + ".\nResponse was:\n" + responseString);
+				var result = new LoginResult(false, "Invalid response data size, expected 4, got " + responseArray.Length +
+											".\nResponse was:\n" + responseString);
+				LoginEvent(new LoginEventArgs(result));
+				return result;
 			}
-
+			LoginEvent(new LoginEventArgs(new LoginResult(true, responseString, responseArray[2], responseArray[3])));
 			return new LoginResult(true, responseString, responseArray[2], responseArray[3]);
 		}
 	}

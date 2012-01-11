@@ -28,17 +28,35 @@ namespace Sharpcraft
 		/// Sharpcraft game object.
 		/// </summary>
 		private Sharpcraft _game;
+
 		/// <summary>
 		/// Whether or not the game is currently running.
 		/// </summary>
 		private bool _gameRunning;
+
 		/// <summary>
 		/// Thread for the game to run in.
 		/// </summary>
 		private Thread _gameThread;
 
+		/// <summary>
+		/// Thread for connecting to minecraft.net and authenticating.
+		/// </summary>
+		private Thread _loginThread;
+
+		/// <summary>
+		/// The authenticator object.
+		/// </summary>
 		private readonly Authenticator _auth;
+
+		/// <summary>
+		/// The user.
+		/// </summary>
 		private User _user;
+
+		/// <summary>
+		/// The current minecraft client version.
+		/// </summary>
 		private const int McVersion = 50;
 
 		/// <summary>
@@ -46,6 +64,7 @@ namespace Sharpcraft
 		/// (Has no text and is out of focus).
 		/// </summary>
 		private bool _userBoxInactive = true;
+
 		/// <summary>
 		/// Whether or not the password box is "inactive".
 		/// (Has no text and is out of focus).
@@ -61,6 +80,7 @@ namespace Sharpcraft
 			_log = LogManager.GetLogger(this);
 			PassBox.PasswordChar = (char) 0x25CF;
 			_auth = new Authenticator(McVersion);
+			_auth.OnLoginEvent += LoginEvent;
 			UpdateForm();
 			_log.Info("Launcher initialized.");
 		}
@@ -82,6 +102,40 @@ namespace Sharpcraft
 		private void UpdateForm()
 		{
 			LoginButton.Enabled = ValidLogin();
+		}
+
+		/// <summary>
+		/// Sets the state of the form.
+		/// </summary>
+		/// <param name="enabled"><c>true</c> to enable and show the form, <c>false</c> to disable and hide it.</param>
+		private void SetState(bool enabled)
+		{
+			if (InvokeRequired)
+				Invoke((VoidDelegate)(() => { Enabled = enabled; }));
+			else
+				Enabled = enabled;
+
+			if (enabled)
+			{
+				
+				if (InvokeRequired)
+				{
+					Invoke((VoidDelegate) (Show));
+					Invoke((VoidDelegate) (BringToFront));
+				}
+				else
+				{
+					Show();
+					BringToFront();
+				}
+			}
+			else
+			{
+				if (InvokeRequired)
+					Invoke((VoidDelegate) (Hide));
+				else
+					Hide();
+			}
 		}
 
 		/// <summary>
@@ -178,21 +232,29 @@ namespace Sharpcraft
 			_log.Debug("Login button clicked.");
 			if (!ValidLogin() || _gameRunning)
 				return;
+			Enabled = false;
 			_user = new User(UserBox.Text);
-			LoginResult result = _auth.Login(_user.GetName(), PassBox.Text);
+			_loginThread = new Thread(() => _auth.Login(_user.GetName(), PassBox.Text));
+			_loginThread.Start();
+		}
+
+		/// <summary>
+		/// Login event handler.
+		/// </summary>
+		/// <param name="e"><see cref="LoginEventArgs" /> for the event.</param>
+		private void LoginEvent(LoginEventArgs e)
+		{
+			LoginResult result = e.Result;
 			if (!result.Success)
 			{
 				MessageBox.Show("Failed to login!\n" + result.Result, "Login Failed",
 								MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				SetState(true);
 				return;
 			}
 			_log.Info("Login succeeded! Got result: " + result.Result);
 			_user.SetName(result.RealName);
 			_user.SetSessionID(result.SessionID);
-			_log.Debug("Disabling launcher");
-			Enabled = false;
-			_log.Debug("Hiding launcher.");
-			Hide();
 			try
 			{
 				_log.Debug("Creating game thread.");
@@ -208,6 +270,7 @@ namespace Sharpcraft
 				_log.Error(ex.GetType() + ": " + ex.Message);
 				_log.Error("Stack Trace:\n" + ex.StackTrace);
 				CloseGame();
+				SetState(true);
 			}
 			catch (Exception ex)
 			{
@@ -218,6 +281,7 @@ namespace Sharpcraft
 				_log.Error(ex.GetType() + ": " + ex.Message);
 				_log.Error("Stack Trace:\n" + ex.StackTrace);
 				CloseGame();
+				SetState(true);
 #if DEBUG
 				throw;
 #else
@@ -248,6 +312,7 @@ namespace Sharpcraft
 			_game.Exiting += GameExit;
 			_gameRunning = true;
 			_log.Info("Running game...");
+			SetState(false);
 			_game.Run();
 			_log.Debug("RunGame(); ## END ##");
 		}
