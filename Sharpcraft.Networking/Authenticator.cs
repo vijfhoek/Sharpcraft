@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Text;
 using Sharpcraft.Logging;
@@ -126,7 +127,18 @@ namespace Sharpcraft.Networking
 			request.ContentLength = postData.Length;
 
 			// Get stream
-			Stream stream = request.GetRequestStream();
+			Stream stream;
+			try
+			{
+				stream = request.GetRequestStream();
+			}
+			catch(WebException ex)
+			{
+				var result = new LoginResult(false, "Failed to contact " + AuthAddress + ". "
+													+ ex.GetType() + " thrown with message: " + ex.Message);
+				LoginEvent(new LoginEventArgs(result));
+				return result;
+			}
 
 			// Send request
 			stream.Write(postData, 0, postData.Length);
