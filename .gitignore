@@ -1,0 +1,17 @@
+/_ReSharper.Sharpcraft
+*.suo
+*.user
+/Sharpcraft/bin
+/Sharpcraft/obj
+/Sharpcraft.Steam/bin
+/Sharpcraft.Steam/obj
+/Sharpcraft.Forms/bin
+/Sharpcraft.Forms/obj
+/Sharpcraft.Content/bin
+/Sharpcraft.Content/obj
+/Sharpcraft.Logging/bin
+/Sharpcraft.Logging/obj
+/Sharpcraft.Networking/obj
+/Sharpcraft.Networking/bin
+/Sharpcraft.Documentation/obj
+/Sharpcraft.Documentation/working
