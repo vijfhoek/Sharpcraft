@@ -50,10 +50,6 @@ namespace Sharpcraft
 		private bool _menuToggling;
 		private bool _inServer = true;
 
-		private TimeSpan _timeElapsed = TimeSpan.Zero;
-		private int _frameCount;
-		private int _fps;
-
 		private Texture2D _crosshair;
 		private SpriteFont _fpsFont;
 
@@ -74,6 +70,7 @@ namespace Sharpcraft
 			};
 			_log.Debug("Setting content directory.");
 			Content.RootDirectory = "content";
+			Components.Add(new FrameRateCounter(this));
 		}
 
 		/// <summary>
@@ -134,7 +131,6 @@ namespace Sharpcraft
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			_crosshair = Content.Load<Texture2D>("crosshair");
-			_fpsFont = Content.Load<SpriteFont>("Font");
 			_log.Debug("LoadContent(); ## END ##");
 		}
 
@@ -168,15 +164,6 @@ namespace Sharpcraft
 
 			// TODO: Add your update logic here
 
-			_timeElapsed += gameTime.ElapsedGameTime;
-
-			if (_timeElapsed >= TimeSpan.FromSeconds(1))
-			{
-				_timeElapsed -= TimeSpan.FromSeconds(1);
-				_fps = _frameCount;
-				_frameCount = 0;
-			}
-
 			base.Update(gameTime);
 		}
 
@@ -186,12 +173,10 @@ namespace Sharpcraft
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw(GameTime gameTime)
 		{
-			_frameCount++;
 
-			GraphicsDevice.Clear(Color.CornflowerBlue);
+			GraphicsDevice.Clear(_gameMenuOpen ? Color.Black : Color.CornflowerBlue);
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_crosshair, new Vector2(Mouse.GetState().X - 24, Mouse.GetState().Y - 24), Color.White);
-			_spriteBatch.DrawString(_fpsFont, "FPS: " + _fps, new Vector2(32, 32), Color.Black);
 			_spriteBatch.End();
 
 			base.Draw(gameTime);

@@ -52,6 +52,22 @@ with.
   -->
     <CharacterRegions>
       <CharacterRegion>
+        <Start>A</Start>
+        <End>A</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>C</Start>
+        <End>C</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>E</Start>
+        <End>E</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>L</Start>
+        <End>L</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>F</Start>
         <End>F</End>
       </CharacterRegion>
@@ -62,6 +78,10 @@ with.
       <CharacterRegion>
         <Start>S</Start>
         <End>S</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>.</Start>
+        <End>.</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>:</Start>
