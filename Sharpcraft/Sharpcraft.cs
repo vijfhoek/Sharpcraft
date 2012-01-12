@@ -50,7 +50,14 @@ namespace Sharpcraft
 		private bool _menuToggling;
 		private bool _inServer = true;
 
+		private bool _debugToggling;
+
+		private Texture2D _crosshair;
+		private SpriteFont _fpsFont;
+
 		private User _user;
+
+		private FrameRateCounter _fpsCounter;
 
 		/// <summary>
 		/// Initializes a new instance of Sharpcraft.
@@ -58,12 +65,17 @@ namespace Sharpcraft
 		public Sharpcraft(User user)
 		{
 			_log = LogManager.GetLogger(this);
+			_user = user;
 			_log.Debug("Initializing graphics device.");
-			_graphics = new GraphicsDeviceManager(this);
-			_graphics.PreferredBackBufferWidth = 1280;
-			_graphics.PreferredBackBufferHeight = 720;
+			_graphics = new GraphicsDeviceManager(this)
+			{
+				PreferredBackBufferWidth = 1280,
+				PreferredBackBufferHeight = 720
+			};
 			_log.Debug("Setting content directory.");
 			Content.RootDirectory = "content";
+			_fpsCounter = new FrameRateCounter(this);
+			Components.Add(_fpsCounter);
 		}
 
 		/// <summary>
@@ -123,7 +135,8 @@ namespace Sharpcraft
 			// Create a new SpriteBatch, which can be used to draw textures.
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
-			// TODO: use this.Content to load your game content here
+			_crosshair = Content.Load<Texture2D>("crosshair");
+			_log.Debug("LoadContent(); ## END ##");
 		}
 
 		/// <summary>
@@ -136,6 +149,7 @@ namespace Sharpcraft
 			_log.Debug("UnloadContent();");
 			// TODO: Unload any non ContentManager content here
 			SteamManager.Close();
+			_log.Debug("UnloadContent(); ## END ##");
 		}
 
 		/// <summary>
@@ -152,10 +166,36 @@ namespace Sharpcraft
 				ToggleGameMenu();
 			if (Keyboard.GetState().IsKeyUp(Keys.Escape))
 				_menuToggling = false;
-
+			if (Keyboard.GetState().IsKeyDown(Keys.F3))
+			{
+				if (!_debugToggling)
+				{
+					_debugToggling = true;
+					_fpsCounter.FpsEnabled = !_fpsCounter.FpsEnabled;
+					_log.Debug("Debug is now " + (_fpsCounter.FpsEnabled ? "enabled" : "disabled"));
+				}
+			}
+			if (Keyboard.GetState().IsKeyUp(Keys.F3))
+				_debugToggling = false;
 			// TODO: Add your update logic here
 
+			
+
 			base.Update(gameTime);
+		}
+
+		/// <summary>
+		/// This is called when the game should draw itself.
+		/// </summary>
+		/// <param name="gameTime">Provides a snapshot of timing values.</param>
+		protected override void Draw(GameTime gameTime)
+		{
+			GraphicsDevice.Clear(_gameMenuOpen ? Color.Black : Color.CornflowerBlue);
+			_spriteBatch.Begin();
+			_spriteBatch.Draw(_crosshair, new Vector2(Mouse.GetState().X - 24, Mouse.GetState().Y - 24), Color.White);
+			_spriteBatch.End();
+
+			base.Draw(gameTime);
 		}
 
 		private void ToggleGameMenu()
@@ -165,19 +205,6 @@ namespace Sharpcraft
 			_menuToggling = true;
 			_gameMenuOpen = !_gameMenuOpen;
 			_log.Debug("Game menu is now " + (_gameMenuOpen ? "open" : "closed"));
-		}
-
-		/// <summary>
-		/// This is called when the game should draw itself.
-		/// </summary>
-		/// <param name="gameTime">Provides a snapshot of timing values.</param>
-		protected override void Draw(GameTime gameTime)
-		{
-			GraphicsDevice.Clear(Color.CornflowerBlue);
-
-			// TODO: Add your drawing code here
-
-			base.Draw(gameTime);
 		}
 	}
 }
