@@ -26,6 +26,8 @@ namespace Sharpcraft
 		private int _frameCount;
 		private TimeSpan _elapsed = TimeSpan.Zero;
 
+		internal bool FpsEnabled;
+
 		internal FrameRateCounter(Game game) : base(game)
 		{
 			_content = new ContentManager(game.Services, "content");
@@ -61,6 +63,9 @@ namespace Sharpcraft
 		public override void Draw(GameTime gameTime)
 		{
 			_frameCount++;
+
+			if (!FpsEnabled)
+				return;
 
 			_spriteBatch.Begin();
 			_spriteBatch.DrawString(_font, "FPS: " + _fps, new Vector2(32, 32), Color.Black);

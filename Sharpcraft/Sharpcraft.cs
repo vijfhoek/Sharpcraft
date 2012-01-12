@@ -50,10 +50,14 @@ namespace Sharpcraft
 		private bool _menuToggling;
 		private bool _inServer = true;
 
+		private bool _debugToggling;
+
 		private Texture2D _crosshair;
 		private SpriteFont _fpsFont;
 
 		private User _user;
+
+		private FrameRateCounter _fpsCounter;
 
 		/// <summary>
 		/// Initializes a new instance of Sharpcraft.
@@ -70,7 +74,8 @@ namespace Sharpcraft
 			};
 			_log.Debug("Setting content directory.");
 			Content.RootDirectory = "content";
-			Components.Add(new FrameRateCounter(this));
+			_fpsCounter = new FrameRateCounter(this);
+			Components.Add(_fpsCounter);
 		}
 
 		/// <summary>
@@ -161,8 +166,20 @@ namespace Sharpcraft
 				ToggleGameMenu();
 			if (Keyboard.GetState().IsKeyUp(Keys.Escape))
 				_menuToggling = false;
-
+			if (Keyboard.GetState().IsKeyDown(Keys.F3))
+			{
+				if (!_debugToggling)
+				{
+					_debugToggling = true;
+					_fpsCounter.FpsEnabled = !_fpsCounter.FpsEnabled;
+					_log.Debug("Debug is now " + (_fpsCounter.FpsEnabled ? "enabled" : "disabled"));
+				}
+			}
+			if (Keyboard.GetState().IsKeyUp(Keys.F3))
+				_debugToggling = false;
 			// TODO: Add your update logic here
+
+			
 
 			base.Update(gameTime);
 		}
@@ -173,7 +190,6 @@ namespace Sharpcraft
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw(GameTime gameTime)
 		{
-
 			GraphicsDevice.Clear(_gameMenuOpen ? Color.Black : Color.CornflowerBlue);
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_crosshair, new Vector2(Mouse.GetState().X - 24, Mouse.GetState().Y - 24), Color.White);
