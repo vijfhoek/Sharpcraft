@@ -9,6 +9,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
@@ -97,6 +98,9 @@ namespace Sharpcraft
 				if (args[0].ToLower() == "debug")
 					debug = true;
 
+			if (string.IsNullOrEmpty(Thread.CurrentThread.Name))
+				Thread.CurrentThread.Name = "Main";
+
 			if (debug && !System.Diagnostics.Debugger.IsAttached)
 			{
 				AllocConsole();
@@ -131,7 +135,7 @@ namespace Sharpcraft
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
 #if SC_DIRECT
-				new Sharpcraft().Run();
+				new Sharpcraft(null).Run();
 #else
 				_log.Debug("Starting launcher...");
 				_launcher = new Launcher();

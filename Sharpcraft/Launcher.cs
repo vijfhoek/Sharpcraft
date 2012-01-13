@@ -234,7 +234,7 @@ namespace Sharpcraft
 				return;
 			Enabled = false;
 			_user = new User(UserBox.Text);
-			_loginThread = new Thread(() => _auth.Login(_user.GetName(), PassBox.Text));
+			_loginThread = new Thread(() => _auth.Login(_user.GetName(), PassBox.Text)) {Name = "Login"};
 			_loginThread.Start();
 		}
 
@@ -258,7 +258,7 @@ namespace Sharpcraft
 			try
 			{
 				_log.Debug("Creating game thread.");
-				_gameThread = new Thread(RunGame);
+				_gameThread = new Thread(RunGame) {Name = "Game"};
 				//_gameThread.Name = "SharpcraftClientThread";
 				_log.Info("Starting game thread...");
 				_gameThread.Start();
