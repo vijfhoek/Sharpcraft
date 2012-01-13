@@ -53,11 +53,11 @@ namespace Sharpcraft
 		private bool _debugToggling;
 
 		private Texture2D _crosshair;
-		private SpriteFont _fpsFont;
+		private SpriteFont _menuFont;
 
 		private User _user;
 
-		private FrameRateCounter _fpsCounter;
+		private readonly FrameRateCounter _fpsCounter;
 
 		/// <summary>
 		/// Initializes a new instance of Sharpcraft.
@@ -136,6 +136,7 @@ namespace Sharpcraft
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			_crosshair = Content.Load<Texture2D>("crosshair");
+			_menuFont = Content.Load<SpriteFont>("fonts\\font_menu");
 			_log.Debug("LoadContent(); ## END ##");
 		}
 
@@ -177,9 +178,9 @@ namespace Sharpcraft
 			}
 			if (Keyboard.GetState().IsKeyUp(Keys.F3))
 				_debugToggling = false;
-			// TODO: Add your update logic here
 
-			
+			if (!_gameMenuOpen && IsActive)
+				Mouse.SetPosition(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
 
 			base.Update(gameTime);
 		}
@@ -190,12 +191,20 @@ namespace Sharpcraft
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw(GameTime gameTime)
 		{
-			GraphicsDevice.Clear(_gameMenuOpen ? Color.Black : Color.CornflowerBlue);
+			GraphicsDevice.Clear(Color.CornflowerBlue);
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_crosshair, new Vector2(Mouse.GetState().X - 24, Mouse.GetState().Y - 24), Color.White);
+			if (_gameMenuOpen)
+				_spriteBatch.DrawString(_menuFont, "!!! GAME MENU OPEN !!!", new Vector2((float) GraphicsDevice.Viewport.Width / 2 - 220, (float) GraphicsDevice.Viewport.Height / 2 - 8), Color.Yellow);
 			_spriteBatch.End();
-
+			
 			base.Draw(gameTime);
+		}
+
+		protected override void OnDeactivated(object sender, EventArgs args)
+		{
+			_gameMenuOpen = true;
+			base.OnDeactivated(sender, args);
 		}
 
 		private void ToggleGameMenu()

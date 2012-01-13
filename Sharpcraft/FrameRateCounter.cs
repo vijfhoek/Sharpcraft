@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -33,12 +34,20 @@ namespace Sharpcraft
 			_content = new ContentManager(game.Services, "content");
 		}
 
+		/// <summary>
+		/// LoadContent will be called once per game and is the place to load
+		/// all of your content.
+		/// </summary>
 		protected override void LoadContent()
 		{
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
-			_font = _content.Load<SpriteFont>("Font");
+			_font = _content.Load<SpriteFont>("fonts\\font_debug");
 		}
 
+		/// <summary>
+		/// UnloadContent will be called once per game and is the place to unload
+		/// all content.
+		/// </summary>
 		protected override void UnloadContent()
 		{
 			_content.Unload();
@@ -60,6 +69,10 @@ namespace Sharpcraft
 			}
 		}
 
+		/// <summary>
+		/// This is called when the game should draw itself.
+		/// </summary>
+		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		public override void Draw(GameTime gameTime)
 		{
 			_frameCount++;
@@ -71,6 +84,8 @@ namespace Sharpcraft
 			_spriteBatch.DrawString(_font, "FPS: " + _fps, new Vector2(32, 32), Color.Black);
 			_spriteBatch.DrawString(_font, "FC:  " + _frameCount, new Vector2(32, 48), Color.Black);
 			_spriteBatch.DrawString(_font, "ELA: " + _elapsed, new Vector2(32, 64), Color.Black);
+			_spriteBatch.DrawString(_font, "M_X: " + Mouse.GetState().X, new Vector2(32, 80), Color.Black);
+			_spriteBatch.DrawString(_font, "M_Y: " + Mouse.GetState().Y, new Vector2(32, 96), Color.Black);
 			_spriteBatch.End();
 		}
 	}
