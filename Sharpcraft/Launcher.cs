@@ -1,11 +1,15 @@
 ﻿using System;
+using System.IO;
 using System.Drawing;
 using System.Threading;
 using System.Diagnostics;
 using System.Windows.Forms;
 
+using Newtonsoft.Json;
+
 using Sharpcraft.Logging;
 using Sharpcraft.Networking;
+using Sharpcraft.Library.Configuration;
 
 namespace Sharpcraft
 {
@@ -23,6 +27,8 @@ namespace Sharpcraft
 		/// Log object for this class.
 		/// </summary>
 		private readonly log4net.ILog _log;
+
+		private readonly LauncherSettings _settings;
 
 		/// <summary>
 		/// Sharpcraft game object.
@@ -81,6 +87,31 @@ namespace Sharpcraft
 			PassBox.PasswordChar = (char) 0x25CF;
 			_auth = new Authenticator(McVersion);
 			_auth.OnLoginEvent += LoginEvent;
+			if (File.Exists(SharpcraftConstants.LauncherSettings))
+			{
+				_log.Info("Loading launcher settings from file...");
+				var reader = new StreamReader(SharpcraftConstants.LauncherSettings);
+				_settings = new JsonSerializer().Deserialize<LauncherSettings>(new JsonTextReader(reader));
+				_log.Info("Launcher settings loaded successfully!");
+				reader.Close();
+			}
+			else
+			{
+				_settings = new LauncherSettings(SharpcraftConstants.LauncherSettings);
+			}
+			if (!string.IsNullOrEmpty(_settings.Username))
+			{
+				_userBoxInactive = false;
+				UserBox.Text = _settings.Username;
+				UserBox.ForeColor = Color.Black;
+			}
+			RememberCheckbox.Checked = _settings.Remember;
+			if (_settings.Remember && !string.IsNullOrEmpty(_settings.GetPassword()))
+			{
+				_passBoxInactive = false;
+				PassBox.Text = _settings.GetPassword();
+				PassBox.ForeColor = Color.Black;
+			}
 			UpdateForm();
 			_log.Info("Launcher initialized.");
 		}
@@ -234,7 +265,12 @@ namespace Sharpcraft
 				return;
 			Enabled = false;
 			_user = new User(UserBox.Text);
-			_loginThread = new Thread(() => _auth.Login(_user.GetName(), PassBox.Text));
+			_settings.Username = _user.GetName();
+			_settings.Remember = RememberCheckbox.Checked;
+			if (_settings.Remember)
+				_settings.SetPassword(PassBox.Text);
+			_settings.WriteToFile();
+			_loginThread = new Thread(() => _auth.Login(_user.GetName(), PassBox.Text)) {Name = "Login"};
 			_loginThread.Start();
 		}
 
@@ -258,7 +294,7 @@ namespace Sharpcraft
 			try
 			{
 				_log.Debug("Creating game thread.");
-				_gameThread = new Thread(RunGame);
+				_gameThread = new Thread(RunGame) {Name = "Game"};
 				//_gameThread.Name = "SharpcraftClientThread";
 				_log.Info("Starting game thread...");
 				_gameThread.Start();

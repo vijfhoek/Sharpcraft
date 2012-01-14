@@ -68,6 +68,10 @@ with.
         <End>L</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>M</Start>
+        <End>M</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>F</Start>
         <End>F</End>
       </CharacterRegion>
@@ -80,6 +84,10 @@ with.
         <End>S</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>X</Start>
+        <End>Z</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>.</Start>
         <End>.</End>
       </CharacterRegion>
@@ -90,6 +98,14 @@ with.
       <CharacterRegion>
         <Start> </Start>
         <End> </End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>_</Start>
+        <End>_</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>-</Start>
+        <End>-</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>0</Start>
