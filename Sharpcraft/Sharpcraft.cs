@@ -24,6 +24,7 @@ using Sharpcraft.Forms;
 using Sharpcraft.Logging;
 using Sharpcraft.Networking;
 using Sharpcraft.Components.Debug;
+using Sharpcraft.Library.Configuration;
 
 namespace Sharpcraft
 {
@@ -37,6 +38,8 @@ namespace Sharpcraft
 		/// Log object for this class.
 		/// </summary>
 		private readonly log4net.ILog _log;
+
+		private readonly GameSettings _settings;
 
 		/// <summary>
 		/// The graphics device manager.
@@ -62,6 +65,7 @@ namespace Sharpcraft
 		public Sharpcraft(User user)
 		{
 			_log = LogManager.GetLogger(this);
+			_settings = new GameSettings(SharpcraftConstants.GameSettings);
 			_user = user;
 			_log.Debug("Initializing graphics device.");
 			_graphics = new GraphicsDeviceManager(this)

@@ -1,15 +1,14 @@
-﻿using System;
-using System.IO;
-
-using Newtonsoft.Json;
-
-namespace Sharpcraft.Library.Configuration
+﻿namespace Sharpcraft.Library.Configuration
 {
-	class GameSettings : Settings
+	/// <summary>
+	/// Settings related to the game (Sharpcraft).
+	/// </summary>
+	public class GameSettings : Settings
 	{
-		public GameSettings(string settingsFile) : base(settingsFile)
-		{
-			
-		}
+		/// <summary>
+		/// Initializes a new instance of <c>GameSettings</c>.
+		/// </summary>
+		/// <param name="settingsFile">The settings file to use.</param>
+		public GameSettings(string settingsFile) : base(settingsFile) { }
 	}
 }
