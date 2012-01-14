@@ -66,6 +66,8 @@ namespace Sharpcraft.Steam
 		/// <param name="state">N/A (Not Used)</param>
 		private void Update(object state)
 		{
+			if (string.IsNullOrEmpty(Thread.CurrentThread.Name))
+				Thread.CurrentThread.Name = "SteamFriendUpdate";
 			_log.Debug("Updating Steam friends...");
 			LoadFriends();
 			_log.Info("Steam friends updated!");
