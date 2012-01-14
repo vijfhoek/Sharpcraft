@@ -110,10 +110,10 @@ namespace Sharpcraft.Networking
 		/// <returns><see cref="LoginResult" /> struct containing details about the result.</returns>
 		public LoginResult Login(string username, string password)
 		{
-			_log.Info("Sending HTTPS POST request to " + AuthAddress);
 			string data = string.Format(AuthData, username, password, _version);
 
 			// Create HTTPS POST request
+			_log.Debug("Creating HTTPS request...");
 			var request = (HttpWebRequest) WebRequest.Create(AuthAddress);
 			request.Method = "POST";
 			request.KeepAlive = false;
@@ -130,10 +130,12 @@ namespace Sharpcraft.Networking
 			Stream stream;
 			try
 			{
+				_log.Debug("Getting request stream...");
 				stream = request.GetRequestStream();
 			}
 			catch(WebException ex)
 			{
+				_log.Warn("Failed to contact " + AuthAddress + ". " + ex.GetType() + ": " + ex.Message);
 				var result = new LoginResult(false, "Failed to contact " + AuthAddress + ". "
 													+ ex.GetType() + " thrown with message: " + ex.Message);
 				LoginEvent(new LoginEventArgs(result));
@@ -141,11 +143,27 @@ namespace Sharpcraft.Networking
 			}
 
 			// Send request
+			_log.Info("Sending HTTPS POST request to " + AuthAddress);
 			stream.Write(postData, 0, postData.Length);
 			stream.Close();
 
 			// Get response
-			var response = (HttpWebResponse) request.GetResponse();
+			HttpWebResponse response;
+			try
+			{
+				_log.Debug("Retrieving response from request...");
+				response = (HttpWebResponse) request.GetResponse();
+			}
+			catch (WebException ex)
+			{
+				_log.Warn("Failed to retrieve response from " + AuthAddress + ". " + ex.GetType() + ": " + ex.Message);
+				var result = new LoginResult(false, "Failed to retrieve response from " + AuthAddress + ". "
+											+ ex.GetType() + " thrown with message: " + ex.Message);
+				LoginEvent(new LoginEventArgs(result));
+				return result;
+			}
+
+			_log.Debug("Creating response stream...");
 			Stream responseStream = response.GetResponseStream();
 			if (responseStream == null)
 			{
@@ -154,6 +172,8 @@ namespace Sharpcraft.Networking
 				LoginEvent(new LoginEventArgs(result));
 				return result;
 			}
+
+			_log.Debug("Creating response reader...");
 			var reader = new StreamReader(responseStream);
 			string responseString = reader.ReadToEnd();
 
@@ -170,6 +190,7 @@ namespace Sharpcraft.Networking
 				LoginEvent(new LoginEventArgs(result));
 				return result;
 			}
+
 			LoginEvent(new LoginEventArgs(new LoginResult(true, responseString, responseArray[2], responseArray[3])));
 			return new LoginResult(true, responseString, responseArray[2], responseArray[3]);
 		}

@@ -23,6 +23,8 @@ using Sharpcraft.Steam;
 using Sharpcraft.Forms;
 using Sharpcraft.Logging;
 using Sharpcraft.Networking;
+using Sharpcraft.Components.Debug;
+using Sharpcraft.Library.Configuration;
 
 namespace Sharpcraft
 {
@@ -37,6 +39,8 @@ namespace Sharpcraft
 		/// </summary>
 		private readonly log4net.ILog _log;
 
+		private readonly GameSettings _settings;
+
 		/// <summary>
 		/// The graphics device manager.
 		/// </summary>
@@ -50,14 +54,10 @@ namespace Sharpcraft
 		private bool _menuToggling;
 		private bool _inServer = true;
 
-		private bool _debugToggling;
-
 		private Texture2D _crosshair;
-		private SpriteFont _fpsFont;
+		private SpriteFont _menuFont;
 
 		private User _user;
-
-		private FrameRateCounter _fpsCounter;
 
 		/// <summary>
 		/// Initializes a new instance of Sharpcraft.
@@ -65,6 +65,7 @@ namespace Sharpcraft
 		public Sharpcraft(User user)
 		{
 			_log = LogManager.GetLogger(this);
+			_settings = new GameSettings(SharpcraftConstants.GameSettings);
 			_user = user;
 			_log.Debug("Initializing graphics device.");
 			_graphics = new GraphicsDeviceManager(this)
@@ -73,9 +74,12 @@ namespace Sharpcraft
 				PreferredBackBufferHeight = 720
 			};
 			_log.Debug("Setting content directory.");
-			Content.RootDirectory = "content";
-			_fpsCounter = new FrameRateCounter(this);
-			Components.Add(_fpsCounter);
+			Content.RootDirectory = SharpcraftConstants.ContentDirectory;
+			_log.Debug("Creating DebugDisplay...");
+			Components.Add(new DebugDisplay(this));
+#if DEBUG
+			_gameMenuOpen = true;
+#endif
 		}
 
 		/// <summary>
@@ -136,6 +140,7 @@ namespace Sharpcraft
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			_crosshair = Content.Load<Texture2D>("crosshair");
+			_menuFont = Content.Load<SpriteFont>(SharpcraftConstants.MenuFont);
 			_log.Debug("LoadContent(); ## END ##");
 		}
 
@@ -160,26 +165,14 @@ namespace Sharpcraft
 		protected override void Update(GameTime gameTime)
 		{
 			// Allows the game to exit
-			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-				Exit();
 			if (Keyboard.GetState().IsKeyDown(Keys.Escape))
 				ToggleGameMenu();
+
 			if (Keyboard.GetState().IsKeyUp(Keys.Escape))
 				_menuToggling = false;
-			if (Keyboard.GetState().IsKeyDown(Keys.F3))
-			{
-				if (!_debugToggling)
-				{
-					_debugToggling = true;
-					_fpsCounter.FpsEnabled = !_fpsCounter.FpsEnabled;
-					_log.Debug("Debug is now " + (_fpsCounter.FpsEnabled ? "enabled" : "disabled"));
-				}
-			}
-			if (Keyboard.GetState().IsKeyUp(Keys.F3))
-				_debugToggling = false;
-			// TODO: Add your update logic here
 
-			
+			if (!_gameMenuOpen && IsActive)
+				Mouse.SetPosition(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
 
 			base.Update(gameTime);
 		}
@@ -190,12 +183,26 @@ namespace Sharpcraft
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw(GameTime gameTime)
 		{
-			GraphicsDevice.Clear(_gameMenuOpen ? Color.Black : Color.CornflowerBlue);
+			GraphicsDevice.Clear(Color.CornflowerBlue);
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_crosshair, new Vector2(Mouse.GetState().X - 24, Mouse.GetState().Y - 24), Color.White);
+			if (_gameMenuOpen)
+				_spriteBatch.DrawString(_menuFont, "!!! GAME MENU OPEN !!!", new Vector2((float) GraphicsDevice.Viewport.Width / 2 - 120, (float) GraphicsDevice.Viewport.Height / 2 + 20), Color.Yellow);
 			_spriteBatch.End();
-
+			
 			base.Draw(gameTime);
+		}
+
+		/// <summary>
+		/// Event handler for when the game loses focus.
+		/// </summary>
+		/// <param name="sender">N/A (Not Used) (See XNA Documentation)</param>
+		/// <param name="args">N/A (Not Used) (See XNA Documentation)</param>
+		/// <remarks>Displays game menu to allow mouse movement when game is minimized/in the background.</remarks>
+		protected override void OnDeactivated(object sender, EventArgs args)
+		{
+			_gameMenuOpen = true;
+			base.OnDeactivated(sender, args);
 		}
 
 		private void ToggleGameMenu()
