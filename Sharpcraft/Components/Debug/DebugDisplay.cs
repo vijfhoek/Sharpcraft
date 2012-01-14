@@ -42,12 +42,18 @@ namespace Sharpcraft.Components.Debug
 			game.Components.Add(new FrameRateDisplay(game));
 		}
 
+		/// <summary>
+		/// Loads all content used by <see cref="DebugDisplay" />.
+		/// </summary>
 		protected override void LoadContent()
 		{
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 			_font = _content.Load<SpriteFont>(SharpcraftConstants.DebugFont);
 		}
 
+		/// <summary>
+		/// Unloads content loaded by <see cref="LoadContent" />.
+		/// </summary>
 		protected override void UnloadContent()
 		{
 			_log.Debug("DebugDisplay is unloading!");
@@ -70,6 +76,10 @@ namespace Sharpcraft.Components.Debug
 				_debugToggling = false;
 		}
 
+		/// <summary>
+		/// Draws the debug information.
+		/// </summary>
+		/// <param name="gameTime">N/A (Not Used) (See XNA Documentation)</param>
 		public override void Draw(GameTime gameTime)
 		{
 			if (!_debugEnabled)

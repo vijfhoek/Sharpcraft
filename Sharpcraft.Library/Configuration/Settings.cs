@@ -9,9 +9,12 @@ namespace Sharpcraft.Library.Configuration
 	/// <summary>
 	/// Settings class used to store settings.
 	/// </summary>
-	internal class Settings
+	public class Settings
 	{
-		protected readonly log4net.ILog _log;
+		/// <summary>
+		/// The log object associated with this class.
+		/// </summary>
+		protected readonly log4net.ILog Log;
 
 		/// <summary>
 		/// The file used to store the settings of this settings class.
@@ -24,7 +27,7 @@ namespace Sharpcraft.Library.Configuration
 		/// <param name="settingsFile">The settings file associated with this class.</param>
 		protected Settings(string settingsFile)
 		{
-			_log = LogManager.GetLogger(this);
+			Log = LogManager.GetLogger(this);
 
 			_settingsFile = settingsFile;
 		}
@@ -34,12 +37,12 @@ namespace Sharpcraft.Library.Configuration
 		/// </summary>
 		public virtual void WriteToFile()
 		{
-			_log.Info("Saving settings to file...");
+			Log.Info("Saving settings to file...");
 			var writer = new StreamWriter(_settingsFile, false, System.Text.Encoding.UTF8);
 			var serializer = new JsonSerializer();
 			serializer.Serialize(writer, this);
 			writer.Close();
-			_log.Info("Settings saved to file successfully!");
+			Log.Info("Settings saved to file successfully!");
 		}
 	}
 }

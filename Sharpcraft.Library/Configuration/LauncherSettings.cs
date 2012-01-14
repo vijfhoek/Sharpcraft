@@ -64,6 +64,10 @@ namespace Sharpcraft.Library.Configuration
 			return Encoding.UTF8.GetString(pass.Select((c, i) => (byte) (c ^ (i % Key.Length))).ToArray());
 		}
 
+		/// <summary>
+		/// Write settings to the settings file.
+		/// </summary>
+		/// <remarks><see cref="LauncherSettings" /> overrides <see cref="Settings.WriteToFile" /> and logs any IO errors instead of crashing.</remarks>
 		public override void WriteToFile()
 		{
 			try
@@ -72,8 +76,8 @@ namespace Sharpcraft.Library.Configuration
 			}
 			catch(IOException ex)
 			{
-				_log.Error("Failed to write settings to file. " + ex.GetType() + " thrown with message: " + ex.Message);
-				_log.Error("Stack Trace:\n" + ex.StackTrace);
+				Log.Error("Failed to write settings to file. " + ex.GetType() + " thrown with message: " + ex.Message);
+				Log.Error("Stack Trace:\n" + ex.StackTrace);
 			}
 		}
 	}

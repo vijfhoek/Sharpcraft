@@ -189,6 +189,12 @@ namespace Sharpcraft
 			base.Draw(gameTime);
 		}
 
+		/// <summary>
+		/// Event handler for when the game loses focus.
+		/// </summary>
+		/// <param name="sender">N/A (Not Used) (See XNA Documentation)</param>
+		/// <param name="args">N/A (Not Used) (See XNA Documentation)</param>
+		/// <remarks>Displays game menu to allow mouse movement when game is minimized/in the background.</remarks>
 		protected override void OnDeactivated(object sender, EventArgs args)
 		{
 			_gameMenuOpen = true;
