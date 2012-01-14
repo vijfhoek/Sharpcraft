@@ -70,9 +70,12 @@ namespace Sharpcraft
 				PreferredBackBufferHeight = 720
 			};
 			_log.Debug("Setting content directory.");
-			Content.RootDirectory = "content";
+			Content.RootDirectory = SharpcraftConstants.ContentDirectory;
 			_log.Debug("Creating DebugDisplay...");
 			Components.Add(new DebugDisplay(this));
+#if DEBUG
+			_gameMenuOpen = true;
+#endif
 		}
 
 		/// <summary>
@@ -133,7 +136,7 @@ namespace Sharpcraft
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			_crosshair = Content.Load<Texture2D>("crosshair");
-			_menuFont = Content.Load<SpriteFont>("fonts\\font_menu");
+			_menuFont = Content.Load<SpriteFont>(SharpcraftConstants.MenuFont);
 			_log.Debug("LoadContent(); ## END ##");
 		}
 

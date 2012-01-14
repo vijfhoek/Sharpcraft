@@ -16,6 +16,7 @@ using Microsoft.Win32.SafeHandles;
 
 using Sharpcraft.Forms;
 using Sharpcraft.Logging;
+using Sharpcraft.Library.Configuration;
 
 namespace Sharpcraft
 {
@@ -111,6 +112,7 @@ namespace Sharpcraft
 				var stdOut = new StreamWriter(fileStream, encoding) {AutoFlush = true};
 				Console.SetOut(stdOut);
 			}
+
 			LogManager.LoadConfig(debug);
 			_log = LogManager.GetLogger(typeof (Program));
 			_log.Info("!!! APPLICATION LOAD !!!");
@@ -128,12 +130,18 @@ namespace Sharpcraft
 					_log.Info(name + " v" + version);
 				}
 			}
+
 			_log.Info("Components detected!");
 			_log.Info("Sharpcraft is loading...");
+
 			try
 			{
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
+
+				if (!Directory.Exists(SharpcraftConstants.SettingsDirectory))
+					Directory.CreateDirectory(SharpcraftConstants.SettingsDirectory);
+
 #if SC_DIRECT
 				new Sharpcraft(null).Run();
 #else

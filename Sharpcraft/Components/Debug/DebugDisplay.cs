@@ -32,12 +32,12 @@ namespace Sharpcraft.Components.Debug
 		/// <summary>
 		/// Initialize a new instance of <c>DebugDisplay</c>.
 		/// </summary>
-		/// <param name="game"></param>
+		/// <param name="game">The game instance.</param>
 		internal DebugDisplay(Game game) : base(game)
 		{
 			_log = LogManager.GetLogger(this);
 			_log.Debug("DebugDisplay created!");
-			_content = new ContentManager(game.Services, "content");
+			_content = new ContentManager(game.Services, SharpcraftConstants.ContentDirectory);
 			_log.Debug("Creating FrameRateDisplay...");
 			game.Components.Add(new FrameRateDisplay(game));
 		}
@@ -45,7 +45,7 @@ namespace Sharpcraft.Components.Debug
 		protected override void LoadContent()
 		{
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
-			_font = _content.Load<SpriteFont>("fonts\\font_debug");
+			_font = _content.Load<SpriteFont>(SharpcraftConstants.DebugFont);
 		}
 
 		protected override void UnloadContent()

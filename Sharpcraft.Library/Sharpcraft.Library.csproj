@@ -1,24 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{BF8396CA-EFC5-4D99-8F43-9504D3927614}</ProjectGuid>
+    <ProjectGuid>{5742ED23-A3B3-4303-95C2-B755A5A01D5D}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sharpcraft</RootNamespace>
-    <AssemblyName>Sharpcraft</AssemblyName>
+    <RootNamespace>Sharpcraft.Library</RootNamespace>
+    <AssemblyName>Sharpcraft.Library</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
     <XnaProfile>HiDef</XnaProfile>
-    <XnaCrossPlatformGroupID>f81ae5f0-81d8-4940-b8c5-9073bc4f610f</XnaCrossPlatformGroupID>
-    <XnaOutputType>Game</XnaOutputType>
-    <ApplicationIcon>Game.ico</ApplicationIcon>
-    <Thumbnail>GameThumbnail.png</Thumbnail>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <XnaCrossPlatformGroupID>70f3fa65-cdf9-431c-bb41-2500a2555f3a</XnaCrossPlatformGroupID>
+    <XnaOutputType>Library</XnaOutputType>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -31,6 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -46,7 +44,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>false</XnaCompressContent>
-    <DocumentationFile>bin\x86\Debug\Sharpcraft.xml</DocumentationFile>
+    <DocumentationFile>bin\x86\Debug\Sharpcraft.Library.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -61,8 +59,7 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="log4net">
       <HintPath>..\lib\log4net\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
@@ -95,23 +92,21 @@
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.0.5.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Newtonsoft.Json">
       <HintPath>..\lib\Json.NET\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Core">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Net">
@@ -119,51 +114,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\Debug\DebugDisplay.cs" />
-    <Compile Include="Components\Debug\FrameRateDisplay.cs" />
-    <Compile Include="Launcher.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Launcher.Designer.cs">
-      <DependentUpon>Launcher.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Configuration\GameSettings.cs" />
+    <Compile Include="Configuration\LauncherSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Sharpcraft.cs" />
-    <Compile Include="SharpcraftConstants.cs" />
-    <Compile Include="User.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Game.ico" />
-    <Content Include="GameThumbnail.png" />
-    <Content Include="LauncherBackground.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Sharpcraft.Library\Sharpcraft.Library.csproj">
-      <Project>{5742ED23-A3B3-4303-95C2-B755A5A01D5D}</Project>
-      <Name>Sharpcraft.Library</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sharpcraft.Logging\Sharpcraft.Logging.csproj">
-      <Project>{6F2B8AE1-CE58-43C1-8E5F-66537E543172}</Project>
-      <Name>Sharpcraft.Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sharpcraft.Networking\Sharpcraft.Networking.csproj">
-      <Project>{6B60AF16-B510-4D54-BC50-CC232B6826AE}</Project>
-      <Name>Sharpcraft.Networking</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sharpcraft.Forms\Sharpcraft.Forms.csproj">
-      <Project>{5B58612A-455C-4A60-8B2C-196F274E7EBA}</Project>
-      <Name>Sharpcraft.Forms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sharpcraft.Steam\Sharpcraft.Steam.csproj">
-      <Project>{C3DF80BE-E42E-4CE2-9CA0-EBA36EFAD79F}</Project>
-      <Name>Sharpcraft.Steam</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sharpcraft.Content\Sharpcraft.Content.contentproj">
-      <Name>Sharpcraft.Content %28content%29</Name>
-      <XnaReferenceType>Content</XnaReferenceType>
-      <Project>{710A3BC6-FD38-4B2A-92A6-558D79553473}</Project>
-    </ProjectReference>
+    <Compile Include="Configuration\Settings.cs" />
+    <Compile Include="StringUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
@@ -186,22 +141,18 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Xna.Framework.4.0">
-      <Visible>False</Visible>
-      <ProductName>Microsoft XNA Framework Redistributable 4.0</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Launcher.resx">
-      <DependentUpon>Launcher.cs</DependentUpon>
-    </EmbeddedResource>
+    <ProjectReference Include="..\Sharpcraft.Logging\Sharpcraft.Logging.csproj">
+      <Project>{6F2B8AE1-CE58-43C1-8E5F-66537E543172}</Project>
+      <Name>Sharpcraft.Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.TimeStamp" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.Increment.TimeStamp" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!--

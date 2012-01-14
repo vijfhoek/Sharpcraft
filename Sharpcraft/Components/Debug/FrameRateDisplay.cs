@@ -32,7 +32,7 @@ namespace Sharpcraft.Components.Debug
 		{
 			_log = LogManager.GetLogger(this);
 			_log.Debug("FrameRateDisplay created!");
-			_content = new ContentManager(game.Services, "content");
+			_content = new ContentManager(game.Services, SharpcraftConstants.ContentDirectory);
 		}
 
 		/// <summary>
@@ -42,7 +42,7 @@ namespace Sharpcraft.Components.Debug
 		protected override void LoadContent()
 		{
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
-			_font = _content.Load<SpriteFont>("fonts\\font_debug");
+			_font = _content.Load<SpriteFont>(SharpcraftConstants.DebugFont);
 		}
 
 		/// <summary>
