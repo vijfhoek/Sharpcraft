@@ -64,9 +64,6 @@ namespace Sharpcraft.Library.Configuration
 			return Encoding.UTF8.GetString(pass.Select((c, i) => (byte) (c ^ (i % Key.Length))).ToArray());
 		}
 
-		/// <summary>
-		/// Write settings to the settings file.
-		/// </summary>
 		public override void WriteToFile()
 		{
 			try
