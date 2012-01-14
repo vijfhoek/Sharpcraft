@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
+using System.Drawing;
 using System.Threading;
 using System.Diagnostics;
 using System.Windows.Forms;
+
 using Newtonsoft.Json;
+
 using Sharpcraft.Logging;
 using Sharpcraft.Networking;
 using Sharpcraft.Library.Configuration;
@@ -104,11 +106,6 @@ namespace Sharpcraft
 				UserBox.ForeColor = Color.Black;
 			}
 			RememberCheckbox.Checked = _settings.Remember;
-			string temp = _settings.GetPassword();
-			if (temp == null)
-				Console.WriteLine("PW IS NULL!");
-			if (temp == string.Empty)
-				Console.WriteLine("PW IS EMPTY!");
 			if (_settings.Remember && !string.IsNullOrEmpty(_settings.GetPassword()))
 			{
 				_passBoxInactive = false;

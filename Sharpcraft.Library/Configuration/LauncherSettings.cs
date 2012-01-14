@@ -7,20 +7,44 @@ using Newtonsoft.Json;
 
 namespace Sharpcraft.Library.Configuration
 {
+	/// <summary>
+	/// Used to store settings for the Sharpcraft launcher.
+	/// </summary>
 	public class LauncherSettings : Settings
 	{
+		/// <summary>
+		/// The key to use when encrypting and decrypting.
+		/// </summary>
 		[JsonIgnore]
 		private const string Key = "~L}%JiYK3&Vq]ezC";
 
+		/// <summary>
+		/// The username of the most recently logged in user.
+		/// </summary>
 		public string Username;
 
-		[JsonProperty]
+		/// <summary>
+		/// The user's password.
+		/// </summary>
+		[JsonProperty("Password")]
 		private string _password;
 
+		/// <summary>
+		/// Whether or not to remember the password.
+		/// </summary>
 		public bool Remember;
 
+		/// <summary>
+		/// Initialize a new instance of the <c>LauncherSettings</c> class.
+		/// </summary>
+		/// <param name="settingsFile">The file containing a JSON serialization of this object.</param>
 		public LauncherSettings(string settingsFile) : base(settingsFile) { }
 
+		/// <summary>
+		/// Set the user's password.
+		/// </summary>
+		/// <param name="password">Plaintext version of password.</param>
+		/// <remarks>The password will be encrypted using XOR and then converted into a Base64 string.</remarks>
 		public void SetPassword(string password)
 		{
 			var pass = Encoding.UTF8.GetBytes(password);
@@ -28,6 +52,10 @@ namespace Sharpcraft.Library.Configuration
 			_password = Convert.ToBase64String(data);
 		}
 
+		/// <summary>
+		/// Get plaintext version of the encrypted password.
+		/// </summary>
+		/// <returns>Plaintext version of password.</returns>
 		public string GetPassword()
 		{
 			if (string.IsNullOrEmpty(_password))
@@ -36,6 +64,9 @@ namespace Sharpcraft.Library.Configuration
 			return Encoding.UTF8.GetString(pass.Select((c, i) => (byte) (c ^ (i % Key.Length))).ToArray());
 		}
 
+		/// <summary>
+		/// Write settings to the settings file.
+		/// </summary>
 		public override void WriteToFile()
 		{
 			try
