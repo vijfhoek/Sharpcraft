@@ -19,6 +19,7 @@ namespace Sharpcraft.Library.Configuration
 		/// <summary>
 		/// The file used to store the settings of this settings class.
 		/// </summary>
+		[JsonProperty("SettingsFile")]
 		private readonly string _settingsFile;
 
 		/// <summary>
@@ -40,7 +41,7 @@ namespace Sharpcraft.Library.Configuration
 			Log.Info("Saving settings to file...");
 			var writer = new StreamWriter(_settingsFile, false, System.Text.Encoding.UTF8);
 			var serializer = new JsonSerializer();
-			serializer.Serialize(writer, this);
+			serializer.Serialize(new JsonTextWriter(writer) {Formatting = Formatting.Indented}, this);
 			writer.Close();
 			Log.Info("Settings saved to file successfully!");
 		}
