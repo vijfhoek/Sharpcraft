@@ -38,6 +38,7 @@
 		/// File used to store game settings.
 		/// </summary>
 		internal static string GameSettings { get { return SettingsDirectory + "\\game.settings"; } }
+		internal static string GitInfoFile { get { return SettingsDirectory + "\\gitinfo"; } }
 		#endregion
 	}
 }
