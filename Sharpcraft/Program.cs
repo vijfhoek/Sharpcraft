@@ -88,6 +88,7 @@ namespace Sharpcraft
 		/// The main entry point for the application.
 		/// </summary>
 		/// <param name="args">Command Line Arguments.</param>
+		[STAThread]
 		static void Main(string[] args)
 		{
 #if DEBUG
@@ -161,7 +162,18 @@ namespace Sharpcraft
 			{
 				_log.Fatal("Unknown exception " + ex.GetType() + " thrown. Writing exception info to logs\\exception.log");
 				WriteExceptionToFile(ex);
-				new ExceptionDialog(ex).ShowDialog();
+				string author = null;
+				using (var reader = new StreamReader(SharpcraftConstants.GitInfoFile))
+				{
+					var readLine = reader.ReadLine();
+					if (readLine != null)
+					{
+						string[] fields = readLine.Split(':');
+						if (fields.Length >= 3)
+							author = fields[2];
+					}
+				}
+				new ExceptionDialog(ex, author).ShowDialog();
 #if DEBUG
 				throw;
 #endif

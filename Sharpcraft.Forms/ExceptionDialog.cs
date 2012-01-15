@@ -13,6 +13,8 @@ namespace Sharpcraft.Forms
 		/// </summary>
 		private readonly Exception _exception;
 
+		private readonly string _author;
+
 		/// <summary>
 		/// The format passed to string.Format when constructing the exception message.
 		/// </summary>
@@ -22,9 +24,11 @@ namespace Sharpcraft.Forms
 		/// Initializes a new instance of ExceptionDialog.
 		/// </summary>
 		/// <param name="exception">The exception to show.</param>
-		public ExceptionDialog(Exception exception)
+		/// <param name="author">The author who built this version of Sharpcraft.</param>
+		public ExceptionDialog(Exception exception, string author = null)
 		{
 			InitializeComponent();
+			_author = author;
 			_exception = exception;
 			ExceptionLabel.Text = string.Format(ExceptionLabelFormat,
 												_exception.Source,
@@ -33,6 +37,21 @@ namespace Sharpcraft.Forms
 												_exception.InnerException == null ? "null" : _exception.InnerException.GetType().ToString());
 			ExceptionMessage.Text = _exception.Message;
 			ExceptionStackTrace.Text = _exception.StackTrace;
+			if (_exception.InnerException != null)
+			{
+				ExceptionMessage.Text += Environment.NewLine + Environment.NewLine + _exception.InnerException.Message;
+				ExceptionStackTrace.Text += Environment.NewLine + Environment.NewLine + _exception.InnerException.StackTrace;
+			}
+			if (string.IsNullOrEmpty(_author))
+			{
+				SendButton.Enabled = false;
+				ExtraInfoCheckbox.Enabled = false;
+			}
+			else
+			{
+				SendButton.Enabled = true;
+				ExtraInfoCheckbox.Enabled = true;
+			}
 		}
 
 		/// <summary>
@@ -43,6 +62,15 @@ namespace Sharpcraft.Forms
 		private void CloseButtonClick(object sender, EventArgs e)
 		{
 			Close();
+		}
+
+		private void SendButtonClick(object sender, EventArgs e)
+		{
+			var result = MessageBox.Show("This will open the GitHub issues page for Sharpcraft in your browser and present you with text to copy into it, continue?",
+										 "GitHub Issues", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+			if (result != DialogResult.Yes)
+				return;
+			new GitHubDialog(_exception, _author, ExtraInfoCheckbox.Checked).ShowDialog(this);
 		}
 	}
 }
