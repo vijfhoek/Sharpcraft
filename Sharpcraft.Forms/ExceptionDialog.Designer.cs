@@ -72,6 +72,7 @@
 			this.ExceptionMessage.Multiline = true;
 			this.ExceptionMessage.Name = "ExceptionMessage";
 			this.ExceptionMessage.ReadOnly = true;
+			this.ExceptionMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.ExceptionMessage.Size = new System.Drawing.Size(579, 81);
 			this.ExceptionMessage.TabIndex = 0;
 			// 
@@ -95,6 +96,7 @@
 			this.ExceptionStackTrace.Multiline = true;
 			this.ExceptionStackTrace.Name = "ExceptionStackTrace";
 			this.ExceptionStackTrace.ReadOnly = true;
+			this.ExceptionStackTrace.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.ExceptionStackTrace.Size = new System.Drawing.Size(579, 181);
 			this.ExceptionStackTrace.TabIndex = 0;
 			// 
@@ -102,17 +104,18 @@
 			// 
 			this.SendButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.SendButton.Enabled = false;
-			this.SendButton.Location = new System.Drawing.Point(5, 385);
+			this.SendButton.Location = new System.Drawing.Point(5, 376);
 			this.SendButton.Name = "SendButton";
 			this.SendButton.Size = new System.Drawing.Size(100, 35);
 			this.SendButton.TabIndex = 3;
 			this.SendButton.Text = "Send error report";
 			this.SendButton.UseVisualStyleBackColor = true;
+			this.SendButton.Click += new System.EventHandler(this.SendButtonClick);
 			// 
 			// CloseButton
 			// 
 			this.CloseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.CloseButton.Location = new System.Drawing.Point(490, 385);
+			this.CloseButton.Location = new System.Drawing.Point(486, 376);
 			this.CloseButton.Name = "CloseButton";
 			this.CloseButton.Size = new System.Drawing.Size(100, 35);
 			this.CloseButton.TabIndex = 4;
@@ -125,7 +128,7 @@
 			this.ExtraInfoCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.ExtraInfoCheckbox.AutoSize = true;
 			this.ExtraInfoCheckbox.Enabled = false;
-			this.ExtraInfoCheckbox.Location = new System.Drawing.Point(110, 395);
+			this.ExtraInfoCheckbox.Location = new System.Drawing.Point(110, 386);
 			this.ExtraInfoCheckbox.Name = "ExtraInfoCheckbox";
 			this.ExtraInfoCheckbox.Size = new System.Drawing.Size(152, 17);
 			this.ExtraInfoCheckbox.TabIndex = 5;
@@ -136,7 +139,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(594, 422);
+			this.ClientSize = new System.Drawing.Size(590, 418);
 			this.ControlBox = false;
 			this.Controls.Add(this.ExtraInfoCheckbox);
 			this.Controls.Add(this.CloseButton);

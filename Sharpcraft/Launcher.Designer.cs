@@ -39,6 +39,7 @@
 			this.RememberCheckbox = new System.Windows.Forms.CheckBox();
 			this.RegisterLink = new System.Windows.Forms.LinkLabel();
 			this.LoginButton = new System.Windows.Forms.Button();
+			this.VersionLabel = new System.Windows.Forms.Label();
 			this.InterfacePanel.SuspendLayout();
 			this.NewsPanel.SuspendLayout();
 			this.LoginPanel.SuspendLayout();
@@ -164,6 +165,20 @@
 			this.LoginButton.UseVisualStyleBackColor = true;
 			this.LoginButton.Click += new System.EventHandler(this.LoginButtonClick);
 			// 
+			// VersionLabel
+			// 
+			this.VersionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.VersionLabel.AutoSize = true;
+			this.VersionLabel.BackColor = System.Drawing.Color.Transparent;
+			this.VersionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.VersionLabel.ForeColor = System.Drawing.Color.White;
+			this.VersionLabel.Location = new System.Drawing.Point(6, 450);
+			this.VersionLabel.Name = "VersionLabel";
+			this.VersionLabel.Size = new System.Drawing.Size(113, 13);
+			this.VersionLabel.TabIndex = 1;
+			this.VersionLabel.Text = "Version {0} ({1}) by {2}";
+			this.VersionLabel.Click += new System.EventHandler(this.VersionLabelClick);
+			// 
 			// Launcher
 			// 
 			this.AcceptButton = this.LoginButton;
@@ -172,6 +187,7 @@
 			this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
 			this.ClientSize = new System.Drawing.Size(794, 472);
+			this.Controls.Add(this.VersionLabel);
 			this.Controls.Add(this.InterfacePanel);
 			this.DoubleBuffered = true;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -187,6 +203,7 @@
 			this.LoginPanel.ResumeLayout(false);
 			this.LoginPanel.PerformLayout();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -202,5 +219,6 @@
 		private System.Windows.Forms.CheckBox RememberCheckbox;
 		private System.Windows.Forms.LinkLabel RegisterLink;
 		private System.Windows.Forms.Button LoginButton;
+		private System.Windows.Forms.Label VersionLabel;
 	}
 }

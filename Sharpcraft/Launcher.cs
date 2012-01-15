@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Drawing;
+using System.Reflection;
 using System.Threading;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -65,6 +66,15 @@ namespace Sharpcraft
 		/// </summary>
 		private const int McVersion = 50;
 
+		private string _version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+		private string _hash = "DEVELOPMENT";
+		private string _shortHash = "DEVELOPMENT";
+		private string _author = "DEVELOPMENT";
+		private const string VersionFormat = "Version {0} ({1}) by {2}";
+		private const string LinkFormat = "https://github.com/{0}/Sharpcraft/commit/{1}";
+		private string VersionString { get { return string.Format(VersionFormat, _version, _shortHash, _author); } }
+		private string LinkString { get { return string.Format(LinkFormat, _author, _hash); } }
+
 		/// <summary>
 		/// Whether or not the username box is "inactive".
 		/// (Has no text and is out of focus).
@@ -87,6 +97,26 @@ namespace Sharpcraft
 			PassBox.PasswordChar = (char) 0x25CF;
 			_auth = new Authenticator(McVersion);
 			_auth.OnLoginEvent += LoginEvent;
+			if (File.Exists(SharpcraftConstants.GitInfoFile))
+			{
+				using (var reader = new StreamReader(SharpcraftConstants.GitInfoFile))
+				{
+					string content = reader.ReadLine();
+					if (!string.IsNullOrEmpty(content))
+					{
+						string[] gitInfo = content.Split(':');
+						if (gitInfo.Length >= 3)
+						{
+							_hash = gitInfo[0];
+							_shortHash = gitInfo[1];
+							_author = gitInfo[2];
+						}
+					}
+				}
+			}
+
+			VersionLabel.Text = VersionString;
+
 			if (File.Exists(SharpcraftConstants.LauncherSettings))
 			{
 				_log.Info("Loading launcher settings from file...");
@@ -167,6 +197,11 @@ namespace Sharpcraft
 				else
 					Hide();
 			}
+		}
+
+		private void VersionLabelClick(object sender, EventArgs e)
+		{
+			Process.Start(LinkString);
 		}
 
 		/// <summary>
