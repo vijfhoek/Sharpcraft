@@ -44,6 +44,9 @@ namespace Sharpcraft
 		/// </summary>
 		private readonly log4net.ILog _log;
 
+		/// <summary>
+		/// Settings specific for the game.
+		/// </summary>
 		private readonly GameSettings _settings;
 
 		/// <summary>
@@ -55,13 +58,34 @@ namespace Sharpcraft
 		/// </summary>
 		private SpriteBatch _spriteBatch;
 
+		/// <summary>
+		/// Whether or not the game menu should be rendered.
+		/// </summary>
 		private bool _gameMenuOpen;
+
+		/// <summary>
+		/// Whether or not the user is currently toggling the game menu.
+		/// </summary>
 		private bool _menuToggling;
+
+		/// <summary>
+		/// Whether or not the player is currently in a game server.
+		/// </summary>
 		private bool _inServer = true;
 
+		/// <summary>
+		/// The crosshair [DEBUG].
+		/// </summary>
 		private Texture2D _crosshair;
+
+		/// <summary>
+		/// Font used for the (pause) menu.
+		/// </summary>
 		private SpriteFont _menuFont;
 
+		/// <summary>
+		/// The user.
+		/// </summary>
 		private User _user;
 
 		/// <summary>
@@ -238,6 +262,11 @@ namespace Sharpcraft
 			_log.Debug("Game menu is now " + (_gameMenuOpen ? "open" : "closed"));
 		}
 
+		/// <summary>
+		/// Writes settings to file and then exits the game.
+		/// </summary>
+		/// <param name="sender">N/A (Not Used) (See XNA Documentation)</param>
+		/// <param name="args">N/A (Not Used) (See XNA Documentation)</param>
 		protected override void OnExiting(object sender, EventArgs args)
 		{
 			_settings.WriteToFile();
