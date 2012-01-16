@@ -5,7 +5,9 @@
  */
 
 using System;
+using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
@@ -19,11 +21,14 @@ using Microsoft.Xna.Framework.GamerServices;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 
+using Newtonsoft.Json;
+
 using Sharpcraft.Steam;
 using Sharpcraft.Forms;
 using Sharpcraft.Logging;
 using Sharpcraft.Networking;
 using Sharpcraft.Components.Debug;
+using Sharpcraft.Library.Minecraft;
 using Sharpcraft.Library.Configuration;
 
 namespace Sharpcraft
@@ -67,12 +72,27 @@ namespace Sharpcraft
 			_log = LogManager.GetLogger(this);
 			_settings = new GameSettings(SharpcraftConstants.GameSettings);
 			_user = user;
-			_log.Debug("Initializing graphics device.");
-			_graphics = new GraphicsDeviceManager(this)
+			if (File.Exists(SharpcraftConstants.GameSettings))
 			{
-				PreferredBackBufferWidth = 1280,
-				PreferredBackBufferHeight = 720
-			};
+				_log.Info("Loading game settings from file...");
+				var reader = new StreamReader(SharpcraftConstants.GameSettings);
+				_settings = new JsonSerializer().Deserialize<GameSettings>(new JsonTextReader(reader));
+				_log.Info("Game settings loaded successfully!");
+				reader.Close();
+			}
+			else
+			{
+				_settings = new GameSettings(SharpcraftConstants.GameSettings) {Size = new Point(1280, 720)};
+			}
+			_log.Debug("Initializing graphics device.");
+			_graphics = new GraphicsDeviceManager(this);
+			if (_settings.Fullscreen)
+			{
+				_graphics.IsFullScreen = true;
+				_settings.Size = new Point(SystemInformation.PrimaryMonitorSize.Width, SystemInformation.PrimaryMonitorSize.Height);
+			}
+			_graphics.PreferredBackBufferWidth = _settings.Size.X;
+			_graphics.PreferredBackBufferHeight = _settings.Size.Y;
 			_log.Debug("Setting content directory.");
 			Content.RootDirectory = SharpcraftConstants.ContentDirectory;
 			_log.Debug("Creating DebugDisplay...");
@@ -154,6 +174,7 @@ namespace Sharpcraft
 			_log.Debug("UnloadContent();");
 			// TODO: Unload any non ContentManager content here
 			SteamManager.Close();
+			
 			_log.Debug("UnloadContent(); ## END ##");
 		}
 
@@ -187,7 +208,10 @@ namespace Sharpcraft
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_crosshair, new Vector2(Mouse.GetState().X - 24, Mouse.GetState().Y - 24), Color.White);
 			if (_gameMenuOpen)
-				_spriteBatch.DrawString(_menuFont, "!!! GAME MENU OPEN !!!", new Vector2((float) GraphicsDevice.Viewport.Width / 2 - 120, (float) GraphicsDevice.Viewport.Height / 2 + 20), Color.Yellow);
+			{
+				float tWidth = _menuFont.MeasureString("!!! GAME MENU OPEN !!!").X;
+				_spriteBatch.DrawString(_menuFont, "!!! GAME MENU OPEN !!!", new Vector2((float) GraphicsDevice.Viewport.Width / 2 - tWidth / 2, (float) GraphicsDevice.Viewport.Height / 2 + _menuFont.LineSpacing), Color.Yellow);
+			}
 			_spriteBatch.End();
 			
 			base.Draw(gameTime);
@@ -212,6 +236,12 @@ namespace Sharpcraft
 			_menuToggling = true;
 			_gameMenuOpen = !_gameMenuOpen;
 			_log.Debug("Game menu is now " + (_gameMenuOpen ? "open" : "closed"));
+		}
+
+		protected override void OnExiting(object sender, EventArgs args)
+		{
+			_settings.WriteToFile();
+			base.OnExiting(sender, args);
 		}
 	}
 }

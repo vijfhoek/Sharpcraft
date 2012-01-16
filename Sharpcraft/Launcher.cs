@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Drawing;
 using System.Reflection;
@@ -70,9 +71,10 @@ namespace Sharpcraft
 		private string _hash = "DEVELOPMENT";
 		private string _shortHash = "DEVELOPMENT";
 		private string _author = "DEVELOPMENT";
-		private const string VersionFormat = "Version {0} ({1}) by {2}";
+		private DateTime _time = DateTime.Now;
+		private const string VersionFormat = "Version {0} ({1}) by {2} at {3}";
 		private const string LinkFormat = "https://github.com/{0}/Sharpcraft/commit/{1}";
-		private string VersionString { get { return string.Format(VersionFormat, _version, _shortHash, _author); } }
+		private string VersionString { get { return string.Format(VersionFormat, _version, _shortHash, _author, _time); } }
 		private string LinkString { get { return string.Format(LinkFormat, _author, _hash); } }
 
 		/// <summary>
@@ -105,11 +107,14 @@ namespace Sharpcraft
 					if (!string.IsNullOrEmpty(content))
 					{
 						string[] gitInfo = content.Split(':');
-						if (gitInfo.Length >= 3)
+						if (gitInfo.Length >= 4)
 						{
 							_hash = gitInfo[0];
 							_shortHash = gitInfo[1];
 							_author = gitInfo[2];
+							if (_author.Contains(" "))
+								_author = _author.Split(' ')[0];
+							_time = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(double.Parse(gitInfo[3])).ToLocalTime();
 						}
 					}
 				}

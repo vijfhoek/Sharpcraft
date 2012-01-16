@@ -20,9 +20,9 @@ namespace Sharpcraft.Components.Debug
 	/// </summary>
 	public class DebugDisplay : DrawableGameComponent
 	{
-		private log4net.ILog _log;
+		private readonly log4net.ILog _log;
 
-		private ContentManager _content;
+		private readonly ContentManager _content;
 		private SpriteBatch _spriteBatch;
 		private SpriteFont _font;
 
@@ -40,6 +40,7 @@ namespace Sharpcraft.Components.Debug
 			_content = new ContentManager(game.Services, SharpcraftConstants.ContentDirectory);
 			_log.Debug("Creating FrameRateDisplay...");
 			game.Components.Add(new FrameRateDisplay(game));
+			game.Exiting += (s, e) => UnloadContent();
 		}
 
 		/// <summary>
@@ -70,6 +71,7 @@ namespace Sharpcraft.Components.Debug
 			{
 				_debugToggling = true;
 				_debugEnabled = !_debugEnabled;
+				_log.Debug("Debug display is now " + (_debugEnabled ? "ENABLED" : "DISABLED"));
 			}
 
 			if (Keyboard.GetState().IsKeyUp(Keys.F3))
