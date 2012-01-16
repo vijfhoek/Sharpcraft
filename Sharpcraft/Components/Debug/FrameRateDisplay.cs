@@ -33,6 +33,7 @@ namespace Sharpcraft.Components.Debug
 			_log = LogManager.GetLogger(this);
 			_log.Debug("FrameRateDisplay created!");
 			_content = new ContentManager(game.Services, SharpcraftConstants.ContentDirectory);
+			game.Exiting += (s, e) => UnloadContent();
 		}
 
 		/// <summary>
