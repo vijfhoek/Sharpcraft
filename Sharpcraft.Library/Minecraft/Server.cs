@@ -26,12 +26,12 @@ namespace Sharpcraft.Library.Minecraft
 		public string Address;
 
 		/// <summary>
-		/// Server port, default is 25566.
+		/// Server port, default is 25565.
 		/// </summary>
 		private int _port;
 
 		/// <summary>
-		/// Server port, default is 25566.
+		/// Server port, default is 25565.
 		/// </summary>
 		public int Port
 		{
@@ -39,7 +39,7 @@ namespace Sharpcraft.Library.Minecraft
 			set
 			{
 				if (value < 0 || value > 65535)
-					_port = 25566;
+					_port = 25565;
 				else
 					_port = value;
 			}
@@ -112,7 +112,7 @@ namespace Sharpcraft.Library.Minecraft
 		/// <param name="online">Is the server online?</param>
 		/// <remarks>name and address are the only required parameters,
 		/// rest is optional and will be set to their default if omitted.</remarks>
-		public Server(string name, string address, int port = 25566, string description = "",
+		public Server(string name, string address, int port = 25565, string description = "",
 			int players = 0, int maxPlayers = 0, int ping = 0, bool online = false)
 		{
 			Name = name;
