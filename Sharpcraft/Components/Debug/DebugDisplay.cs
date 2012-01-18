@@ -22,6 +22,7 @@ namespace Sharpcraft.Components.Debug
 	{
 		private readonly log4net.ILog _log;
 
+		private readonly GraphicsDeviceManager _graphics;
 		private readonly ContentManager _content;
 		private SpriteBatch _spriteBatch;
 		private SpriteFont _font;
@@ -33,10 +34,12 @@ namespace Sharpcraft.Components.Debug
 		/// Initialize a new instance of <c>DebugDisplay</c>.
 		/// </summary>
 		/// <param name="game">The game instance.</param>
-		internal DebugDisplay(Game game) : base(game)
+		/// <param name="graphics">The graphics device manager.</param>
+		internal DebugDisplay(Game game, GraphicsDeviceManager graphics) : base(game)
 		{
 			_log = LogManager.GetLogger(this);
 			_log.Debug("DebugDisplay created!");
+			_graphics = graphics;
 			_content = new ContentManager(game.Services, SharpcraftConstants.ContentDirectory);
 			_log.Debug("Creating FrameRateDisplay...");
 			game.Components.Add(new FrameRateDisplay(game));
@@ -90,6 +93,8 @@ namespace Sharpcraft.Components.Debug
 			_spriteBatch.Begin();
 			_spriteBatch.DrawString(_font, "M_X: " + Mouse.GetState().X, new Vector2(32, 80), Color.Black);
 			_spriteBatch.DrawString(_font, "M_Y: " + Mouse.GetState().Y, new Vector2(32, 96), Color.Black);
+			if (_graphics.IsFullScreen)
+				_spriteBatch.DrawString(_font, "FULLSCREEN", new Vector2(32, 120), Color.Red);
 			_spriteBatch.End();
 		}
 	}

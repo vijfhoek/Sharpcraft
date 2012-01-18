@@ -28,8 +28,11 @@ using Sharpcraft.Forms;
 using Sharpcraft.Logging;
 using Sharpcraft.Networking;
 using Sharpcraft.Components.Debug;
+using Sharpcraft.Library.GUI;
 using Sharpcraft.Library.Minecraft;
 using Sharpcraft.Library.Configuration;
+
+using Label = Sharpcraft.Library.GUI.Label;
 
 namespace Sharpcraft
 {
@@ -68,6 +71,8 @@ namespace Sharpcraft
 		/// </summary>
 		private bool _menuToggling;
 
+		private bool _fullscreenToggling;
+
 		/// <summary>
 		/// Whether or not the player is currently in a game server.
 		/// </summary>
@@ -82,6 +87,8 @@ namespace Sharpcraft
 		/// Font used for the (pause) menu.
 		/// </summary>
 		private SpriteFont _menuFont;
+
+		private Label _menuLabel;
 
 		/// <summary>
 		/// The user.
@@ -120,7 +127,7 @@ namespace Sharpcraft
 			_log.Debug("Setting content directory.");
 			Content.RootDirectory = SharpcraftConstants.ContentDirectory;
 			_log.Debug("Creating DebugDisplay...");
-			Components.Add(new DebugDisplay(this));
+			Components.Add(new DebugDisplay(this, _graphics));
 #if DEBUG
 			_gameMenuOpen = true;
 #endif
@@ -185,6 +192,7 @@ namespace Sharpcraft
 
 			_crosshair = Content.Load<Texture2D>("crosshair");
 			_menuFont = Content.Load<SpriteFont>(SharpcraftConstants.MenuFont);
+			_menuLabel = new Label("!!! GAME MENU OPEN !!!", _menuFont, Color.Yellow);
 			_log.Debug("LoadContent(); ## END ##");
 		}
 
@@ -219,6 +227,12 @@ namespace Sharpcraft
 			if (!_gameMenuOpen && IsActive)
 				Mouse.SetPosition(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
 
+			if (Keyboard.GetState().IsKeyDown(Keys.LeftAlt) && Keyboard.GetState().IsKeyDown(Keys.Enter))
+				ToggleFullscreen();
+			else
+				_fullscreenToggling = false;
+			
+
 			base.Update(gameTime);
 		}
 
@@ -233,8 +247,12 @@ namespace Sharpcraft
 			_spriteBatch.Draw(_crosshair, new Vector2(Mouse.GetState().X - 24, Mouse.GetState().Y - 24), Color.White);
 			if (_gameMenuOpen)
 			{
-				float tWidth = _menuFont.MeasureString("!!! GAME MENU OPEN !!!").X;
-				_spriteBatch.DrawString(_menuFont, "!!! GAME MENU OPEN !!!", new Vector2((float) GraphicsDevice.Viewport.Width / 2 - tWidth / 2, (float) GraphicsDevice.Viewport.Height / 2 + _menuFont.LineSpacing), Color.Yellow);
+				//float tWidth = _menuFont.MeasureString("!!! GAME MENU OPEN !!!").X;
+				//_spriteBatch.DrawString(_menuFont, "!!! GAME MENU OPEN !!!", new Vector2((float) GraphicsDevice.Viewport.Width / 2 - tWidth / 2, (float) GraphicsDevice.Viewport.Height / 2 + _menuFont.LineSpacing), Color.Yellow);
+				var menuPos =
+					_menuLabel.GetCenterPosition(new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height),
+					                             new Vector2(0, _menuLabel.Height + 5));
+				_spriteBatch.DrawString(_menuLabel.Font, _menuLabel.Text, menuPos, _menuLabel.ForeColor);
 			}
 			_spriteBatch.End();
 			
@@ -260,6 +278,17 @@ namespace Sharpcraft
 			_menuToggling = true;
 			_gameMenuOpen = !_gameMenuOpen;
 			_log.Debug("Game menu is now " + (_gameMenuOpen ? "open" : "closed"));
+		}
+
+		private void ToggleFullscreen()
+		{
+			if (_fullscreenToggling)
+				return;
+			_fullscreenToggling = true;
+			_settings.Fullscreen = !_settings.Fullscreen;
+			_graphics.IsFullScreen = _settings.Fullscreen;
+			_graphics.ApplyChanges();
+			_log.Debug("Fullscreen is now " + (_settings.Fullscreen ? "enabled" : "disabled"));
 		}
 
 		/// <summary>
