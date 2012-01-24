@@ -94,7 +94,7 @@ namespace Sharpcraft.Components.Debug
 			_spriteBatch.DrawString(_font, "M_X: " + Mouse.GetState().X, new Vector2(32, 80), Color.Black);
 			_spriteBatch.DrawString(_font, "M_Y: " + Mouse.GetState().Y, new Vector2(32, 96), Color.Black);
 			if (_graphics.IsFullScreen)
-				_spriteBatch.DrawString(_font, "FULLSCREEN", new Vector2(32, 120), Color.Red);
+				_spriteBatch.DrawString(_font, "FULLSCREEN", new Vector2(32, 152), Color.Red);
 			_spriteBatch.End();
 		}
 	}
