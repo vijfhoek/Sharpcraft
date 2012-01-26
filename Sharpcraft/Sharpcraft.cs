@@ -172,6 +172,15 @@ namespace Sharpcraft
 				_log.Info("Steam not installed or not running, Steam functionality will NOT be available.");
 			}
 
+			// /!\ WARNING /!\
+			// Ugly debug code ahead!
+			_log.Debug("Starting debug connection...");
+			var server = new Server("F16Gaming Test", "localhost", 25565, "The test server", 0, 0, 0, true);
+			var player = new Player("Sharpcraft");
+			var client = new Client(server, player);
+			client.Connect();
+			_log.Debug("Reached end of debug connection!");
+
 			/* Commented out by Vijfhoek:
 			 * Removed code seeing that we will add it somewhere else later.
 			_log.Debug("Creating protocol...");

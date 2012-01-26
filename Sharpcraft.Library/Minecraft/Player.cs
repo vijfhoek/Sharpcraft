@@ -47,6 +47,8 @@ namespace Sharpcraft.Library.Minecraft
 			Name = name;
 			_skin = new Skin(skin);
 			_position = position;
+			if (_skin.GetTexture() == null)
+				return;
 			if (_skin.GetTexture().Width != SkinWidth || _skin.GetTexture().Height != SkinHeight)
 			{
 				// Set the skin to default player skin (Steve)
