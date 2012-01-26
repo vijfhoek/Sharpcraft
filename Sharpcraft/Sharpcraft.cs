@@ -56,6 +56,7 @@ namespace Sharpcraft
 		/// The graphics device manager.
 		/// </summary>
 		private GraphicsDeviceManager _graphics;
+
 		/// <summary>
 		/// Sprite batch.
 		/// </summary>
@@ -71,6 +72,9 @@ namespace Sharpcraft
 		/// </summary>
 		private bool _menuToggling;
 
+		/// <summary>
+		/// Whether or not fullscreen mode is currently toggling.
+		/// </summary>
 		private bool _fullscreenToggling;
 
 		/// <summary>
@@ -88,6 +92,9 @@ namespace Sharpcraft
 		/// </summary>
 		private SpriteFont _menuFont;
 
+		/// <summary>
+		/// The label used for the in-game pause menu.
+		/// </summary>
 		private Label _menuLabel;
 
 		/// <summary>

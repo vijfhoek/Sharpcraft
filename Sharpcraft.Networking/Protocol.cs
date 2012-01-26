@@ -19,14 +19,20 @@ namespace Sharpcraft.Networking
 	{
 		private readonly log4net.ILog _log;
 
-		private readonly TcpClient _client = new TcpClient();
+		private readonly TcpClient _client;
 		private readonly NetworkStream _stream;
 		private readonly NetworkTools _tools;
 
+		/// <summary>
+		/// Initialize a new instance of <see cref="Protocol" />
+		/// </summary>
+		/// <param name="server">Server address to connect to.</param>
+		/// <param name="port">Server port.</param>
 		public Protocol(string server, int port)
 		{
 			_log = LogManager.GetLogger(this);
 			_log.Debug("Connecting to server.");
+			_client = new TcpClient();
 			_client.Connect(server, port);
 			_log.Debug("Getting stream.");
 			_stream = _client.GetStream();
@@ -34,7 +40,11 @@ namespace Sharpcraft.Networking
 			_tools = new NetworkTools(_stream);
 		}
 
-
+		/// <summary>
+		/// Convert a string to a byte array.
+		/// </summary>
+		/// <param name="str">The string to convert.</param>
+		/// <returns>String as a byte array.</returns>
 		public byte[] StringToBytes(string str)
 		{
 			byte[] strLength = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(str.Length));
@@ -46,6 +56,11 @@ namespace Sharpcraft.Networking
 			return bytes.ToArray();
 		}
 
+		/// <summary>
+		/// Convert a byte array to string.
+		/// </summary>
+		/// <param name="bytes">The byte array to convert.</param>
+		/// <returns>Byte array as a string.</returns>
 		public string BytesToString(byte[] bytes)
 		{
 			byte[] bteStrLength = { bytes[0], bytes[1] };
