@@ -55,7 +55,9 @@
 <NamespaceSummaryItem name="Sharpcraft.Forms" isDocumented="True">Forms, dialogs and the likes.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="Sharpcraft.Components.Debug" isDocumented="True">Game components for debugging (FPS counter et.c).</NamespaceSummaryItem>
 <NamespaceSummaryItem name="Sharpcraft.Library.Configuration" isDocumented="True">Configuration classes for storing settings across sessions.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Sharpcraft.Library.Minecraft" isDocumented="True">Various Minecraft assets.</NamespaceSummaryItem></NamespaceSummaries>
+<NamespaceSummaryItem name="Sharpcraft.Library.Minecraft" isDocumented="True">Various Minecraft assets.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Sharpcraft.Library.GUI" isDocumented="True">GUI objects for the game (e.g. labels).</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Sharpcraft.Networking.Enums" isDocumented="True">Various enums related to Networking (Packet types et.c.).</NamespaceSummaryItem></NamespaceSummaries>
     <FooterText>&amp;lt%3ba href=&amp;quot%3bhttps://github.com/Vijfhoek/Sharpcraft&amp;quot%3b&amp;gt%3bSharpcraft on GitHub&amp;lt%3b/a&amp;gt%3b | &amp;lt%3ba href=&amp;quot%3bhttps://github.com/F16Gaming/Sharpcraft&amp;quot%3b&amp;gt%3bF16Gaming&amp;#39%3bs fork&amp;lt%3b/a&amp;gt%3b</FooterText>
     <HeaderText>Join us on &amp;lt%3ba href=&amp;quot%3birc://irc.kottnet.net:6667/#CSharp&amp;quot%3b&amp;gt%3bKottNet&amp;#39%3bs IRC&amp;lt%3b/a&amp;gt%3b!</HeaderText>
     <CopyrightHref>

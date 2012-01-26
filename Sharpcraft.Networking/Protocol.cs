@@ -15,8 +15,17 @@ using Sharpcraft.Logging;
 
 namespace Sharpcraft.Networking
 {
+	// TODO: @Vijfhoek, this class looks very messy right now!
+	// TODO/NOTE: @Vijfhoek, make use of Sharpcraft.Networking.Enums.PacketType in Sharpcraft.Networking.Protocol.GetPacket()
+	/// <summary>
+	/// The Minecraft protocol.
+	/// </summary>
+	/// <remarks>http://wiki.vg/Protocol</remarks>
 	public class Protocol
 	{
+		/// <summary>
+		/// Log object for this class.
+		/// </summary>
 		private readonly log4net.ILog _log;
 
 		private readonly TcpClient _client;

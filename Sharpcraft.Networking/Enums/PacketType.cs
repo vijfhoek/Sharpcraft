@@ -4,7 +4,7 @@
 	/// All the different packet types.
 	/// </summary>
 	/// <remarks>http://wiki.vg/Protocol</remarks>
-	internal enum PacketType
+	public enum PacketType
 	{
 		KeepAlive					= 0x00,
 		LoginRequest				= 0x01,
