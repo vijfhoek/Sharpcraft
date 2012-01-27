@@ -34,7 +34,7 @@ namespace Sharpcraft.Networking
 		private readonly NetworkTools _tools;
 
 		/// <summary>
-		/// Initialize a new instance of <see cref="Protocol" />
+		/// Initialize a new instance of <see cref="Protocol" />.
 		/// </summary>
 		/// <param name="server">Server address to connect to.</param>
 		/// <param name="port">Server port.</param>
@@ -76,7 +76,7 @@ namespace Sharpcraft.Networking
 			byte[] bteStrLength = { bytes[0], bytes[1] };
 			int strLength = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bteStrLength, 0));
 
-			string str = "";
+			var str = string.Empty;
 
 			for (short s = 1; s < strLength + 1; s++)
 			{

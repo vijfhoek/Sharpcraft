@@ -94,7 +94,6 @@ namespace Sharpcraft.Networking
 			_stream.Write(bte, 0, bte.Length);
 		}
 
-
 		public void StreamSkip(int amount)
 		{
 			for (int i = 0; i < amount; i++)
