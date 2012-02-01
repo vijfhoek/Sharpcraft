@@ -5,12 +5,7 @@
  */
 
 using System;
-using System.Net;
 using System.Net.Sockets;
-using System.Linq;
-using System.Text;
-using System.Collections.Generic;
-
 using Sharpcraft.Logging;
 using Sharpcraft.Networking.Enums;
 
@@ -49,6 +44,10 @@ namespace Sharpcraft.Networking
 			_tools = new NetworkTools(_stream);
 		}
 
+		/// <summary>
+		/// Gets a packet from the server and returns it.
+		/// </summary>
+		/// <returns>The received packet.</returns>
 		public Packet GetPacket()
 		{
 			var packetID = (byte)_stream.ReadByte();
@@ -99,12 +98,16 @@ namespace Sharpcraft.Networking
 			return pack;
 		}
 
+		/// <summary>
+		/// Sends the given packet to the connected Minecraft server.
+		/// </summary>
+		/// <param name="packet">The packet to send</param>
 		public void SendPacket(Packet packet)
 		{
 			_log.Debug("Sending packet (ID: " + packet.Type + ")");
 		
-			PacketType type = packet.Type;
-			byte packetID = (byte) packet.Type;
+			var type = packet.Type;
+			var packetID = (byte) packet.Type;
 
 			switch (type)
 			{
