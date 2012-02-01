@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authenticator.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Enums\EntityEffect.cs" />
     <Compile Include="Enums\SmokeDirection.cs" />
     <Compile Include="Enums\StateReason.cs" />
@@ -68,6 +69,28 @@
     <Compile Include="PacketListener.cs" />
     <Compile Include="Packets.cs" />
     <Compile Include="Enums\PacketType.cs" />
+    <Compile Include="Packets\AnimationPacket.cs" />
+    <Compile Include="Packets\ChatMessagePacket.cs" />
+    <Compile Include="Packets\EntityEquipmentPacket.cs" />
+    <Compile Include="Packets\HandshakePacketCS.cs" />
+    <Compile Include="Packets\HandshakePacketSC.cs" />
+    <Compile Include="Packets\HoldingChangePacket.cs" />
+    <Compile Include="Packets\KeepAlivePacket.cs" />
+    <Compile Include="Packets\LoginRequestPacketCS.cs" />
+    <Compile Include="Packets\LoginRequestPacketSC.cs" />
+    <Compile Include="Packets\Packet.cs" />
+    <Compile Include="Packets\PlayerBlockPlacementPacket.cs" />
+    <Compile Include="Packets\PlayerDiggingPacket.cs" />
+    <Compile Include="Packets\PlayerLookPacket.cs" />
+    <Compile Include="Packets\PlayerPacket.cs" />
+    <Compile Include="Packets\PlayerPositionPacket.cs" />
+    <Compile Include="Packets\RespawnPacket.cs" />
+    <Compile Include="Packets\SpawnPositionPacket.cs" />
+    <Compile Include="Packets\TimeUpdatePacket.cs" />
+    <Compile Include="Packets\UpdateHealthPacket.cs" />
+    <Compile Include="Packets\UseBedPacket.cs" />
+    <Compile Include="Packets\UseEntityPacket.cs" />
+    <Compile Include="Packets\PlayerPositionAndLookPacket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocol.cs" />
     <Compile Include="Enums\SoundParticleEffect.cs" />

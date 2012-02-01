@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Sharpcraft.Logging;
 using Sharpcraft.Networking;
 using Sharpcraft.Networking.Enums;
+using Sharpcraft.Networking.Packets;
 
 namespace Sharpcraft.Library.Minecraft
 {
@@ -47,7 +48,7 @@ namespace Sharpcraft.Library.Minecraft
 			}
 			_log.Info("Server responded to Handshake with " + ((HandshakePacketSC)response).ConnectionHash);
 			_log.Info("Sending login request...");
-			_protocol.SendPacket(new LoginRequestPacketCS(23, _player.Name));
+			_protocol.SendPacket(new LoginRequestPacketCS(Constants.ProtocolVersion, _player.Name));
 			_log.Info("Waiting for login response...");
 			response = _protocol.GetPacket();
 			if (!(response is LoginRequestPacketSC))

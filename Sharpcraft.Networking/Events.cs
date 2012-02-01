@@ -1,4 +1,5 @@
 ﻿using System;
+using Sharpcraft.Networking.Packets;
 
 namespace Sharpcraft.Networking
 {
