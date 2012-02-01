@@ -1,2 +1,5 @@
+content\crosshair.xnb
+content\fonts\font_debug.xnb
+content\fonts\font_menu.xnb
 configs\LoggerConfig.xml
 configs\LoggerDebugConfig.xml
