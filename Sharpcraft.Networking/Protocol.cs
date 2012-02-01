@@ -62,21 +62,19 @@ namespace Sharpcraft.Networking
 					pack = new KeepAlivePacket(_tools.ReadInt32());
 					break;
 				case PacketType.LoginRequest:
-					{
-						var packet = new LoginRequestPacketSC();
+					var packet = new LoginRequestPacketSC();
 
-						packet.EntityID = _tools.ReadInt32();
-						packet.NotUsed = _tools.ReadString();
-						packet.MapSeed = _tools.ReadInt64();
-						packet.LevelType = _tools.ReadString();
-						packet.Gamemode = _tools.ReadInt32();
-						packet.Dimension = (sbyte) _stream.ReadByte();
-						packet.Difficulty = (sbyte) _stream.ReadByte();
-						packet.WorldHeight = (byte) _stream.ReadByte();
-						packet.MaxPlayers = (byte) _stream.ReadByte();
+					packet.EntityID = _tools.ReadInt32();
+					packet.NotUsed = _tools.ReadString();
+					packet.MapSeed = _tools.ReadInt64();
+					packet.LevelType = _tools.ReadString();
+					packet.Gamemode = _tools.ReadInt32();
+					packet.Dimension = (sbyte) _stream.ReadByte();
+					packet.Difficulty = (sbyte) _stream.ReadByte();
+					packet.WorldHeight = (byte) _stream.ReadByte();
+					packet.MaxPlayers = (byte) _stream.ReadByte();
 
-						pack = packet;
-					}
+					pack = packet;
 					break;
 				case PacketType.Handshake:
 					pack = new HandshakePacketSC(_tools.ReadString());
@@ -126,6 +124,7 @@ namespace Sharpcraft.Networking
 						_tools.WriteInt32(pack.ProtocolVersion);
 						_tools.WriteString(pack.Username);
 						_tools.WriteInt64(0);						// Not Used
+						_tools.WriteString(String.Empty);           // Not Used
 						_tools.WriteInt32(0);						// Not Used
 						_tools.WriteByte(0);						// Not Used
 						_tools.WriteByte(0);						// Not Used
