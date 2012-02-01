@@ -111,52 +111,52 @@ namespace Sharpcraft.Networking
 			switch (type)
 			{
 				case PacketType.KeepAlive:
-				{
-					_log.Debug("Writing KeepAlive packet (" + ((KeepAlivePacket)packet).KeepAliveID + ")...");
-					var pack = (KeepAlivePacket) packet;
-					_tools.WriteByte(packetID);
-					_tools.WriteInt32(pack.KeepAliveID);
-				}
-				break;
+					{
+						_log.Debug("Writing KeepAlive packet (" + ((KeepAlivePacket)packet).KeepAliveID + ")...");
+						var pack = (KeepAlivePacket) packet;
+						_tools.WriteByte(packetID);
+						_tools.WriteInt32(pack.KeepAliveID);
+					}
+					break;
 				case PacketType.LoginRequest:
-				{
-					_log.Debug("Writing Login Request packet...");
-					var pack = (LoginRequestPacketCS)packet;
-					_tools.WriteByte(packetID);
-					_tools.WriteInt32(pack.ProtocolVersion);
-					_tools.WriteString(pack.Username);
-					_tools.WriteInt64(0);						// Not Used
-					_tools.WriteInt32(0);						// Not Used
-					_tools.WriteByte(0);						// Not Used
-					_tools.WriteByte(0);						// Not Used
-					_tools.WriteByte(0);						// Not Used
-					_tools.WriteByte(0);						// Not Used
-				}
-				break;
+					{
+						_log.Debug("Writing Login Request packet...");
+						var pack = (LoginRequestPacketCS)packet;
+						_tools.WriteByte(packetID);
+						_tools.WriteInt32(pack.ProtocolVersion);
+						_tools.WriteString(pack.Username);
+						_tools.WriteInt64(0);						// Not Used
+						_tools.WriteInt32(0);						// Not Used
+						_tools.WriteByte(0);						// Not Used
+						_tools.WriteByte(0);						// Not Used
+						_tools.WriteByte(0);						// Not Used
+						_tools.WriteByte(0);						// Not Used
+					}
+					break;
 				case PacketType.Handshake:
-				{
-					_log.Debug("Writing Handshake packet.");
-					var pack = (HandshakePacketCS)packet;
-					_tools.WriteByte(packetID);
-					_tools.WriteString(pack.Username);
-				}
-				break;
+					{
+						_log.Debug("Writing Handshake packet.");
+						var pack = (HandshakePacketCS)packet;
+						_tools.WriteByte(packetID);
+						_tools.WriteString(pack.Username);
+					}
+					break;
 				case PacketType.ChatMessage:
-				{
-					var pack = (ChatMessagePacket)packet;
-					_tools.WriteByte(packetID);
-					_tools.WriteString(pack.Message);
-				}
-				break;
+					{
+						var pack = (ChatMessagePacket)packet;
+						_tools.WriteByte(packetID);
+						_tools.WriteString(pack.Message);
+					}
+					break;
 				case PacketType.UseEntity:
-				{
-					var pack = (UseEntityPacket)packet;
-					_tools.WriteByte(packetID);
-					_tools.WriteInt32(pack.AttackerID);
-					_tools.WriteInt32(pack.TargetID);
-					_tools.WriteBoolean(pack.IsLeftClick);
-				}
-				break;
+					{
+						var pack = (UseEntityPacket)packet;
+						_tools.WriteByte(packetID);
+						_tools.WriteInt32(pack.AttackerID);
+						_tools.WriteInt32(pack.TargetID);
+						_tools.WriteBoolean(pack.IsLeftClick);
+					}
+					break;
 			}
 
 			_log.Debug("Sending packet...");

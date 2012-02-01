@@ -49,15 +49,15 @@ namespace Sharpcraft.Networking
 			{
 				while (_running)
 				{
-					//_log.Debug("Waiting for packet...");
+					_log.Debug("Waiting for packet...");
 					Packet packet;
 					if ((packet = _protocol.GetPacket()) == null)
 						continue;
 
-					//_log.Debug("Got packet: " + packet.Type);
-					//_log.Debug("Broadcasting packet to subscribers...");
+					_log.Debug("Got packet: " + packet.Type);
+					_log.Debug("Broadcasting packet to subscribers...");
 					PacketReceived(packet);
-					//_log.Debug("Done!");
+					_log.Debug("Done!");
 				}
 			}
 			catch (ThreadAbortException)
