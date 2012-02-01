@@ -28,8 +28,11 @@ using Sharpcraft.Forms;
 using Sharpcraft.Logging;
 using Sharpcraft.Networking;
 using Sharpcraft.Components.Debug;
+using Sharpcraft.Library.GUI;
 using Sharpcraft.Library.Minecraft;
 using Sharpcraft.Library.Configuration;
+
+using Label = Sharpcraft.Library.GUI.Label;
 
 namespace Sharpcraft
 {
@@ -44,24 +47,59 @@ namespace Sharpcraft
 		/// </summary>
 		private readonly log4net.ILog _log;
 
+		/// <summary>
+		/// Settings specific for the game.
+		/// </summary>
 		private readonly GameSettings _settings;
 
 		/// <summary>
 		/// The graphics device manager.
 		/// </summary>
 		private GraphicsDeviceManager _graphics;
+
 		/// <summary>
 		/// Sprite batch.
 		/// </summary>
 		private SpriteBatch _spriteBatch;
 
+		/// <summary>
+		/// Whether or not the game menu should be rendered.
+		/// </summary>
 		private bool _gameMenuOpen;
+
+		/// <summary>
+		/// Whether or not the user is currently toggling the game menu.
+		/// </summary>
 		private bool _menuToggling;
+
+		/// <summary>
+		/// Whether or not fullscreen mode is currently toggling.
+		/// </summary>
+		private bool _fullscreenToggling;
+
+		/// <summary>
+		/// Whether or not the player is currently in a game server.
+		/// </summary>
 		private bool _inServer = true;
 
+		/// <summary>
+		/// The crosshair [DEBUG].
+		/// </summary>
 		private Texture2D _crosshair;
+
+		/// <summary>
+		/// Font used for the (pause) menu.
+		/// </summary>
 		private SpriteFont _menuFont;
 
+		/// <summary>
+		/// The label used for the in-game pause menu.
+		/// </summary>
+		private Label _menuLabel;
+
+		/// <summary>
+		/// The user.
+		/// </summary>
 		private User _user;
 
 		/// <summary>
@@ -96,7 +134,7 @@ namespace Sharpcraft
 			_log.Debug("Setting content directory.");
 			Content.RootDirectory = SharpcraftConstants.ContentDirectory;
 			_log.Debug("Creating DebugDisplay...");
-			Components.Add(new DebugDisplay(this));
+			Components.Add(new DebugDisplay(this, _graphics));
 #if DEBUG
 			_gameMenuOpen = true;
 #endif
@@ -134,6 +172,15 @@ namespace Sharpcraft
 				_log.Info("Steam not installed or not running, Steam functionality will NOT be available.");
 			}
 
+			// /!\ WARNING /!\
+			// Ugly debug code ahead!
+			_log.Debug("Starting debug connection...");
+			var server = new Server("F16Gaming Test", "localhost", 25565, "The test server", 0, 0, 0, true);
+			var player = new Player("Sharpcraft");
+			var client = new Client(server, player);
+			client.Connect();
+			_log.Debug("Reached end of debug connection!");
+
 			/* Commented out by Vijfhoek:
 			 * Removed code seeing that we will add it somewhere else later.
 			_log.Debug("Creating protocol...");
@@ -161,6 +208,7 @@ namespace Sharpcraft
 
 			_crosshair = Content.Load<Texture2D>("crosshair");
 			_menuFont = Content.Load<SpriteFont>(SharpcraftConstants.MenuFont);
+			_menuLabel = new Label("!!! GAME MENU OPEN !!!", _menuFont, Color.Yellow);
 			_log.Debug("LoadContent(); ## END ##");
 		}
 
@@ -195,6 +243,12 @@ namespace Sharpcraft
 			if (!_gameMenuOpen && IsActive)
 				Mouse.SetPosition(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
 
+			if (Keyboard.GetState().IsKeyDown(Keys.LeftAlt) && Keyboard.GetState().IsKeyDown(Keys.Enter))
+				ToggleFullscreen();
+			else
+				_fullscreenToggling = false;
+			
+
 			base.Update(gameTime);
 		}
 
@@ -209,8 +263,12 @@ namespace Sharpcraft
 			_spriteBatch.Draw(_crosshair, new Vector2(Mouse.GetState().X - 24, Mouse.GetState().Y - 24), Color.White);
 			if (_gameMenuOpen)
 			{
-				float tWidth = _menuFont.MeasureString("!!! GAME MENU OPEN !!!").X;
-				_spriteBatch.DrawString(_menuFont, "!!! GAME MENU OPEN !!!", new Vector2((float) GraphicsDevice.Viewport.Width / 2 - tWidth / 2, (float) GraphicsDevice.Viewport.Height / 2 + _menuFont.LineSpacing), Color.Yellow);
+				//float tWidth = _menuFont.MeasureString("!!! GAME MENU OPEN !!!").X;
+				//_spriteBatch.DrawString(_menuFont, "!!! GAME MENU OPEN !!!", new Vector2((float) GraphicsDevice.Viewport.Width / 2 - tWidth / 2, (float) GraphicsDevice.Viewport.Height / 2 + _menuFont.LineSpacing), Color.Yellow);
+				var menuPos =
+					_menuLabel.GetCenterPosition(new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height),
+					                             new Vector2(0, _menuLabel.Height + 5));
+				_spriteBatch.DrawString(_menuLabel.Font, _menuLabel.Text, menuPos, _menuLabel.ForeColor);
 			}
 			_spriteBatch.End();
 			
@@ -238,6 +296,22 @@ namespace Sharpcraft
 			_log.Debug("Game menu is now " + (_gameMenuOpen ? "open" : "closed"));
 		}
 
+		private void ToggleFullscreen()
+		{
+			if (_fullscreenToggling)
+				return;
+			_fullscreenToggling = true;
+			_settings.Fullscreen = !_settings.Fullscreen;
+			_graphics.IsFullScreen = _settings.Fullscreen;
+			_graphics.ApplyChanges();
+			_log.Debug("Fullscreen is now " + (_settings.Fullscreen ? "enabled" : "disabled"));
+		}
+
+		/// <summary>
+		/// Writes settings to file and then exits the game.
+		/// </summary>
+		/// <param name="sender">N/A (Not Used) (See XNA Documentation)</param>
+		/// <param name="args">N/A (Not Used) (See XNA Documentation)</param>
 		protected override void OnExiting(object sender, EventArgs args)
 		{
 			_settings.WriteToFile();

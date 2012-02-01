@@ -74,6 +74,7 @@ namespace Sharpcraft
 		/// Log object for this class.
 		/// </summary>
 		private static log4net.ILog _log;
+
 		/// <summary>
 		/// File to write all unhandled exceptions to.
 		/// </summary>

@@ -12,21 +12,39 @@ using System.Text;
 using System.Collections.Generic;
 
 using Sharpcraft.Logging;
+using Sharpcraft.Networking.Enums;
 
 namespace Sharpcraft.Networking
 {
+	// TODO: @Vijfhoek, this class looks very messy right now!
+	/// <summary>
+	/// The Minecraft protocol.
+	/// </summary>
+	/// <remarks>http://wiki.vg/Protocol</remarks>
 	public class Protocol
 	{
+		/// <summary>
+		/// Log object for this class.
+		/// </summary>
 		private readonly log4net.ILog _log;
 
-		private readonly TcpClient _client = new TcpClient();
+		private readonly TcpClient _client;
 		private readonly NetworkStream _stream;
 		private readonly NetworkTools _tools;
 
+		// TODO: Use BeginRead() of NetworkStream to run a listener in the background?
+		// TODO: Firing an event every time it receives a packet? _DOABLE_?
+
+		/// <summary>
+		/// Initialize a new instance of <see cref="Protocol" />.
+		/// </summary>
+		/// <param name="server">Server address to connect to.</param>
+		/// <param name="port">Server port.</param>
 		public Protocol(string server, int port)
 		{
 			_log = LogManager.GetLogger(this);
 			_log.Debug("Connecting to server.");
+			_client = new TcpClient();
 			_client.Connect(server, port);
 			_log.Debug("Getting stream.");
 			_stream = _client.GetStream();
@@ -34,7 +52,11 @@ namespace Sharpcraft.Networking
 			_tools = new NetworkTools(_stream);
 		}
 
-
+		/// <summary>
+		/// Convert a string to a byte array.
+		/// </summary>
+		/// <param name="str">The string to convert.</param>
+		/// <returns>String as a byte array.</returns>
 		public byte[] StringToBytes(string str)
 		{
 			byte[] strLength = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(str.Length));
@@ -46,12 +68,17 @@ namespace Sharpcraft.Networking
 			return bytes.ToArray();
 		}
 
+		/// <summary>
+		/// Convert a byte array to string.
+		/// </summary>
+		/// <param name="bytes">The byte array to convert.</param>
+		/// <returns>Byte array as a string.</returns>
 		public string BytesToString(byte[] bytes)
 		{
 			byte[] bteStrLength = { bytes[0], bytes[1] };
 			int strLength = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bteStrLength, 0));
 
-			string str = "";
+			var str = string.Empty;
 
 			for (short s = 1; s < strLength + 1; s++)
 			{
@@ -66,66 +93,44 @@ namespace Sharpcraft.Networking
 		public Packet GetPacket()
 		{
 			var packetID = (byte)_stream.ReadByte();
+			var type = (PacketType) packetID;
 			Packet pack = null;
 
-			if (packetID == 0x00) // Keep Alive
+			switch (type)
 			{
-				var packet = new KeepAlivePacket { PacketID = 0x00, KeepAliveID = _tools.ReadInt32() };
-				pack = packet;
-			}
-			else if (packetID == 0x01) // Login Request
-			{
-				var packet = new LoginRequestPacketSC { PacketID = 0x01, EntityID = _tools.ReadInt32() };
-
-				_tools.StreamSkip(2);
-				packet.MapSeed     = _tools.ReadInt64();
-				packet.Gamemode    = _tools.ReadInt32();
-				packet.Dimension   = (sbyte)_stream.ReadByte();
-				packet.Difficulty  = (sbyte)_stream.ReadByte();
-				packet.WorldHeight = (byte)_stream.ReadByte();
-				packet.MaxPlayers  = (byte)_stream.ReadByte();
-
-				pack = packet;
-			}
-			else if (packetID == 0x02) // Handshake
-			{
-				var packet = new HandshakePacketSC { PacketID = 0x02, ConnectionHash = _tools.ReadString() };
-				pack = packet;
-			}
-			else if (packetID == 0x03) // Chat Message
-			{
-				var packet = new ChatMessagePacket { PacketID = 0x03, Message = _tools.ReadString() };
-				pack = packet;
-			}
-			else if (packetID == 0x04) // Time Update
-			{
-				var packet = new TimeUpdatePacket { PacketID = 0x04, Time = _tools.ReadInt32() };
-				pack = packet;
-			}
-			else if (packetID == 0x05) // Entity Equipment
-			{
-				var packet = new EntityEquipmentPacket
+				case PacketType.KeepAlive:
+					pack = new KeepAlivePacket(_tools.ReadInt32());
+					break;
+				case PacketType.LoginRequest:
 				{
-					PacketID = 0x05,
-					EntityID = _tools.ReadInt32(),
-					Slot = _tools.ReadInt16(),
-					ItemID = _tools.ReadInt16(),
-					Damage = _tools.ReadInt16()
-				};
+					var packet = new LoginRequestPacketSC(_tools.ReadInt32());
 
-				pack = packet;
-			}
-			else if (packetID == 0x06) // Spawn Position
-			{
-				var packet = new SpawnPositionPacket
-				{
-					PacketID = 0x06,
-					X = _tools.ReadInt32(),
-					Y = _tools.ReadInt32(),
-					Z = _tools.ReadInt32()
-				};
+					_tools.StreamSkip(2);
+					packet.MapSeed = _tools.ReadInt64();
+					packet.Gamemode = _tools.ReadInt32();
+					packet.Dimension = (sbyte) _stream.ReadByte();
+					packet.Difficulty = (sbyte) _stream.ReadByte();
+					packet.WorldHeight = (byte) _stream.ReadByte();
+					packet.MaxPlayers = (byte) _stream.ReadByte();
 
-				pack = packet;
+					pack = packet;
+				}
+				break;
+				case PacketType.Handshake:
+					pack = new HandshakePacketSC(_tools.ReadString());
+					break;
+				case PacketType.ChatMessage:
+					pack = new ChatMessagePacket(_tools.ReadString());
+					break;
+				case PacketType.TimeUpdate:
+					pack = new TimeUpdatePacket(_tools.ReadInt32());
+					break;
+				case PacketType.EntityEquipment:
+					pack = new EntityEquipmentPacket(_tools.ReadInt32(), _tools.ReadInt16(), _tools.ReadInt16(), _tools.ReadInt16());
+					break;
+				case PacketType.SpawnPosition:
+					pack = new SpawnPositionPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32());
+					break;
 			}
 
 			return pack;
@@ -133,53 +138,63 @@ namespace Sharpcraft.Networking
 
 		public void SendPacket(Packet packet)
 		{
-			_log.Debug("Sending packet (ID: " + packet.PacketID + ")");
+			_log.Debug("Sending packet (ID: " + packet.Type + ")");
+		
+			PacketType type = packet.Type;
+			byte packetID = (byte) packet.Type;
 
-			byte packetID = packet.PacketID;
+			switch (type)
+			{
+				case PacketType.KeepAlive:
+				{
+					_log.Debug("Writing KeepAlive packet...");
+					var pack = (KeepAlivePacket) packet;
+					_tools.WriteByte(packetID);
+					_tools.WriteInt32(pack.KeepAliveID);
+				}
+				break;
+				case PacketType.LoginRequest:
+				{
+					_log.Debug("Writing Login Request packet...");
+					var pack = (LoginRequestPacketCS)packet;
+					_tools.WriteByte(packetID);
+					_tools.WriteInt32(pack.ProtocolVersion);
+					_tools.WriteString(pack.Username);
+					_tools.WriteInt64(0);						// Not Used
+					_tools.WriteInt32(0);						// Not Used
+					_tools.WriteByte(0);						// Not Used
+					_tools.WriteByte(0);						// Not Used
+					_tools.WriteByte(0);						// Not Used
+					_tools.WriteByte(0);						// Not Used
+				}
+				break;
+				case PacketType.Handshake:
+				{
+					_log.Debug("Writing Handshake packet.");
+					var pack = (HandshakePacketCS)packet;
+					_tools.WriteByte(packetID);
+					_tools.WriteString(pack.Username);
+				}
+				break;
+				case PacketType.ChatMessage:
+				{
+					var pack = (ChatMessagePacket)packet;
+					_tools.WriteByte(packetID);
+					_tools.WriteString(pack.Message);
+				}
+				break;
+				case PacketType.UseEntity:
+				{
+					var pack = (UseEntityPacket)packet;
+					_tools.WriteByte(packetID);
+					_tools.WriteInt32(pack.AttackerID);
+					_tools.WriteInt32(pack.TargetID);
+					_tools.WriteBoolean(pack.IsLeftClick);
+				}
+				break;
+			}
 
-			if (packetID == 0x00) // Keep Alive
-			{
-				_log.Debug("Sending KeepAlive packet.");
-				var pack = (KeepAlivePacket)packet;
-				_tools.WriteByte(packetID);
-				_tools.WriteInt32(pack.KeepAliveID);
-			}
-			else if (packetID == 0x01) // Login Request (Client -> Server)
-			{
-				_log.Debug("Sending Login Request packet.");
-				var pack = (LoginRequestPacketCS)packet;
-				_tools.WriteByte(packetID);
-				_tools.WriteInt32(pack.ProtocolVersion);
-				_tools.WriteString(pack.Username);
-				_tools.WriteInt64(0);						// Not Used
-				_tools.WriteInt32(0);						// Not Used
-				_tools.WriteByte(0);						// Not Used
-				_tools.WriteByte(0);						// Not Used
-				_tools.WriteByte(0);						// Not Used
-				_tools.WriteByte(0);						// Not Used
-			}
-			else if (packetID == 0x02) // Handshake (Client -> Server)
-			{
-				_log.Debug("Sending Handshake packet.");
-				var pack = (HandshakePacketCS)packet;
-				_tools.WriteByte(packetID);
-				_tools.WriteString(pack.Username);
-			}
-			else if (packetID == 0x03) // Chat Message
-			{
-				var pack = (ChatMessagePacket)packet;
-				_tools.WriteByte(packetID);
-				_tools.WriteString(pack.Message);
-			}
-			else if (packetID == 0x07) // Use Entity
-			{
-				var pack = (UseEntityPacket)packet;
-				_tools.WriteByte(packetID);
-				_tools.WriteInt32(pack.AttackerID);
-				_tools.WriteInt32(pack.TargetID);
-				_tools.WriteBoolean(pack.IsLeftClick);
-			}
-
+			_log.Debug("Sending packet...");
 			_stream.Flush();
 			_log.Debug("Packet sent!");
 		}

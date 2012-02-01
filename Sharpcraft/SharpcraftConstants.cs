@@ -38,7 +38,29 @@
 		/// File used to store game settings.
 		/// </summary>
 		internal static string GameSettings { get { return SettingsDirectory + "\\game.settings"; } }
+		/// <summary>
+		/// File containing info about the git commit from which this version was built.
+		/// </summary>
 		internal static string GitInfoFile { get { return SettingsDirectory + "\\gitinfo"; } }
+		#endregion
+
+		#region Data
+		/// <summary>
+		/// Directory where various data is stored.
+		/// </summary>
+		internal const string DataDirectory = "data";
+		/// <summary>
+		/// Directory where minecraft specific data is stored.
+		/// </summary>
+		internal static string MinecraftDataDirectory { get { return DataDirectory + "\\minecraft"; } }
+		/// <summary>
+		/// File containing block data.
+		/// </summary>
+		internal static string MinecraftBlockDataFile { get { return MinecraftDataDirectory + "\\blocks.list"; } }
+		/// <summary>
+		/// File containing item data.
+		/// </summary>
+		internal static string MinecraftItemDataFile { get { return MinecraftDataDirectory + "\\items.list"; } }
 		#endregion
 	}
 }

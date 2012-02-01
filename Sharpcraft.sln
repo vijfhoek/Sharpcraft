@@ -39,6 +39,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Website", "Sharp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Library", "Sharpcraft.Library\Sharpcraft.Library.csproj", "{5742ED23-A3B3-4303-95C2-B755A5A01D5D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Devtools", "Sharpcraft.Devtools\Sharpcraft.Devtools.csproj", "{8487D5D6-DBAE-4ED2-97EC-5ACCE7C637D9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{D6275296-90AF-4F6B-B5FC-EFE28EB1F800}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "minecraft", "minecraft", "{123CC25E-E77E-4B8B-B65F-9E3477754FEF}"
+	ProjectSection(SolutionItems) = preProject
+		data\minecraft\items.list = data\minecraft\items.list
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +146,16 @@ Global
 		{5742ED23-A3B3-4303-95C2-B755A5A01D5D}.Release|Mixed Platforms.Build.0 = Release|x86
 		{5742ED23-A3B3-4303-95C2-B755A5A01D5D}.Release|x86.ActiveCfg = Release|x86
 		{5742ED23-A3B3-4303-95C2-B755A5A01D5D}.Release|x86.Build.0 = Release|x86
+		{8487D5D6-DBAE-4ED2-97EC-5ACCE7C637D9}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{8487D5D6-DBAE-4ED2-97EC-5ACCE7C637D9}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{8487D5D6-DBAE-4ED2-97EC-5ACCE7C637D9}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{8487D5D6-DBAE-4ED2-97EC-5ACCE7C637D9}.Debug|x86.ActiveCfg = Debug|x86
+		{8487D5D6-DBAE-4ED2-97EC-5ACCE7C637D9}.Debug|x86.Build.0 = Debug|x86
+		{8487D5D6-DBAE-4ED2-97EC-5ACCE7C637D9}.Release|Any CPU.ActiveCfg = Release|x86
+		{8487D5D6-DBAE-4ED2-97EC-5ACCE7C637D9}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{8487D5D6-DBAE-4ED2-97EC-5ACCE7C637D9}.Release|Mixed Platforms.Build.0 = Release|x86
+		{8487D5D6-DBAE-4ED2-97EC-5ACCE7C637D9}.Release|x86.ActiveCfg = Release|x86
+		{8487D5D6-DBAE-4ED2-97EC-5ACCE7C637D9}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -144,10 +163,11 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{037E2F06-2BE2-4572-8C9F-13F73FA791CA} = {5AF1004D-E333-45B5-96AB-723DC06D8058}
 		{F386CBDF-AB1A-420C-B932-240B5FE290A0} = {5AF1004D-E333-45B5-96AB-723DC06D8058}
+		{123CC25E-E77E-4B8B-B65F-9E3477754FEF} = {D6275296-90AF-4F6B-B5FC-EFE28EB1F800}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_UpdateFileVersion = False
-		BuildVersion_UpdateAssemblyVersion = False
 		BuildVersion_BuildVersioningStyle = None.None.Increment.TimeStamp
+		BuildVersion_UpdateAssemblyVersion = False
+		BuildVersion_UpdateFileVersion = False
 	EndGlobalSection
 EndGlobal
