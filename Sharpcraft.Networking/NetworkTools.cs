@@ -14,7 +14,7 @@ namespace Sharpcraft.Networking
 	/// <summary>
 	/// Provides various networking tools.
 	/// </summary>
-	class NetworkTools
+	internal class NetworkTools
 	{
 		private readonly NetworkStream _stream;
 
@@ -37,13 +37,6 @@ namespace Sharpcraft.Networking
 			return str.ToString();
 		}
 
-		public void WriteString(string s)
-		{
-			_stream.Write(BitConverter.GetBytes(IPAddress.HostToNetworkOrder((short) s.Length)), 0, 2);
-			byte[] byteString = Encoding.BigEndianUnicode.GetBytes(s);
-			_stream.Write(byteString, 0, byteString.Length);
-		}
-
 		public Int16 ReadInt16()
 		{
 			var bte = new byte[2];
@@ -63,6 +56,13 @@ namespace Sharpcraft.Networking
 			var bte = new byte[8];
 			_stream.Read(bte, 0, bte.Length);
 			return IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bte, 0));
+		}
+
+		public void WriteString(string s)
+		{
+			_stream.Write(BitConverter.GetBytes(IPAddress.HostToNetworkOrder((short)s.Length)), 0, 2);
+			byte[] byteString = Encoding.BigEndianUnicode.GetBytes(s);
+			_stream.Write(byteString, 0, byteString.Length);
 		}
 
 		public void WriteBoolean(bool b)

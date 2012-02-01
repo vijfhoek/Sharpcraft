@@ -32,9 +32,6 @@ namespace Sharpcraft.Networking
 		private readonly NetworkStream _stream;
 		private readonly NetworkTools _tools;
 
-		// TODO: Use BeginRead() of NetworkStream to run a listener in the background?
-		// TODO: Firing an event every time it receives a packet? _DOABLE_?
-
 		/// <summary>
 		/// Initialize a new instance of <see cref="Protocol" />.
 		/// </summary>
@@ -52,47 +49,10 @@ namespace Sharpcraft.Networking
 			_tools = new NetworkTools(_stream);
 		}
 
-		/// <summary>
-		/// Convert a string to a byte array.
-		/// </summary>
-		/// <param name="str">The string to convert.</param>
-		/// <returns>String as a byte array.</returns>
-		public byte[] StringToBytes(string str)
-		{
-			byte[] strLength = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(str.Length));
-			List<Byte> bytes = strLength.ToList();
-
-			byte[] bteString = Encoding.BigEndianUnicode.GetBytes(str);
-			bytes.AddRange(bteString);
-
-			return bytes.ToArray();
-		}
-
-		/// <summary>
-		/// Convert a byte array to string.
-		/// </summary>
-		/// <param name="bytes">The byte array to convert.</param>
-		/// <returns>Byte array as a string.</returns>
-		public string BytesToString(byte[] bytes)
-		{
-			byte[] bteStrLength = { bytes[0], bytes[1] };
-			int strLength = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bteStrLength, 0));
-
-			var str = string.Empty;
-
-			for (short s = 1; s < strLength + 1; s++)
-			{
-				byte[] tmp = { bytes[s * 2], bytes[(s * 2) + 1] };
-				str += Encoding.BigEndianUnicode.GetString(tmp);
-			}
-
-			return str;
-		}
-
-
 		public Packet GetPacket()
 		{
 			var packetID = (byte)_stream.ReadByte();
+			_log.Debug("Got packet ID: " + packetID.ToString());
 			var type = (PacketType) packetID;
 			Packet pack = null;
 
@@ -102,20 +62,22 @@ namespace Sharpcraft.Networking
 					pack = new KeepAlivePacket(_tools.ReadInt32());
 					break;
 				case PacketType.LoginRequest:
-				{
-					var packet = new LoginRequestPacketSC(_tools.ReadInt32());
+					{
+						var packet = new LoginRequestPacketSC();
 
-					_tools.StreamSkip(2);
-					packet.MapSeed = _tools.ReadInt64();
-					packet.Gamemode = _tools.ReadInt32();
-					packet.Dimension = (sbyte) _stream.ReadByte();
-					packet.Difficulty = (sbyte) _stream.ReadByte();
-					packet.WorldHeight = (byte) _stream.ReadByte();
-					packet.MaxPlayers = (byte) _stream.ReadByte();
+						packet.EntityID = _tools.ReadInt32();
+						packet.NotUsed = _tools.ReadString();
+						packet.MapSeed = _tools.ReadInt64();
+						packet.LevelType = _tools.ReadString();
+						packet.Gamemode = _tools.ReadInt32();
+						packet.Dimension = (sbyte) _stream.ReadByte();
+						packet.Difficulty = (sbyte) _stream.ReadByte();
+						packet.WorldHeight = (byte) _stream.ReadByte();
+						packet.MaxPlayers = (byte) _stream.ReadByte();
 
-					pack = packet;
-				}
-				break;
+						pack = packet;
+					}
+					break;
 				case PacketType.Handshake:
 					pack = new HandshakePacketSC(_tools.ReadString());
 					break;
@@ -130,6 +92,9 @@ namespace Sharpcraft.Networking
 					break;
 				case PacketType.SpawnPosition:
 					pack = new SpawnPositionPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32());
+					break;
+				case PacketType.DisconnectKick:
+					pack = new DisconnectKickPacket(_tools.ReadString());
 					break;
 			}
 
@@ -147,7 +112,7 @@ namespace Sharpcraft.Networking
 			{
 				case PacketType.KeepAlive:
 				{
-					_log.Debug("Writing KeepAlive packet...");
+					_log.Debug("Writing KeepAlive packet (" + ((KeepAlivePacket)packet).KeepAliveID + ")...");
 					var pack = (KeepAlivePacket) packet;
 					_tools.WriteByte(packetID);
 					_tools.WriteInt32(pack.KeepAliveID);

@@ -138,6 +138,8 @@ namespace Sharpcraft.Steam
 			_log.Debug("Close();");
 			if (SteamLoaded)
 			{
+				_log.Info("Stopping steam watcher...");
+				_steamWatcher.Dispose();
 				_log.Info("Unloading Steam components...");
 				SteamClose();
 				CallbackDispatcher.SpawnDispatchThread(Pipe);
@@ -161,6 +163,8 @@ namespace Sharpcraft.Steam
 		/// <param name="state">N/A (Not Used)</param>
 		private static void SteamCheck(object state)
 		{
+			if (string.IsNullOrEmpty(Thread.CurrentThread.Name))
+				Thread.CurrentThread.Name = "SteamWatcher";
 			//_log.Info("Running Steam process check..."); // Gets VERY spammy in the log.
 			bool found = Process.GetProcesses().Any(process => process.ProcessName.ToLower() == "steam");
 			if (!found || Friends == null)

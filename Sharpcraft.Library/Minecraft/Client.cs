@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using Sharpcraft.Logging;
 using Sharpcraft.Networking;
+using Sharpcraft.Networking.Enums;
 
 namespace Sharpcraft.Library.Minecraft
 {
@@ -13,6 +14,8 @@ namespace Sharpcraft.Library.Minecraft
 		private readonly Protocol _protocol;
 		private readonly Server _server;
 		private readonly Player _player;
+
+		private PacketListener _listener;
 
 		public Client(Server server, Player player)
 		{
@@ -53,6 +56,9 @@ namespace Sharpcraft.Library.Minecraft
 				return false;
 			}
 			_log.Info("Server responded to login with mapseed " + ((LoginRequestPacketSC)response).MapSeed);
+			_log.Info("Creating packet listener...");
+			_listener = new PacketListener(_protocol);
+			_listener.OnPacketReceived += PacketReceived;
 			_log.Info("Further connection methods not yet implemented, halting Connect!");
 			return true;
 		}
@@ -64,7 +70,8 @@ namespace Sharpcraft.Library.Minecraft
 
 		public void SendMessage(string message)
 		{
-			
+			var packet = new ChatMessagePacket(message);
+			_protocol.SendPacket(packet);
 		}
 
 		public void SendEmote(string emote)
@@ -75,6 +82,25 @@ namespace Sharpcraft.Library.Minecraft
 		public void SendCommand(string command)
 		{
 			
+		}
+
+		private void PacketReceived(object sender, PacketEventArgs e)
+		{
+			Packet response;
+			switch (e.Packet.Type)
+			{
+				case PacketType.KeepAlive:
+					response = new KeepAlivePacket(((KeepAlivePacket)e.Packet).KeepAliveID);
+					_log.Debug("Client received KeepAlive request, sending KeepAlive packet...");
+					_protocol.SendPacket(response);
+					break;
+				case PacketType.DisconnectKick:
+					_log.Debug("Client DISCONNECT or KICK with reason: " + ((DisconnectKickPacket)e.Packet).Reason);
+					break;
+				default:
+					_log.Info("Received packet: " + e.Packet.Type + " but Client is not configured to respond to this packet!");
+					break;
+			}
 		}
 	}
 }
