@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authenticator.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Enums\EntityEffect.cs" />
     <Compile Include="Enums\SmokeDirection.cs" />
     <Compile Include="Enums\StateReason.cs" />
