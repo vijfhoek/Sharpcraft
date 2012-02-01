@@ -30,6 +30,9 @@ namespace Sharpcraft
 		/// </summary>
 		private readonly log4net.ILog _log;
 
+		/// <summary>
+		/// The settings specific for the launcher.
+		/// </summary>
 		private readonly LauncherSettings _settings;
 
 		/// <summary>
@@ -67,14 +70,51 @@ namespace Sharpcraft
 		/// </summary>
 		private const int McVersion = 50;
 
-		private string _version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-		private string _hash = "DEVELOPMENT";
-		private string _shortHash = "DEVELOPMENT";
-		private string _author = "DEVELOPMENT";
-		private DateTime _time = DateTime.Now;
+		/// <summary>
+		/// The version of Sharpcraft, as set in AssemblyInfo.cs.
+		/// </summary>
+		private readonly string _version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+		/// <summary>
+		/// The full SHA hash of this git commit.
+		/// </summary>
+		private readonly string _hash = "DEVELOPMENT";
+
+		/// <summary>
+		/// Shorter, more readable version of the git commit hash.
+		/// </summary>
+		private readonly string _shortHash = "DEVELOPMENT";
+
+		/// <summary>
+		/// The dev who authored the commit.
+		/// </summary>
+		private readonly string _author = "DEVELOPMENT";
+
+		/// <summary>
+		/// Time when the commit was made.
+		/// </summary>
+		private readonly DateTime _time = DateTime.Now;
+
+		/// <summary>
+		/// Format for the version string used by the <see cref="VersionString" />.
+		/// </summary>
+		/// <remarks><c>{0}</c> = version, <c>{1}</c> = short hash, <c>{2}</c> = author, <c>{3}</c> = time.</remarks>
 		private const string VersionFormat = "Version {0} ({1}) by {2} at {3}";
+
+		/// <summary>
+		/// Format for the GitHub link used by the <see cref="LinkString" />.
+		/// </summary>
+		/// <remarks><c>{0}</c> = author, <c>{1}</c> = full commit hash.</remarks>
 		private const string LinkFormat = "https://github.com/{0}/Sharpcraft/commit/{1}";
+
+		/// <summary>
+		/// The version string using the <see cref="VersionFormat" />.
+		/// </summary>
 		private string VersionString { get { return string.Format(VersionFormat, _version, _shortHash, _author, _time); } }
+		
+		/// <summary>
+		/// The GitHub link using the <see cref="LinkFormat" />.
+		/// </summary>
 		private string LinkString { get { return string.Format(LinkFormat, _author, _hash); } }
 
 		/// <summary>
@@ -204,6 +244,11 @@ namespace Sharpcraft
 			}
 		}
 
+		/// <summary>
+		/// Opens the GitHub URL in browser to show info about the commit.
+		/// </summary>
+		/// <param name="sender">N/A (Not Used) (See MSDN)</param>
+		/// <param name="e">N/A (Not Used) (See MSDN)</param>
 		private void VersionLabelClick(object sender, EventArgs e)
 		{
 			Process.Start(LinkString);

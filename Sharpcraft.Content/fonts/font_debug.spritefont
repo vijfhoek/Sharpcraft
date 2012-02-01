@@ -72,6 +72,10 @@ with.
         <End>M</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>N</Start>
+        <End>N</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>F</Start>
         <End>F</End>
       </CharacterRegion>
@@ -80,8 +84,16 @@ with.
         <End>P</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>R</Start>
+        <End>R</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>S</Start>
         <End>S</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>U</Start>
+        <End>U</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>X</Start>
