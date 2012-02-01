@@ -27,23 +27,22 @@ namespace Sharpcraft.Networking
 		{
 			byte[] bteStringLength = {(byte) _stream.ReadByte(), (byte) _stream.ReadByte()};
 			short stringLength = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bteStringLength, 0));
-			string str = "";
+			var str = new StringBuilder();
 			for (short s = 0; s < stringLength; s++)
 			{
 				byte[] bte = {(byte) _stream.ReadByte(), (byte) _stream.ReadByte()};
-				str += Encoding.BigEndianUnicode.GetString(bte);
+				str.Append(Encoding.BigEndianUnicode.GetString(bte));
 			}
 
-			return str;
+			return str.ToString();
 		}
 
 		public void WriteString(string s)
 		{
 			_stream.Write(BitConverter.GetBytes(IPAddress.HostToNetworkOrder((short) s.Length)), 0, 2);
-			byte[] bteUsername = Encoding.BigEndianUnicode.GetBytes(s);
-			_stream.Write(bteUsername, 0, bteUsername.Length);
+			byte[] byteString = Encoding.BigEndianUnicode.GetBytes(s);
+			_stream.Write(byteString, 0, byteString.Length);
 		}
-
 
 		public Int16 ReadInt16()
 		{

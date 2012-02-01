@@ -17,7 +17,6 @@ using Sharpcraft.Networking.Enums;
 namespace Sharpcraft.Networking
 {
 	// TODO: @Vijfhoek, this class looks very messy right now!
-	// TODO/NOTE: @Vijfhoek, make use of Sharpcraft.Networking.Enums.PacketType in Sharpcraft.Networking.Protocol.GetPacket()
 	/// <summary>
 	/// The Minecraft protocol.
 	/// </summary>
