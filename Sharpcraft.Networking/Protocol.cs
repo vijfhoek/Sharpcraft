@@ -13,6 +13,7 @@ using System.Collections.Generic;
 
 using Sharpcraft.Logging;
 using Sharpcraft.Networking.Enums;
+using Sharpcraft.Networking.Packets;
 
 namespace Sharpcraft.Networking
 {
