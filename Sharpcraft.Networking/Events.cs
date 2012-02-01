@@ -23,8 +23,28 @@ namespace Sharpcraft.Networking
 	}
 
 	/// <summary>
+	/// The <c>PacketEventArgs</c> class used for the packet (received) event.
+	/// </summary>
+	public class PacketEventArgs : EventArgs
+	{
+		public Packet Packet { get; private set; }
+
+		internal PacketEventArgs(Packet packet)
+		{
+			Packet = packet;
+		}
+	}
+
+	/// <summary>
 	/// The login event handler.
 	/// </summary>
 	/// <param name="e">The <see cref="LoginEventArgs" /> associated with this event.</param>
 	public delegate void LoginEventHandler(LoginEventArgs e);
+
+	/// <summary>
+	/// The packet event handler.
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="eventArgs">The <see cref="Packet" /> that was received.</param>
+	public delegate void PacketEventHandler(object sender, PacketEventArgs eventArgs);
 }
