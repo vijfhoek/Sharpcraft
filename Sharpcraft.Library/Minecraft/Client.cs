@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Sharpcraft.Logging;
 using Sharpcraft.Networking;
 using Sharpcraft.Networking.Enums;
+using Sharpcraft.Networking.Packets;
 
 namespace Sharpcraft.Library.Minecraft
 {
