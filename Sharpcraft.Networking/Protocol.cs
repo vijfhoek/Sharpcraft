@@ -32,6 +32,9 @@ namespace Sharpcraft.Networking
 		private readonly NetworkStream _stream;
 		private readonly NetworkTools _tools;
 
+		// TODO: Use BeginRead() of NetworkStream to run a listener in the background?
+		// TODO: Firing an event every time it receives a packet? _DOABLE_?
+
 		/// <summary>
 		/// Initialize a new instance of <see cref="Protocol" />.
 		/// </summary>

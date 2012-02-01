@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Windows.Forms;
 using Sharpcraft.Library.Minecraft;
@@ -14,7 +15,7 @@ namespace Sharpcraft.Devtools
 {
 	public partial class Form1 : Form
 	{
-		private List<Item> _itemList; 
+		private List<Item> _itemList;
 
 		public Form1()
 		{
