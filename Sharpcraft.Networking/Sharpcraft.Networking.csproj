@@ -50,6 +50,9 @@
     <Reference Include="log4net">
       <HintPath>..\lib\log4net\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Sharpcraft.Library">
+      <HintPath>..\Sharpcraft\bin\x86\Debug\Sharpcraft.Library.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -105,6 +108,7 @@
     <Compile Include="Packets\HoldingChangePacket.cs" />
     <Compile Include="Packets\IncrementStatisticPacket.cs" />
     <Compile Include="Packets\ItemDataPacket.cs" />
+    <Compile Include="Packets\ItemStack.cs" />
     <Compile Include="Packets\KeepAlivePacket.cs" />
     <Compile Include="Packets\LoginRequestPacketCS.cs" />
     <Compile Include="Packets\LoginRequestPacketSC.cs" />
@@ -178,7 +182,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.TimeStamp" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.Increment.TimeStamp" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

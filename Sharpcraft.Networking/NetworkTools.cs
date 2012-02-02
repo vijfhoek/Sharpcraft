@@ -8,6 +8,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using Sharpcraft.Library.Minecraft;
 
 namespace Sharpcraft.Networking
 {
@@ -80,6 +81,20 @@ namespace Sharpcraft.Networking
 			var bte = new byte[64];
 			_stream.Read(bte, 0, bte.Length);
 			return BitConverter.ToDouble(bte, 0);
+		}
+
+		public ItemStack ReadItemStack()
+		{
+			ItemStack itemStack = null;
+			var itemID = ReadInt16();
+			if (itemID >= 0)
+			{
+				var stackSize = ReadByte();
+				var itemDamage = ReadInt16();
+				itemStack = new ItemStack(itemID, stackSize, itemDamage);
+				// TODO check damageability
+			}
+			return itemStack;
 		}
 
 		public void WriteString(String s)

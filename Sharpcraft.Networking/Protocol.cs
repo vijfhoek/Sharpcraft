@@ -112,6 +112,19 @@ namespace Sharpcraft.Networking
 				case PacketType.PlayerLook:
 					pack = new PlayerLookPacket(_tools.ReadSingle(), _tools.ReadSingle(), _tools.ReadBoolean());
 					break;
+				case PacketType.PlayerPositionAndLook:
+					pack = new PlayerPositionAndLookPacket(_tools.ReadDouble(), _tools.ReadDouble(), _tools.ReadDouble(),
+					                                       _tools.ReadDouble(), _tools.ReadSingle(), _tools.ReadSingle(),
+					                                       _tools.ReadBoolean());
+					break;
+				case PacketType.PlayerDigging:
+					pack = new PlayerDiggingPacket(_tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadSignedByte(),
+					                               _tools.ReadInt32(), _tools.ReadSignedByte());
+					break;
+				case PacketType.PlayerBlockPlacement:
+					// TODO fix this
+					pack = new PlayerBlockPlacementPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadItemStack());
+					break;
 				case PacketType.DisconnectKick:
 					pack = new DisconnectKickPacket(_tools.ReadString());
 					break;
