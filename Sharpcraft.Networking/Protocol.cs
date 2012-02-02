@@ -129,8 +129,8 @@ namespace Sharpcraft.Networking
 			{
 				case PacketType.KeepAlive:
 					{
-						_log.Debug("Writing KeepAlive packet (" + ((KeepAlivePacket)packet).KeepAliveID + ")...");
 						var pack = (KeepAlivePacket) packet;
+						_log.Debug("Writing KeepAlive packet (" + pack.KeepAliveID + ")...");
 						_tools.WriteByte(packetID);
 						_tools.WriteInt32(pack.KeepAliveID);
 					}

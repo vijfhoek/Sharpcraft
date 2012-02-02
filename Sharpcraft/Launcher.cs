@@ -380,18 +380,8 @@ namespace Sharpcraft
 			{
 				_log.Debug("Creating game thread.");
 				_gameThread = new Thread(RunGame) {Name = "Game"};
-				//_gameThread.Name = "SharpcraftClientThread";
 				_log.Info("Starting game thread...");
 				_gameThread.Start();
-			}
-			catch (System.Net.Sockets.SocketException ex)
-			{
-				// This should be handled in the game itself when it's finished.
-				_log.Error("Failed to connect to target server, " + ex.GetType() + " was thrown.");
-				_log.Error(ex.GetType() + ": " + ex.Message);
-				_log.Error("Stack Trace:\n" + ex.StackTrace);
-				CloseGame();
-				SetState(true);
 			}
 			catch (Exception ex)
 			{
@@ -434,7 +424,23 @@ namespace Sharpcraft
 			_gameRunning = true;
 			_log.Info("Running game...");
 			SetState(false);
-			_game.Run();
+			try
+			{
+				_game.Run();
+			}
+			catch(System.Net.Sockets.SocketException ex) // This should be catched/checked somewhere else.
+			{
+				_log.Warn("Failed to connect to server. " + ex.GetType() + " thrown: " + ex.Message);
+				_log.Warn("Stack Trace:\n" + ex.StackTrace);
+				MessageBox.Show("Failed to connect to server! " + ex.GetType() + " thrown with message: " + ex.Message,
+								"Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				_game.Exiting -= GameExit;
+				if (_game.IsActive)
+					_game.Exit();
+				_gameRunning = false;
+				_game = null;
+				SetState(true);
+			}
 			_log.Debug("RunGame(); ## END ##");
 		}
 
