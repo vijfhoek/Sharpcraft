@@ -29,7 +29,7 @@ namespace Sharpcraft.Library.Minecraft
 		/// <summary>
 		/// Will contain an NBT compound.
 		/// </summary>
-		//public  StackTagCompound; // TODO implement NBTTagCompound class
+		//public NbtCompound StackTagCompound; // TODO implement NBTTagCompound class
 		
 		/// <summary>
 		/// Initializes the ItemStack.
