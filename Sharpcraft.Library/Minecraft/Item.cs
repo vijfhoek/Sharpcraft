@@ -21,17 +21,21 @@
 		/// </summary>
 		public int Data { get; private set; }
 
+		public bool Damageable { get; private set; }
+
 		/// <summary>
 		/// Initialize a new instance of <see cref="Item" />.
 		/// </summary>
 		/// <param name="name">Name of the item.</param>
 		/// <param name="id">ID of the item.</param>
 		/// <param name="data">Data/Damage value of the item, defaults to zero (0).</param>
-		public Item(string name, int id, int data = 0)
+		/// <param name="damageable">Wether the item degrades whilst it is being used, defaults to false.</param>
+		public Item(string name, int id, int data = 0, bool damageable = false)
 		{
 			Name = name;
 			Id = id;
 			Data = data;
+			Damageable = damageable;
 		}
 	}
 }

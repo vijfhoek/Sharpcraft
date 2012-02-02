@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.IO;
+using Newtonsoft.Json;
 using Sharpcraft.Logging;
 using Sharpcraft.Networking;
 using Sharpcraft.Networking.Enums;
@@ -18,10 +19,17 @@ namespace Sharpcraft.Library.Minecraft
 
 		private PacketListener _listener;
 
+		public List<Item> Items { get; private set; }
+
 		public Client(Server server, Player player)
 		{
 			_log = LogManager.GetLogger(this);
 			_log.Debug("Minecraft Client created!");
+
+			_log.Debug("Loading Item list...");
+			using (var reader = new StreamReader("items.list"))
+				Items = new JsonSerializer().Deserialize<List<Item>>(new JsonTextReader(reader));
+
 			_server = server;
 			_log.Debug("Creating communication protocol...");
 			_protocol = new Protocol(_server.Address, _server.Port);
@@ -40,7 +48,7 @@ namespace Sharpcraft.Library.Minecraft
 			_log.Info("Connecting to " + _server.Address + ":" + _server.Port + "...");
 			_protocol.SendPacket(new HandshakePacketCS(_player.Name));
 			_log.Info("Waiting for handshake response...");
-			Packet response = _protocol.GetPacket();
+			var response = _protocol.GetPacket();
 			if (!(response is HandshakePacketSC))
 			{
 				_log.Warn("Incorrect packet type sent as response! Expected HandshakePacketSC, got " + response.GetType());

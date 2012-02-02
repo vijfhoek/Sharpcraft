@@ -166,8 +166,8 @@ Global
 		{123CC25E-E77E-4B8B-B65F-9E3477754FEF} = {D6275296-90AF-4F6B-B5FC-EFE28EB1F800}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_BuildVersioningStyle = None.None.Increment.TimeStamp
-		BuildVersion_UpdateAssemblyVersion = False
 		BuildVersion_UpdateFileVersion = False
+		BuildVersion_UpdateAssemblyVersion = False
+		BuildVersion_BuildVersioningStyle = None.None.Increment.TimeStamp
 	EndGlobalSection
 EndGlobal

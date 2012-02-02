@@ -121,13 +121,13 @@
   <ItemGroup>
     <Compile Include="Components\Debug\DebugDisplay.cs" />
     <Compile Include="Components\Debug\FrameRateDisplay.cs" />
-    <Compile Include="ItemStack.cs" />
     <Compile Include="Launcher.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Launcher.Designer.cs">
       <DependentUpon>Launcher.cs</DependentUpon>
     </Compile>
+    <Compile Include="Library\Minecraft\ItemStack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Sharpcraft.cs" />

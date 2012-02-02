@@ -92,7 +92,7 @@ namespace Sharpcraft.Networking
 				var stackSize = ReadByte();
 				var itemDamage = ReadInt16();
 				itemStack = new ItemStack(itemID, stackSize, itemDamage);
-				// TODO check damageability
+				if (Item.)
 			}
 			return itemStack;
 		}
