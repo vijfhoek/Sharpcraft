@@ -37,7 +37,7 @@ namespace Sharpcraft.Library.Minecraft
 		/// <param name="itemID">The item ID, defaults to 0</param>
 		/// <param name="stackSize">The stack size, defaults to 0</param>
 		/// <param name="itemDamage">The item damage, defaults to 0</param>
-		public ItemStack(int itemID = 0, int stackSize = 0, int itemDamage = 0)
+		public ItemStack(int itemID = 0, byte stackSize = 0, int itemDamage = 0)
 		{
 			ItemID = itemID;
 			StackSize = stackSize;
