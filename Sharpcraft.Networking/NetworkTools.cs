@@ -37,6 +37,16 @@ namespace Sharpcraft.Networking
 			return str.ToString();
 		}
 
+		public byte ReadByte()
+		{
+			return (byte) _stream.ReadByte();
+		}
+
+		public sbyte ReadSignedByte()
+		{
+			return (sbyte) _stream.ReadByte();
+		}
+
 		public Int16 ReadInt16()
 		{
 			var bte = new byte[2];
@@ -93,7 +103,7 @@ namespace Sharpcraft.Networking
 			_stream.Write(bte, 0, bte.Length);
 		}
 
-		public void StreamSkip(int amount)
+		public void Skip(int amount = 1)
 		{
 			for (int i = 0; i < amount; i++)
 				_stream.ReadByte();

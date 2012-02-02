@@ -6,13 +6,14 @@
 
 using System;
 using System.Net.Sockets;
+
 using Sharpcraft.Logging;
 using Sharpcraft.Networking.Enums;
 using Sharpcraft.Networking.Packets;
 
 namespace Sharpcraft.Networking
 {
-	// TODO: @Vijfhoek, this class looks very messy right now!
+	// NOTE: This class is a bit cleaner now!
 	/// <summary>
 	/// The Minecraft protocol.
 	/// </summary>
@@ -52,7 +53,7 @@ namespace Sharpcraft.Networking
 		public Packet GetPacket()
 		{
 			var packetID = (byte)_stream.ReadByte();
-			_log.Debug("Got packet ID: " + packetID.ToString());
+			_log.Debug("Got packet ID: " + packetID.ToString()); // Spammy debug message
 			var type = (PacketType) packetID;
 			Packet pack = null;
 
@@ -90,6 +91,27 @@ namespace Sharpcraft.Networking
 					break;
 				case PacketType.SpawnPosition:
 					pack = new SpawnPositionPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32());
+					break;
+				case PacketType.UseEntity:
+					pack = new UseEntityPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadSignedByte() > 0);
+					break;
+				case PacketType.UpdateHealth:
+					pack = new UpdateHealthPacket(_tools.ReadInt16(), _tools.ReadInt16());
+					_tools.Skip(); // We are supposed to read a float value into UpdateHealthPacket here
+					break;
+				case PacketType.Respawn:
+					pack = new RespawnPacket(_tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadInt16(), _tools.ReadInt64(), _tools.ReadString());
+					break;
+				case PacketType.Player:
+					pack = new PlayerPacket(_tools.ReadSignedByte() > 0);
+					break;
+				case PacketType.PlayerPosition:
+					_tools.Skip(4); // We are supposed to read 4 doubles into PlayerPositionPacket here
+					pack = new PlayerPositionPacket(onGround : _tools.ReadSignedByte() > 0);
+					break;
+				case PacketType.PlayerLook:
+					_tools.Skip(2); // We are supposed to read 2 floats into PlayerLookPacket here
+					pack = new PlayerLookPacket(onGround : _tools.ReadSignedByte() > 0);
 					break;
 				case PacketType.DisconnectKick:
 					pack = new DisconnectKickPacket(_tools.ReadString());

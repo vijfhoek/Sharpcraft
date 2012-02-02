@@ -150,7 +150,6 @@ namespace Sharpcraft
 		{
 			_log.Debug("Initialize();");
 			_log.Info("Sharpcraft is initializing!");
-			// TODO: Add your initialization logic here
 
 			base.Initialize();
 
@@ -220,7 +219,6 @@ namespace Sharpcraft
 		{
 			_log.Info("!!! GAME UNLOAD !!!");
 			_log.Debug("UnloadContent();");
-			// TODO: Unload any non ContentManager content here
 			SteamManager.Close();
 			
 			_log.Debug("UnloadContent(); ## END ##");
