@@ -82,19 +82,19 @@ namespace Sharpcraft.Networking
 			return BitConverter.ToDouble(bte, 0);
 		}
 
-		public void WriteString(string s)
+		public void WriteString(String s)
 		{
 			WriteInt16((Int16)s.Length);
 			var byteString = Encoding.BigEndianUnicode.GetBytes(s);
 			_stream.Write(byteString, 0, byteString.Length);
 		}
 
-		public void WriteBoolean(bool b)
+		public void WriteBoolean(Boolean b)
 		{
 			_stream.WriteByte(Convert.ToByte(b));
 		}
 
-		public void WriteByte(byte i)
+		public void WriteByte(Byte i)
 		{
 			_stream.WriteByte(i);
 		}
