@@ -1,5 +1,4 @@
 ﻿using Sharpcraft.Networking.Enums;
-using Sharpcraft.Library.Minecraft;
 
 namespace Sharpcraft.Networking.Packets
 {
@@ -11,7 +10,5 @@ namespace Sharpcraft.Networking.Packets
 		{
 			Type = type;
 		}
-
-		
 	}
 }

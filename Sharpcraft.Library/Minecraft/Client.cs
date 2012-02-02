@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+
 using Newtonsoft.Json;
+
 using Sharpcraft.Logging;
 using Sharpcraft.Networking;
 using Sharpcraft.Networking.Enums;
@@ -19,6 +20,9 @@ namespace Sharpcraft.Library.Minecraft
 
 		private PacketListener _listener;
 
+		/// <summary>
+		/// A list of the Items that are available in the game.
+		/// </summary>
 		public List<Item> Items { get; private set; }
 
 		public Client(Server server, Player player)
@@ -27,7 +31,7 @@ namespace Sharpcraft.Library.Minecraft
 			_log.Debug("Minecraft Client created!");
 
 			_log.Debug("Loading Item list...");
-			using (var reader = new StreamReader("items.list"))
+			using (var reader = new StreamReader("data\\minecraft\\items.list"))
 				Items = new JsonSerializer().Deserialize<List<Item>>(new JsonTextReader(reader));
 
 			_server = server;
