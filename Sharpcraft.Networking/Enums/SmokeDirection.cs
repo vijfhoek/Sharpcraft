@@ -4,7 +4,7 @@
 	/// Different smoke directions.
 	/// </summary>
 	/// <remarks>http://wiki.vg/Protocol#Effects_2</remarks>
-	internal enum SmokeDirection
+	public enum SmokeDirection
 	{
 		SouthEast	= 0,
 		South		= 1,

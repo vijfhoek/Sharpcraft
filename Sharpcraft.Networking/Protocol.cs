@@ -12,7 +12,7 @@ using Sharpcraft.Networking.Packets;
 
 namespace Sharpcraft.Networking
 {
-	// TODO: @Vijfhoek, this class looks very messy right now!
+	// NOTE: This class is a bit cleaner now!
 	/// <summary>
 	/// The Minecraft protocol.
 	/// </summary>

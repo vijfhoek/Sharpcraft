@@ -11,7 +11,7 @@ namespace Sharpcraft.Networking.Packets
 		public sbyte Y;
 		public Int32 Z;
 		public sbyte Direction;
-		public object HeldItem; // This is supposed to be SlotData: http://wiki.vg/Slot_Data
+		public object HeldItem; // TODO: This is supposed to be SlotData: http://wiki.vg/Slot_Data
 
 		public PlayerBlockPlacementPacket(Int32 x = 0, sbyte y = 0, Int32 z = 0, sbyte direction = 0, object heldItem = null) : base(PacketType.PlayerBlockPlacement)
 		{

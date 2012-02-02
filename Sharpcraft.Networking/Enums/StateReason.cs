@@ -1,6 +1,6 @@
 ﻿namespace Sharpcraft.Networking.Enums
 {
-	internal enum StateReason
+	public enum StateReason
 	{
 		InvalidBed		= 0,
 		BeginRaining	= 1,
