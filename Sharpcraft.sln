@@ -48,6 +48,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "minecraft", "minecraft", "{
 		data\minecraft\items.list = data\minecraft\items.list
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Json.NET", "Json.NET", "{D3D379DE-CD4D-45EE-8CEC-16D0613BC509}"
+	ProjectSection(SolutionItems) = preProject
+		lib\Json.NET\Newtonsoft.Json.dll = lib\Json.NET\Newtonsoft.Json.dll
+		lib\Json.NET\Newtonsoft.Json.xml = lib\Json.NET\Newtonsoft.Json.xml
+		lib\Json.NET\Newtonsoft.Json_license.txt = lib\Json.NET\Newtonsoft.Json_license.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LibNbt", "LibNbt", "{DCB3141B-61D1-4DC3-9163-2351FAA0D5EB}"
+	ProjectSection(SolutionItems) = preProject
+		lib\LibNbt\LibNbt.dll = lib\LibNbt\LibNbt.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -163,11 +175,13 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{037E2F06-2BE2-4572-8C9F-13F73FA791CA} = {5AF1004D-E333-45B5-96AB-723DC06D8058}
 		{F386CBDF-AB1A-420C-B932-240B5FE290A0} = {5AF1004D-E333-45B5-96AB-723DC06D8058}
+		{D3D379DE-CD4D-45EE-8CEC-16D0613BC509} = {5AF1004D-E333-45B5-96AB-723DC06D8058}
+		{DCB3141B-61D1-4DC3-9163-2351FAA0D5EB} = {5AF1004D-E333-45B5-96AB-723DC06D8058}
 		{123CC25E-E77E-4B8B-B65F-9E3477754FEF} = {D6275296-90AF-4F6B-B5FC-EFE28EB1F800}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_UpdateFileVersion = False
-		BuildVersion_UpdateAssemblyVersion = False
 		BuildVersion_BuildVersioningStyle = None.None.Increment.TimeStamp
+		BuildVersion_UpdateAssemblyVersion = False
+		BuildVersion_UpdateFileVersion = False
 	EndGlobalSection
 EndGlobal
