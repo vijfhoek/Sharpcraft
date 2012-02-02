@@ -93,7 +93,7 @@ namespace Sharpcraft.Networking
 					pack = new SpawnPositionPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32());
 					break;
 				case PacketType.UseEntity:
-					pack = new UseEntityPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadSignedByte() > 0);
+					pack = new UseEntityPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadBoolean());
 					break;
 				case PacketType.UpdateHealth:
 					pack = new UpdateHealthPacket(_tools.ReadInt16(), _tools.ReadInt16(), _tools.ReadSingle());
@@ -103,14 +103,14 @@ namespace Sharpcraft.Networking
 					                         _tools.ReadInt16(), _tools.ReadInt64(), _tools.ReadString());
 					break;
 				case PacketType.Player:
-					pack = new PlayerPacket(_tools.ReadSignedByte() > 0);
+					pack = new PlayerPacket(_tools.ReadBoolean());
 					break;
 				case PacketType.PlayerPosition:
 					pack = new PlayerPositionPacket(_tools.ReadDouble(), _tools.ReadDouble(), _tools.ReadDouble(), _tools.ReadDouble(),
-					                                _tools.ReadByte() > 0);
+					                                _tools.ReadBoolean());
 					break;
 				case PacketType.PlayerLook:
-					pack = new PlayerLookPacket(_tools.ReadSingle(), _tools.ReadSingle(), _tools.ReadByte() > 0);
+					pack = new PlayerLookPacket(_tools.ReadSingle(), _tools.ReadSingle(), _tools.ReadBoolean());
 					break;
 				case PacketType.DisconnectKick:
 					pack = new DisconnectKickPacket(_tools.ReadString());
