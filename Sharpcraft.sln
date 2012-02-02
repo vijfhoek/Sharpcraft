@@ -34,8 +34,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "log4net", "log4net", "{F386
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Sharpcraft.Documentation", "Sharpcraft.Documentation\Sharpcraft.Documentation.shfbproj", "{D4AC8811-A6DB-4722-9B82-9534FB3D9F40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Website", "Sharpcraft.Website\Sharpcraft.Website.csproj", "{9B347AB0-3C24-4781-8637-10815FB0E00E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Library", "Sharpcraft.Library\Sharpcraft.Library.csproj", "{5742ED23-A3B3-4303-95C2-B755A5A01D5D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Devtools", "Sharpcraft.Devtools\Sharpcraft.Devtools.csproj", "{8487D5D6-DBAE-4ED2-97EC-5ACCE7C637D9}"
@@ -129,12 +127,6 @@ Global
 		{D4AC8811-A6DB-4722-9B82-9534FB3D9F40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4AC8811-A6DB-4722-9B82-9534FB3D9F40}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D4AC8811-A6DB-4722-9B82-9534FB3D9F40}.Release|x86.ActiveCfg = Release|Any CPU
-		{9B347AB0-3C24-4781-8637-10815FB0E00E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B347AB0-3C24-4781-8637-10815FB0E00E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{9B347AB0-3C24-4781-8637-10815FB0E00E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9B347AB0-3C24-4781-8637-10815FB0E00E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B347AB0-3C24-4781-8637-10815FB0E00E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{9B347AB0-3C24-4781-8637-10815FB0E00E}.Release|x86.ActiveCfg = Release|Any CPU
 		{5742ED23-A3B3-4303-95C2-B755A5A01D5D}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{5742ED23-A3B3-4303-95C2-B755A5A01D5D}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{5742ED23-A3B3-4303-95C2-B755A5A01D5D}.Debug|Mixed Platforms.Build.0 = Debug|x86
