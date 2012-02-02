@@ -22,3 +22,5 @@ Dependencies
 [OpenSteamWorks (OSW)](http://opensteamworks.org/) is required for this to work, you can download the source from [their mercurial repo](http://hg.opensteamworks.org/open-steamworks/src).
 
 [Json.NET (Newtonsoft.Json)](http://james.newtonking.com/pages/json-net.aspx) is required for this to work, you can download the source and binaries from [the CodePlex project page](http://json.codeplex.com/).
+
+[LibNbt](https://github.com/aphistic/libnbt) by [aphistic](https://github.com/aphistic) is required for this to work, you can download the source from [the Git repository](https://github.com/aphistic/libnbt).
