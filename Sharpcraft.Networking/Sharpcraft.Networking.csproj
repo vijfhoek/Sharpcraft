@@ -72,7 +72,6 @@
     <Compile Include="Events.cs" />
     <Compile Include="NetworkTools.cs" />
     <Compile Include="PacketListener.cs" />
-    <Compile Include="Packets.cs" />
     <Compile Include="Enums\PacketType.cs" />
     <Compile Include="Packets\AddObjectVehiclePacket.cs" />
     <Compile Include="Packets\AnimationPacket.cs" />

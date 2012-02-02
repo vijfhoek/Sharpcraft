@@ -14,7 +14,7 @@ namespace Sharpcraft.Networking.Packets
 		public string Text3;
 		public string Text4;
 
-		public UpdateSignPacket(Int32 x = 0, Int16 y = 0, Int32 z = 0, string text1 = null, string text2 = null, string text3 = null)
+		public UpdateSignPacket(Int32 x = 0, Int16 y = 0, Int32 z = 0, string text1 = null, string text2 = null, string text3 = null, string text4 = null)
 			: base(PacketType.UpdateSign)
 		{
 			X = x;
