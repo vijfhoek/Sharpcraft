@@ -31,6 +31,12 @@ namespace Sharpcraft.Networking
 			return Encoding.BigEndianUnicode.GetString(bteString);
 		}
 
+		public Boolean ReadBoolean()
+		{
+			byte[] bte = {(byte) _stream.ReadByte()};
+			return BitConverter.ToBoolean(bte, 0);
+		}
+
 		public Byte ReadByte()
 		{
 			return (byte) _stream.ReadByte();
