@@ -108,7 +108,6 @@
     <Compile Include="Packets\HoldingChangePacket.cs" />
     <Compile Include="Packets\IncrementStatisticPacket.cs" />
     <Compile Include="Packets\ItemDataPacket.cs" />
-    <Compile Include="Packets\ItemStack.cs" />
     <Compile Include="Packets\KeepAlivePacket.cs" />
     <Compile Include="Packets\LoginRequestPacketCS.cs" />
     <Compile Include="Packets\LoginRequestPacketSC.cs" />
@@ -182,7 +181,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.Increment.TimeStamp" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.TimeStamp" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

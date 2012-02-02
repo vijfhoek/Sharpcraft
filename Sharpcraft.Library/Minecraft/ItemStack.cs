@@ -21,7 +21,7 @@ namespace Sharpcraft.Library.Minecraft
 		/// <summary>
 		/// The Item this stack contains.
 		/// </summary>
-		public Item ItemID;
+		public Item StackItem;
 
 		/// <summary>
 		/// The damage values of the stack.
@@ -39,9 +39,9 @@ namespace Sharpcraft.Library.Minecraft
 		/// <param name="itemID">The item ID, defaults to 0</param>
 		/// <param name="stackSize">The stack size, defaults to 0</param>
 		/// <param name="itemDamage">The item damage, defaults to 0</param>
-		public ItemStack(int itemID = 0, int stackSize = 0, int itemDamage = 0)
+		public ItemStack(Item item = null, int stackSize = 0, int itemDamage = 0)
 		{
-			ItemID = itemID;
+			StackItem = item;
 			StackSize = stackSize;
 			ItemDamage = itemDamage;
 		}

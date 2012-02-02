@@ -91,8 +91,9 @@ namespace Sharpcraft.Networking
 			{
 				var stackSize = ReadByte();
 				var itemDamage = ReadInt16();
-				itemStack = new ItemStack(itemID, stackSize, itemDamage);
-				if (Item.)
+				// TODO: Pass an actual item instead of null
+				itemStack = new ItemStack(null, stackSize, itemDamage);
+				//if (Item.)
 			}
 			return itemStack;
 		}
