@@ -4,7 +4,7 @@
 	/// The different entity effects.
 	/// </summary>
 	/// <remarks>http://wiki.vg/Protocol#Effects</remarks>
-	internal enum EntityEffect
+	public enum EntityEffect
 	{
 		MoveSpeed		=  1,
 		MoveSlowDown	=  2,

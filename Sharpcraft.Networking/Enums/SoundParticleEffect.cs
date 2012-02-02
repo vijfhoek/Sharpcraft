@@ -4,7 +4,7 @@
 	/// Different sound/particle effects.
 	/// </summary>
 	/// <remarks>http://wiki.vg/Protocol#Effects_2</remarks>
-	internal enum SoundParticleEffect
+	public enum SoundParticleEffect
 	{
 		Click2			= 1000,
 		Click1			= 1001,
