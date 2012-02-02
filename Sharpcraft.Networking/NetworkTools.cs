@@ -59,14 +59,14 @@ namespace Sharpcraft.Networking
 		{
 			var bte = new byte[4];
 			_stream.Read(bte, 0, bte.Length);
-			return IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bte, 0));
+			return IPAddress.NetworkToHostOrder(BitConverter.ToInt32(bte, 0));
 		}
 
 		public Int64 ReadInt64()
 		{
 			var bte = new byte[8];
 			_stream.Read(bte, 0, bte.Length);
-			return IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bte, 0));
+			return IPAddress.NetworkToHostOrder(BitConverter.ToInt64(bte, 0));
 		}
 
 		public Single ReadSingle()
