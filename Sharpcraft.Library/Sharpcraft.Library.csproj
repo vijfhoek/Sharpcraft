@@ -59,6 +59,9 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LibNbt">
+      <HintPath>..\lib\LibNbt\LibNbt.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\lib\log4net\log4net.dll</HintPath>
     </Reference>
@@ -119,6 +122,7 @@
     <Compile Include="GUI\Label.cs" />
     <Compile Include="Minecraft\Client.cs" />
     <Compile Include="Minecraft\Item.cs" />
+    <Compile Include="Minecraft\ItemStack.cs" />
     <Compile Include="Minecraft\Player.cs" />
     <Compile Include="Minecraft\Server.cs" />
     <Compile Include="Minecraft\Skin.cs" />
@@ -157,7 +161,6 @@
       <Name>Sharpcraft.Networking</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <ProjectExtensions>

@@ -5,7 +5,6 @@
  */
 
 using System;
-using System.Net;
 using System.Net.Sockets;
 
 using Sharpcraft.Logging;
@@ -47,10 +46,14 @@ namespace Sharpcraft.Networking
 			_tools = new NetworkTools(_stream);
 		}
 
+		/// <summary>
+		/// Gets a packet from the server and returns it.
+		/// </summary>
+		/// <returns>The received packet.</returns>
 		public Packet GetPacket()
 		{
 			var packetID = (byte)_stream.ReadByte();
-			_log.Debug("Got packet ID: " + packetID.ToString()); // Spammy debug message
+			_log.Debug("Got packet ID: " + packetID); // Spammy debug message
 			var type = (PacketType) packetID;
 			Packet pack = null;
 
@@ -90,25 +93,37 @@ namespace Sharpcraft.Networking
 					pack = new SpawnPositionPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32());
 					break;
 				case PacketType.UseEntity:
-					pack = new UseEntityPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadSignedByte() > 0);
+					pack = new UseEntityPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadBoolean());
 					break;
 				case PacketType.UpdateHealth:
-					pack = new UpdateHealthPacket(_tools.ReadInt16(), _tools.ReadInt16());
-					_tools.Skip(); // We are supposed to read a float value into UpdateHealthPacket here
+					pack = new UpdateHealthPacket(_tools.ReadInt16(), _tools.ReadInt16(), _tools.ReadSingle());
 					break;
 				case PacketType.Respawn:
-					pack = new RespawnPacket(_tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadInt16(), _tools.ReadInt64(), _tools.ReadString());
+					pack = new RespawnPacket(_tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadSignedByte(),
+					                         _tools.ReadInt16(), _tools.ReadInt64(), _tools.ReadString());
 					break;
 				case PacketType.Player:
-					pack = new PlayerPacket(_tools.ReadSignedByte() > 0);
+					pack = new PlayerPacket(_tools.ReadBoolean());
 					break;
 				case PacketType.PlayerPosition:
-					_tools.Skip(4); // We are supposed to read 4 doubles into PlayerPositionPacket here
-					pack = new PlayerPositionPacket(onGround : _tools.ReadSignedByte() > 0);
+					pack = new PlayerPositionPacket(_tools.ReadDouble(), _tools.ReadDouble(), _tools.ReadDouble(), _tools.ReadDouble(),
+					                                _tools.ReadBoolean());
 					break;
 				case PacketType.PlayerLook:
-					_tools.Skip(2); // We are supposed to read 2 floats into PlayerLookPacket here
-					pack = new PlayerLookPacket(onGround : _tools.ReadSignedByte() > 0);
+					pack = new PlayerLookPacket(_tools.ReadSingle(), _tools.ReadSingle(), _tools.ReadBoolean());
+					break;
+				case PacketType.PlayerPositionAndLook:
+					pack = new PlayerPositionAndLookPacket(_tools.ReadDouble(), _tools.ReadDouble(), _tools.ReadDouble(),
+					                                       _tools.ReadDouble(), _tools.ReadSingle(), _tools.ReadSingle(),
+					                                       _tools.ReadBoolean());
+					break;
+				case PacketType.PlayerDigging:
+					pack = new PlayerDiggingPacket(_tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadSignedByte(),
+					                               _tools.ReadInt32(), _tools.ReadSignedByte());
+					break;
+				case PacketType.PlayerBlockPlacement:
+					// TODO fix this
+					pack = new PlayerBlockPlacementPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadItemStack());
 					break;
 				case PacketType.DisconnectKick:
 					pack = new DisconnectKickPacket(_tools.ReadString());
@@ -118,12 +133,16 @@ namespace Sharpcraft.Networking
 			return pack;
 		}
 
+		/// <summary>
+		/// Sends the given packet to the connected Minecraft server.
+		/// </summary>
+		/// <param name="packet">The packet to send</param>
 		public void SendPacket(Packet packet)
 		{
 			_log.Debug("Sending packet (ID: " + packet.Type + ")");
 		
-			PacketType type = packet.Type;
-			byte packetID = (byte) packet.Type;
+			var type = packet.Type;
+			var packetID = (byte) packet.Type;
 
 			switch (type)
 			{
