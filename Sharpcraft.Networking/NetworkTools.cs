@@ -83,7 +83,7 @@ namespace Sharpcraft.Networking
 			return BitConverter.ToDouble(bte, 0);
 		}
 
-		public ItemStack ReadItemStack()
+		/*public ItemStack ReadItemStack()
 		{
 			ItemStack itemStack = null;
 			var itemID = ReadInt16();
@@ -96,7 +96,7 @@ namespace Sharpcraft.Networking
 				//if (Item.)
 			}
 			return itemStack;
-		}
+		}*/
 
 		public void WriteString(String s)
 		{
