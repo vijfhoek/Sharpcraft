@@ -123,7 +123,8 @@ namespace Sharpcraft.Networking
 					break;
 				case PacketType.PlayerBlockPlacement:
 					// TODO fix this
-					pack = new PlayerBlockPlacementPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadItemStack());
+					pack = new PlayerBlockPlacementPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadSignedByte()); // ReadItemStack
+					_tools.Skip();
 					break;
 				case PacketType.DisconnectKick:
 					pack = new DisconnectKickPacket(_tools.ReadString());
