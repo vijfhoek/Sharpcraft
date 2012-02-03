@@ -14,14 +14,13 @@ namespace Sharpcraft.Library.Minecraft
 		public sbyte Difficulty { get; private set; }
 		public byte Height { get; private set; }
 		
-		public World(string seed = null, string type = null, sbyte dimension = 0, sbyte difficulty = 0, byte height = 0, Vector3 spawn = null)
+		public World(long seed = 0, string type = null, sbyte dimension = 0, sbyte difficulty = 0, byte height = 0)
 		{
 			Seed = seed;
 			LevelType = type;
 			Dimension = dimension;
 			Difficulty = difficulty;
 			Height = height;
-			SetSpawn(spawn);
 		}
 
 		public void SetSeed(long seed)

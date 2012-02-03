@@ -35,13 +35,13 @@ namespace Sharpcraft.Library.Minecraft
 			_log.Debug("Loading Items from file...");
 			try
 			{
-				using (var reader = new StreamReader("data\items.list"))
+				using (var reader = new StreamReader("data\\items.list"))
 					Items = new JsonSerializer().Deserialize<List<Item>>(new JsonTextReader(reader));
 			}
 			catch(IOException ex)
 			{
 				_log.Error("Failed to read item list from file!");
-				_log.Error(ex.GetType + ": " + ex.Message);
+				_log.Error(ex.GetType() + ": " + ex.Message);
 				_log.Error("Stack Trace:\n" + ex.StackTrace);
 				throw new Exception("Sharpcraft.Library.Minecraft.Client failed to initialize! Could not read item list file!", ex);
 			}
