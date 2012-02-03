@@ -30,6 +30,7 @@ using Sharpcraft.Networking;
 using Sharpcraft.Components.Debug;
 using Sharpcraft.Library.GUI;
 using Sharpcraft.Library.Minecraft;
+using Sharpcraft.Library.Minecraft.Entities;
 using Sharpcraft.Library.Configuration;
 
 using Label = Sharpcraft.Library.GUI.Label;
@@ -175,7 +176,7 @@ namespace Sharpcraft
 			// Ugly debug code ahead!
 			_log.Debug("Starting debug connection...");
 			var server = new Server("F16Gaming Test", "localhost", 25565, "The test server", 0, 0, 0, true);
-			var player = new Player("Sharpcraft");
+			var player = new Player(0, "Sharpcraft");
 			var client = new Client(server, player);
 			client.Connect();
 			_log.Debug("Reached end of debug connection!");

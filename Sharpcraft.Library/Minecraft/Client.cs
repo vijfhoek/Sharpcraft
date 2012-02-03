@@ -1,11 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Collections.Generic;
+
+using Microsoft.Xna.Framework;
+
 using Newtonsoft.Json;
+
 using Sharpcraft.Logging;
 using Sharpcraft.Networking;
 using Sharpcraft.Networking.Enums;
 using Sharpcraft.Networking.Packets;
+using Sharpcraft.Library.Minecraft.Entities;
 
 namespace Sharpcraft.Library.Minecraft
 {
@@ -16,25 +21,35 @@ namespace Sharpcraft.Library.Minecraft
 		private readonly Protocol _protocol;
 		private readonly Server _server;
 		private readonly Player _player;
+		private World _world;
 
 		private PacketListener _listener;
-
+		
 		public List<Item> Items { get; private set; }
 
 		public Client(Server server, Player player)
 		{
 			_log = LogManager.GetLogger(this);
 			_log.Debug("Minecraft Client created!");
-
-			_log.Debug("Loading Item list...");
-			using (var reader = new StreamReader("items.list"))
-				Items = new JsonSerializer().Deserialize<List<Item>>(new JsonTextReader(reader));
-
 			_server = server;
+			_log.Debug("Loading Items from file...");
+			try
+			{
+				using (var reader = new StreamReader("data\items.list"))
+					Items = new JsonSerializer().Deserialize<List<Item>>(new JsonTextReader(reader));
+			}
+			catch(IOException ex)
+			{
+				_log.Error("Failed to read item list from file!");
+				_log.Error(ex.GetType + ": " + ex.Message);
+				_log.Error("Stack Trace:\n" + ex.StackTrace);
+				throw new Exception("Sharpcraft.Library.Minecraft.Client failed to initialize! Could not read item list file!", ex);
+			}
 			_log.Debug("Creating communication protocol...");
 			_protocol = new Protocol(_server.Address, _server.Port);
 			_log.Info("Client initiated on " + _server.Address + ":" + _server.Port + "!");
 			_player = player;
+			_world = new World();
 		}
 
 		public Server GetServer()
@@ -48,7 +63,7 @@ namespace Sharpcraft.Library.Minecraft
 			_log.Info("Connecting to " + _server.Address + ":" + _server.Port + "...");
 			_protocol.SendPacket(new HandshakePacketCS(_player.Name));
 			_log.Info("Waiting for handshake response...");
-			var response = _protocol.GetPacket();
+			Packet response = _protocol.GetPacket();
 			if (!(response is HandshakePacketSC))
 			{
 				_log.Warn("Incorrect packet type sent as response! Expected HandshakePacketSC, got " + response.GetType());
@@ -103,8 +118,38 @@ namespace Sharpcraft.Library.Minecraft
 					_log.Debug("Client received KeepAlive request, sending KeepAlive packet...");
 					_protocol.SendPacket(response);
 					break;
+				case PacketType.LoginRequest:
+					_log.Debug("Client received LoginRequest packet, updating world, player and server data...");
+					var lrPack = (LoginRequestPacketSC) e.Packet;
+					_log.Debug("Setting Player Entity ID to " + lrPack.EntityID);
+					_player.EntityID = lrPack.EntityID;
+					_log.Debug("Setting map seed to " + lrPack.MapSeed);
+					_world.SetSeed(lrPack.MapSeed);
+					_log.Debug("Setting map type to " + lrPack.LevelType);
+					_world.SetLevelType(lrPack.LevelType);
+					_log.Debug("Setting server mode to " + lrPack.Gamemode);
+					_server.SetMode(lrPack.Gamemode);
+					_log.Debug("Setting world dimension to " + lrPack.Dimension);
+					_world.SetDimension(lrPack.Dimension);
+					_log.Debug("Setting world difficulty to " + lrPack.Difficulty);
+					_world.SetDifficulty(lrPack.Difficulty);
+					_log.Debug("Setting world height to " + lrPack.WorldHeight);
+					_world.SetHeight(lrPack.WorldHeight);
+					_log.Debug("Setting server max players to " + lrPack.MaxPlayers);
+					if (_server.Players > lrPack.MaxPlayers)
+						_server.Players = lrPack.MaxPlayers;
+					_server.MaxPlayers = lrPack.MaxPlayers;
+					_log.Debug("World, player and server data successfully updated!");
+					break;
+				case PacketType.SpawnPosition:
+					var pack = (SpawnPositionPacket) e.Packet;
+					_log.Debug(string.Format("Received SpawnPosition packet: {0}, {1}, {2}. Updating world spawn...", pack.X, pack.Y ,pack.Z));
+					_world.SetSpawn(pack.X, pack.Y, pack.Z);
+					_log.Debug("Spawn position set!");
+					break;
 				case PacketType.DisconnectKick:
 					_log.Debug("Client DISCONNECT or KICK with reason: " + ((DisconnectKickPacket)e.Packet).Reason);
+					_listener.Stop();
 					break;
 				default:
 					_log.Info("Received packet: " + e.Packet.Type + " but Client is not configured to respond to this packet!");

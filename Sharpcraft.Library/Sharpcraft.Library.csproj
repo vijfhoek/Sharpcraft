@@ -122,10 +122,11 @@
     <Compile Include="GUI\Label.cs" />
     <Compile Include="Minecraft\Client.cs" />
     <Compile Include="Minecraft\Item.cs" />
-    <Compile Include="Minecraft\ItemStack.cs" />
-    <Compile Include="Minecraft\Player.cs" />
     <Compile Include="Minecraft\Server.cs" />
+	<Compile Include="Minecraft\World.cs" />
     <Compile Include="Minecraft\Skin.cs" />
+	<Compile Include="Minecraft\Entities\Entity.cs" />
+    <Compile Include="Minecraft\Entities\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration\Settings.cs" />
   </ItemGroup>
