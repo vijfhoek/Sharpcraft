@@ -1,13 +1,8 @@
-<<<<<<< HEAD
-﻿using System;
+using System;
 using System.IO;
 using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
-=======
-﻿using System.Collections.Generic;
-using System.IO;
->>>>>>> 8a0a507c2a0749f8e5efa33f521d783bcc42331c
 
 using Newtonsoft.Json;
 
