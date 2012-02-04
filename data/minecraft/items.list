@@ -3,1332 +3,1332 @@
     "Name": "Iron Shovel",
     "Id": 256,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Iron Pickaxe",
     "Id": 257,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Iron Axe",
     "Id": 258,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Flint and Steel",
     "Id": 259,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Red Apple",
     "Id": 260,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Bow",
     "Id": 261,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Arrow",
     "Id": 262,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Coal",
     "Id": 263,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Charcoal",
     "Id": 263,
     "Data": 1,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Diamond",
     "Id": 264,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Iron Ingot",
     "Id": 265,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Gold Ingot",
     "Id": 266,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Iron Sword",
     "Id": 267,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Wooden Sword",
     "Id": 268,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Wooden Shovel",
     "Id": 269,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Wooden Pickaxe",
     "Id": 270,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Wooden Axe",
     "Id": 271,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Stone Sword",
     "Id": 272,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Stone Shovel",
     "Id": 273,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Stone Pickaxe",
     "Id": 274,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Stone Axe",
     "Id": 275,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Diamond Sword",
     "Id": 276,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Diamond Shovel",
     "Id": 277,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Diamond Pickaxe",
     "Id": 278,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Diamond Axe",
     "Id": 279,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Stick",
     "Id": 280,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Bowl",
     "Id": 281,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Mushroom Soup",
     "Id": 282,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Gold Sword",
     "Id": 283,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Gold Shovel",
     "Id": 284,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Gold Pickaxe",
     "Id": 285,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Gold Axe",
     "Id": 286,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "String",
     "Id": 287,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Feather",
     "Id": 288,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Gunpowder",
     "Id": 289,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Wooden Hoe",
     "Id": 290,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Stone Hoe",
     "Id": 291,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Iron Hoe",
     "Id": 292,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Diamond Hoe",
     "Id": 293,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Gold Hoe",
     "Id": 294,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Seeds",
     "Id": 295,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Wheat",
     "Id": 296,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Bread",
     "Id": 297,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Leather Cap",
     "Id": 298,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Leather Tunic",
     "Id": 299,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Leather Pants",
     "Id": 300,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Leather Boots",
     "Id": 301,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Chain Helmet",
     "Id": 302,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Chain Chestplate",
     "Id": 303,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Chain Leggings",
     "Id": 304,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Chain Boots",
     "Id": 305,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Iron Helmet",
     "Id": 306,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Iron Chestplate",
     "Id": 307,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Iron Leggings",
     "Id": 308,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Iron Boots",
     "Id": 309,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Diamond Helmet",
     "Id": 310,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Diamond Chestplate",
     "Id": 311,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Diamond Leggings",
     "Id": 312,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Diamond Boots",
     "Id": 313,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Gold Helmet",
     "Id": 314,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Gold Chestplate",
     "Id": 315,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Gold Leggings",
     "Id": 316,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Gold Boots",
     "Id": 317,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Flint",
     "Id": 318,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Raw Porkchop",
     "Id": 319,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Cooked Porkchop",
     "Id": 320,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Painting",
     "Id": 321,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Golden Apple",
     "Id": 322,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Sign",
     "Id": 323,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Wooden Door",
     "Id": 324,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Bucket",
     "Id": 325,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Water Bucket",
     "Id": 326,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Lava Bucket",
     "Id": 327,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Minecart",
     "Id": 328,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Saddle",
     "Id": 329,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Iron Door",
     "Id": 330,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Redstone",
     "Id": 331,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Snowball",
     "Id": 332,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Boat",
     "Id": 333,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Leather",
     "Id": 334,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Milk",
     "Id": 335,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Clay Brick",
     "Id": 336,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Clay",
     "Id": 337,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Sugar Cane",
     "Id": 338,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Paper",
     "Id": 339,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Book",
     "Id": 340,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Slimeball",
     "Id": 341,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Minecart with Chest",
     "Id": 342,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Minecart with Furnace",
     "Id": 343,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Egg",
     "Id": 344,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Compass",
     "Id": 345,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Fishing Rod",
     "Id": 346,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Clock",
     "Id": 347,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Glowstone Dust",
     "Id": 348,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Raw Fish",
     "Id": 349,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Cooked Fish",
     "Id": 350,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Ink Sac",
     "Id": 351,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Rose Red",
     "Id": 351,
     "Data": 1,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Cactus Green",
     "Id": 351,
     "Data": 2,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Cocoa Beans",
     "Id": 351,
     "Data": 3,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Lapis Lazuli",
     "Id": 351,
     "Data": 4,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Purple Dye",
     "Id": 351,
     "Data": 5,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Cyan Dye",
     "Id": 351,
     "Data": 6,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Light Gray Dye",
     "Id": 351,
     "Data": 7,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Gray Dye",
     "Id": 351,
     "Data": 8,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Pink Dye",
     "Id": 351,
     "Data": 9,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Lime Dye",
     "Id": 351,
     "Data": 10,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Dandelion Yellow",
     "Id": 351,
     "Data": 11,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Light Blue Dye",
     "Id": 351,
     "Data": 12,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Magenta Dye",
     "Id": 351,
     "Data": 13,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Orange Dye",
     "Id": 351,
     "Data": 14,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Bone Meal",
     "Id": 351,
     "Data": 15,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Bone",
     "Id": 352,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Sugar",
     "Id": 353,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Cake",
     "Id": 354,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Bed",
     "Id": 355,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Redstone Repeater",
     "Id": 356,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Cookie",
     "Id": 357,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Map",
     "Id": 358,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Shears",
     "Id": 359,
     "Data": 0,
-    "Damageable": 1
+    "Damageable": true
   },
   {
     "Name": "Melon Slice",
     "Id": 360,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Pumpkin Seeds",
     "Id": 361,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Melon Seeds",
     "Id": 362,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Raw Beef",
     "Id": 363,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Steak",
     "Id": 364,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Raw Chicken",
     "Id": 365,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Cooked Chicken",
     "Id": 366,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Rotten Flesh",
     "Id": 367,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Ender Pearl",
     "Id": 368,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Blaze Rod",
     "Id": 369,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Ghast Tear",
     "Id": 370,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Gold Nugget",
     "Id": 371,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Nether Wart",
     "Id": 372,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Water Bottle",
     "Id": 373,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Awkward Potion",
     "Id": 373,
     "Data": 16,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Thick Potion",
     "Id": 373,
     "Data": 32,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Mundane Potion",
     "Id": 373,
     "Data": 64,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Mundane Potion",
     "Id": 373,
     "Data": 8192,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Regeneration",
     "Id": 373,
     "Data": 8193,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Swiftness",
     "Id": 373,
     "Data": 8194,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Fire Resistance",
     "Id": 373,
     "Data": 8195,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Poison",
     "Id": 373,
     "Data": 8196,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Healing",
     "Id": 373,
     "Data": 8197,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Weakness",
     "Id": 373,
     "Data": 8200,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Strength",
     "Id": 373,
     "Data": 8201,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Slowness",
     "Id": 373,
     "Data": 8202,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Harming",
     "Id": 373,
     "Data": 8204,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Regeneration II",
     "Id": 373,
     "Data": 8225,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Swiftness II",
     "Id": 373,
     "Data": 8226,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Fire Resistance",
     "Id": 373,
     "Data": 8227,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Poison II",
     "Id": 373,
     "Data": 8228,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Healing II",
     "Id": 373,
     "Data": 8229,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Weakness",
     "Id": 373,
     "Data": 8232,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Strength II",
     "Id": 373,
     "Data": 8233,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Slowness",
     "Id": 373,
     "Data": 8234,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Harming II",
     "Id": 373,
     "Data": 8236,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Regeneration",
     "Id": 373,
     "Data": 8257,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Swiftness",
     "Id": 373,
     "Data": 8258,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Fire Resistance",
     "Id": 373,
     "Data": 8259,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Poison",
     "Id": 373,
     "Data": 8260,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Healing",
     "Id": 373,
     "Data": 8261,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Weakness",
     "Id": 373,
     "Data": 8264,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Strength",
     "Id": 373,
     "Data": 8265,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Slowness",
     "Id": 373,
     "Data": 8266,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Harming",
     "Id": 373,
     "Data": 8268,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Regeneration II",
     "Id": 373,
     "Data": 8289,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Swiftness II",
     "Id": 373,
     "Data": 8290,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Poison II",
     "Id": 373,
     "Data": 8292,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Potion of Strength II",
     "Id": 373,
     "Data": 8297,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Mundane Potion",
     "Id": 373,
     "Data": 16384,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Regeneration",
     "Id": 373,
     "Data": 16385,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Swiftness",
     "Id": 373,
     "Data": 16386,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Fire Resistance",
     "Id": 373,
     "Data": 16387,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Poison",
     "Id": 373,
     "Data": 16388,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Healing",
     "Id": 373,
     "Data": 16389,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Weakness",
     "Id": 373,
     "Data": 16392,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Strength",
     "Id": 373,
     "Data": 16393,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Slowness",
     "Id": 373,
     "Data": 16394,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Harming",
     "Id": 373,
     "Data": 16396,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Regeneration II",
     "Id": 373,
     "Data": 16417,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Swiftness II",
     "Id": 373,
     "Data": 16418,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Fire Resistance",
     "Id": 373,
     "Data": 16419,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Poison II",
     "Id": 373,
     "Data": 16420,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Healing II",
     "Id": 373,
     "Data": 16421,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Weakness",
     "Id": 373,
     "Data": 16424,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Strength II",
     "Id": 373,
     "Data": 16425,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Slowness",
     "Id": 373,
     "Data": 16426,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Harming II",
     "Id": 373,
     "Data": 16428,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Regeneration",
     "Id": 373,
     "Data": 16449,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Swiftness",
     "Id": 373,
     "Data": 16450,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Fire Resistance",
     "Id": 373,
     "Data": 16451,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Poison",
     "Id": 373,
     "Data": 16452,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Healing",
     "Id": 373,
     "Data": 16453,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Weakness",
     "Id": 373,
     "Data": 16456,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Strength",
     "Id": 373,
     "Data": 16457,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Slowness",
     "Id": 373,
     "Data": 16458,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Harming",
     "Id": 373,
     "Data": 16460,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Regeneration II",
     "Id": 373,
     "Data": 16481,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Swiftness II",
     "Id": 373,
     "Data": 16482,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Poison II",
     "Id": 373,
     "Data": 16484,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Splash Potion of Strength II",
     "Id": 373,
     "Data": 16489,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Glass Bottle",
     "Id": 374,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Spider Eye",
     "Id": 375,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Fermented Spider Eye",
     "Id": 376,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Blaze Powder",
     "Id": 377,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Magma Cream",
     "Id": 378,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Brewing Stand",
     "Id": 379,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Cauldron",
     "Id": 380,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Eye of Ender",
     "Id": 381,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Glistering Melon",
     "Id": 382,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Spawn Egg",
     "Id": 383,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "13 Disc",
     "Id": 2256,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Cat Disc",
     "Id": 2257,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Blocks Disc",
     "Id": 2258,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Chirp Disc",
     "Id": 2259,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Far Disc",
     "Id": 2260,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Mall Disc",
     "Id": 2261,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Mellohi Disc",
     "Id": 2262,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Stal Disc",
     "Id": 2263,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Strad Disc",
     "Id": 2264,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "Ward Disc",
     "Id": 2265,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   },
   {
     "Name": "11 Disc",
     "Id": 2266,
     "Data": 0,
-    "Damageable": 0
+    "Damageable": false
   }
 ]
