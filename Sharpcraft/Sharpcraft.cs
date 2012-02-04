@@ -109,19 +109,19 @@ namespace Sharpcraft
 		public Sharpcraft(User user)
 		{
 			_log = LogManager.GetLogger(this);
-			_settings = new GameSettings(SharpcraftConstants.GameSettings);
+			_settings = new GameSettings(Constants.GameSettings);
 			_user = user;
-			if (File.Exists(SharpcraftConstants.GameSettings))
+			if (File.Exists(Constants.GameSettings))
 			{
 				_log.Info("Loading game settings from file...");
-				var reader = new StreamReader(SharpcraftConstants.GameSettings);
+				var reader = new StreamReader(Constants.GameSettings);
 				_settings = new JsonSerializer().Deserialize<GameSettings>(new JsonTextReader(reader));
 				_log.Info("Game settings loaded successfully!");
 				reader.Close();
 			}
 			else
 			{
-				_settings = new GameSettings(SharpcraftConstants.GameSettings) {Size = new Point(1280, 720)};
+				_settings = new GameSettings(Constants.GameSettings) {Size = new Point(1280, 720)};
 			}
 			_log.Debug("Initializing graphics device.");
 			_graphics = new GraphicsDeviceManager(this);
@@ -133,7 +133,7 @@ namespace Sharpcraft
 			_graphics.PreferredBackBufferWidth = _settings.Size.X;
 			_graphics.PreferredBackBufferHeight = _settings.Size.Y;
 			_log.Debug("Setting content directory.");
-			Content.RootDirectory = SharpcraftConstants.ContentDirectory;
+			Content.RootDirectory = Constants.ContentDirectory;
 			_log.Debug("Creating DebugDisplay...");
 			Components.Add(new DebugDisplay(this, _graphics));
 #if DEBUG
@@ -207,7 +207,7 @@ namespace Sharpcraft
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			_crosshair = Content.Load<Texture2D>("crosshair");
-			_menuFont = Content.Load<SpriteFont>(SharpcraftConstants.MenuFont);
+			_menuFont = Content.Load<SpriteFont>(Constants.MenuFont);
 			_menuLabel = new Label("!!! GAME MENU OPEN !!!", _menuFont, Color.Yellow);
 			_log.Debug("LoadContent(); ## END ##");
 		}

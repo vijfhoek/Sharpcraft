@@ -131,7 +131,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Sharpcraft.cs" />
-    <Compile Include="SharpcraftConstants.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>

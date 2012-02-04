@@ -55,10 +55,10 @@ namespace Sharpcraft.Networking
 					if ((packet = _protocol.GetPacket()) == null)
 						continue;
 
-					_log.Debug("Got packet: " + packet.Type);
-					_log.Debug("Broadcasting packet to subscribers...");
+					_log.Debug("Got packet: " + packet.Type); // Disable completely when all packets are implemented?
+					//_log.Debug("Broadcasting packet to subscribers..."); // Spammy
 					PacketReceived(packet);
-					_log.Debug("Done!");
+					//_log.Debug("Done!"); // Spammy
 				}
 			}
 			catch (ThreadAbortException)

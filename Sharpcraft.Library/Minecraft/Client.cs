@@ -38,7 +38,7 @@ namespace Sharpcraft.Library.Minecraft
 			_log.Debug("Loading Items from file...");
 			try
 			{
-				using (var reader = new StreamReader("data\\items.list"))
+				using (var reader = new StreamReader(Constants.MinecraftItemFile))
 					Items = new JsonSerializer().Deserialize<List<Item>>(new JsonTextReader(reader));
 			}
 			catch(IOException ex)
@@ -74,7 +74,7 @@ namespace Sharpcraft.Library.Minecraft
 			}
 			_log.Info("Server responded to Handshake with " + ((HandshakePacketSC)response).ConnectionHash);
 			_log.Info("Sending login request...");
-			_protocol.SendPacket(new LoginRequestPacketCS(Constants.ProtocolVersion, _player.Name));
+			_protocol.SendPacket(new LoginRequestPacketCS(Networking.Constants.ProtocolVersion, _player.Name));
 			_log.Info("Waiting for login response...");
 			response = _protocol.GetPacket();
 			if (!(response is LoginRequestPacketSC))
@@ -145,10 +145,25 @@ namespace Sharpcraft.Library.Minecraft
 					_log.Debug("World, player and server data successfully updated!");
 					break;
 				case PacketType.SpawnPosition:
-					var pack = (SpawnPositionPacket) e.Packet;
-					_log.Debug(string.Format("Received SpawnPosition packet: {0}, {1}, {2}. Updating world spawn...", pack.X, pack.Y ,pack.Z));
-					_world.SetSpawn(pack.X, pack.Y, pack.Z);
+					var spPack = (SpawnPositionPacket) e.Packet;
+					_log.Debug(string.Format("Received SpawnPosition packet: {0}, {1}, {2}. Updating world spawn...", spPack.X, spPack.Y ,spPack.Z));
+					_world.SetSpawn(spPack.X, spPack.Y, spPack.Z);
 					_log.Debug("Spawn position set!");
+					break;
+				case PacketType.PlayerPositionAndLook:
+					var plPack = (PlayerPositionAndLookPacket) e.Packet;
+					response = new PlayerPositionAndLookPacket
+					{
+						X = plPack.X,
+						Y = plPack.Y,
+						Z = plPack.Y,
+						Stance = plPack.Stance,
+						Yaw = plPack.Yaw,
+						Pitch = plPack.Pitch,
+						OnGround = plPack.OnGround
+					};
+					_log.Debug("Client received PlayerPositionAndLook packet (0x0D), responding with identical packet...");
+					_protocol.SendPacket(response);
 					break;
 				case PacketType.DisconnectKick:
 					_log.Debug("Client DISCONNECT or KICK with reason: " + ((DisconnectKickPacket)e.Packet).Reason);
