@@ -26,7 +26,10 @@ namespace Sharpcraft.Networking
 
 		public string ReadString()
 		{
-			var bteString = new byte[ReadInt16()*2];
+			Int16 length = ReadInt16();
+			Logging.LogManager.GetLogger(this).Debug("ReadString reading string with length: " + length);
+			Logging.LogManager.GetLogger(this).Debug("Final: " + (length * 2 + 2));
+			var bteString = new byte[length * 2 + 2];
 			_stream.Read(bteString, 0, bteString.Length);
 			return Encoding.BigEndianUnicode.GetString(bteString);
 		}

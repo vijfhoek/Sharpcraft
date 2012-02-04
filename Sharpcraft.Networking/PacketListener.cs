@@ -22,10 +22,11 @@ namespace Sharpcraft.Networking
 			_protocol = protocol;
 			_log.Debug("Creating packet listen thread...");
 			_listenThread = new Thread(ReadPackets) {Name = "PacketListen"};
+			_listenThread.IsBackground = true;
 			_log.Debug("Starting packet listen thread...");
+			_running = true;
 			_listenThread.Start();
 			_log.Info("Packet listen thread started!");
-			_running = true;
 		}
 
 		public event PacketEventHandler OnPacketReceived;
