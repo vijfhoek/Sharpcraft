@@ -53,7 +53,9 @@ namespace Sharpcraft.Networking
 		public Packet GetPacket()
 		{
 			var packetID = (byte)_stream.ReadByte();
-			_log.Debug("Got packet ID: " + packetID); // Spammy debug message
+			//_log.Debug("Got packet ID: " + packetID); // Spammy debug message
+			if (!Enum.IsDefined(typeof(PacketType), packetID))
+				return null;
 			var type = (PacketType) packetID;
 			Packet pack = null;
 
@@ -63,19 +65,18 @@ namespace Sharpcraft.Networking
 					pack = new KeepAlivePacket(_tools.ReadInt32());
 					break;
 				case PacketType.LoginRequest:
-					var packet = new LoginRequestPacketSC();
-
-					packet.EntityID = _tools.ReadInt32();
-					packet.NotUsed = _tools.ReadString();
-					packet.MapSeed = _tools.ReadInt64();
-					packet.LevelType = _tools.ReadString();
-					packet.Gamemode = _tools.ReadInt32();
-					packet.Dimension = (sbyte) _stream.ReadByte();
-					packet.Difficulty = (sbyte) _stream.ReadByte();
-					packet.WorldHeight = (byte) _stream.ReadByte();
-					packet.MaxPlayers = (byte) _stream.ReadByte();
-
-					pack = packet;
+					pack = new LoginRequestPacketSC
+					{
+						EntityID = _tools.ReadInt32(),
+						NotUsed = _tools.ReadString(),
+						MapSeed = _tools.ReadInt64(),
+						LevelType = _tools.ReadString(),
+						Gamemode = _tools.ReadInt32(),
+						Dimension = (sbyte) _stream.ReadByte(),
+						Difficulty = (sbyte) _stream.ReadByte(),
+						WorldHeight = (byte) _stream.ReadByte(),
+						MaxPlayers = (byte) _stream.ReadByte()
+					};
 					break;
 				case PacketType.Handshake:
 					pack = new HandshakePacketSC(_tools.ReadString());
@@ -125,6 +126,141 @@ namespace Sharpcraft.Networking
 					// TODO fix this
 					pack = new PlayerBlockPlacementPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadSignedByte()); // ReadItemStack
 					_tools.Skip();
+					break;
+				case PacketType.HoldingChange:
+					pack = null;
+					break;
+				case PacketType.UseBed:
+					pack = null;
+					break;
+				case PacketType.Animation:
+					pack = null;
+					break;
+				case PacketType.NamedEntitySpawn:
+					pack = null;
+					break;
+				case PacketType.PickupSpawn:
+					pack = null;
+					break;
+				case PacketType.CollectItem:
+					pack = null;
+					break;
+				case PacketType.AddObjectVehicle:
+					pack = null;
+					break;
+				case PacketType.MobSpawn:
+					pack = null;
+					break;
+				case PacketType.EntityPainting:
+					pack = null;
+					break;
+				case PacketType.ExperienceOrb:
+					pack = null;
+					break;
+				case PacketType.EntityVelocity:
+					pack = null;
+					break;
+				case PacketType.DestroyEntity:
+					pack = null;
+					break;
+				case PacketType.Entity:
+					pack = null;
+					break;
+				case PacketType.EntityRelativeMove:
+					pack = null;
+					break;
+				case PacketType.EntityLook:
+					pack = null;
+					break;
+				case PacketType.EntityLookAndRelativeMove:
+					pack = null;
+					break;
+				case PacketType.EntityTeleport:
+					pack = null;
+					break;
+				case PacketType.EntityStatus:
+					pack = null;
+					break;
+				case PacketType.AttachEntity:
+					pack = null;
+					break;
+				case PacketType.EntityMetadata:
+					pack = null;
+					break;
+				case PacketType.EntityEffect:
+					pack = null;
+					break;
+				case PacketType.RemoveEntityEffect:
+					pack = null;
+					break;
+				case PacketType.Experience:
+					pack = null;
+					break;
+				case PacketType.PreChunk:
+					pack = null;
+					break;
+				case PacketType.MapChunk:
+					pack = null;
+					break;
+				case PacketType.MultiBlockChange:
+					pack = null;
+					break;
+				case PacketType.BlockChange:
+					pack = null;
+					break;
+				case PacketType.BlockAction:
+					pack = null;
+					break;
+				case PacketType.Explosion:
+					pack = null;
+					break;
+				case PacketType.SoundParticleEffect:
+					pack = null;
+					break;
+				case PacketType.NewInvalidState:
+					pack = null;
+					break;
+				case PacketType.Thunderbolt:
+					pack = null;
+					break;
+				case PacketType.OpenWindow:
+					pack = null;
+					break;
+				case PacketType.CloseWindow:
+					pack = null;
+					break;
+				case PacketType.SetSlot:
+					pack = null;
+					break;
+				case PacketType.WindowItems:
+					pack = null;
+					break;
+				case PacketType.UpdateWindowProperty:
+					pack = null;
+					break;
+				case PacketType.Transaction:
+					pack = null;
+					break;
+				case PacketType.CreativeInventoryAction:
+					pack = null;
+					break;
+				case PacketType.UpdateSign:
+					pack = null;
+					break;
+				case PacketType.ItemData:
+					pack = null;
+					break;
+				case PacketType.IncrementStatistic:
+					pack = null;
+					break;
+				case PacketType.PlayerListItem:
+					pack = null;
+					break;
+				case PacketType.PluginMessage:
+					pack = null;
+					break;
+				case PacketType.ServerListPing:
+					pack = null;
 					break;
 				case PacketType.DisconnectKick:
 					pack = new DisconnectKickPacket(_tools.ReadString());

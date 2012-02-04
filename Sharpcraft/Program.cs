@@ -141,8 +141,8 @@ namespace Sharpcraft
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
 
-				if (!Directory.Exists(SharpcraftConstants.SettingsDirectory))
-					Directory.CreateDirectory(SharpcraftConstants.SettingsDirectory);
+				if (!Directory.Exists(Constants.SettingsDirectory))
+					Directory.CreateDirectory(Constants.SettingsDirectory);
 
 #if SC_DIRECT
 				new Sharpcraft(null).Run();
@@ -164,7 +164,7 @@ namespace Sharpcraft
 				_log.Fatal("Unknown exception " + ex.GetType() + " thrown. Writing exception info to logs\\exception.log");
 				WriteExceptionToFile(ex);
 				string author = null;
-				using (var reader = new StreamReader(SharpcraftConstants.GitInfoFile))
+				using (var reader = new StreamReader(Constants.GitInfoFile))
 				{
 					var readLine = reader.ReadLine();
 					if (readLine != null)
