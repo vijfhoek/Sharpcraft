@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
+=======
+﻿using System.Collections.Generic;
+using System.IO;
+>>>>>>> 8a0a507c2a0749f8e5efa33f521d783bcc42331c
 
 using Newtonsoft.Json;
 
@@ -24,7 +29,10 @@ namespace Sharpcraft.Library.Minecraft
 		private World _world;
 
 		private PacketListener _listener;
-		
+
+		/// <summary>
+		/// A list of the Items that are available in the game.
+		/// </summary>
 		public List<Item> Items { get; private set; }
 
 		public Client(Server server, Player player)
