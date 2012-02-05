@@ -271,7 +271,9 @@ namespace Sharpcraft.Networking
 					pack = null;
 					break;
 				case PacketType.PluginMessage:
-					pack = null;
+					pack = new PluginMessagePacket(_tools.ReadString());
+					var length = _tools.ReadInt16(); ((PluginMessagePacket) pack).Length = length;
+					((PluginMessagePacket) pack).Data = _tools.ReadSignedBytes(length);
 					break;
 				case PacketType.DisconnectKick:
 					pack = new DisconnectKickPacket(_tools.ReadString());

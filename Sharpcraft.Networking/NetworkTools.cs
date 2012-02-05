@@ -89,6 +89,24 @@ namespace Sharpcraft.Networking
 			return BitConverter.ToDouble(bte, 0);
 		}
 
+		public byte[] ReadBytes(short length)
+		{
+			var data = new byte[length];
+			_stream.Read(data, 0, data.Length);
+			return data;
+		}
+		
+		public sbyte[] ReadSignedBytes(short length)
+		{
+			var data = ReadBytes(length);
+			var sdata = new sbyte[length];
+			
+			for (short i = 0; i < length; i++)
+				sdata[length] = (sbyte) data.Length;
+
+			return sdata;
+		}
+
 		public SlotData ReadSlotData()
 		{
 			var slotData = new SlotData(ReadInt16());
@@ -173,6 +191,11 @@ namespace Sharpcraft.Networking
 		{
 			var bte = BitConverter.GetBytes(d);
 			_stream.Write(bte, 0, bte.Length);
+		}
+
+		public void WriteBytes(byte[] b)
+		{
+			_stream.Write(b, 0, b.Length);
 		}
 
 		public void Skip(int amount = 1)
