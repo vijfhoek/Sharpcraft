@@ -241,9 +241,21 @@ namespace Sharpcraft.Networking
 					                             _tools.ReadSignedByte());
 					break;
 				case PacketType.Explosion:
-					pack = new ExplosionPacket(_tools.ReadDouble(), _tools.ReadDouble(), _tools.ReadDouble(), _tools.ReadSingle(),
-					                           _tools.ReadInt32());
-					_tools.Skip(); // TODO: We are supposed to read a byte array into ExplosionPacket here
+					var explosionPacket = new ExplosionPacket(_tools.ReadDouble(), _tools.ReadDouble(), _tools.ReadDouble(), _tools.ReadSingle());
+
+					var recordCount = _tools.ReadInt32();
+					explosionPacket.Count = recordCount;
+
+					var records = new sbyte[recordCount,3];
+					for (var i = 0; i < recordCount; i++)
+					{
+						records[1, 0] = _tools.ReadSignedByte();
+						records[1, 1] = _tools.ReadSignedByte();
+						records[1, 2] = _tools.ReadSignedByte();
+					}
+					explosionPacket.Records = records;
+
+					pack = explosionPacket;
 					break;
 				case PacketType.SoundParticleEffect:
 					pack = new SoundParticleEffectPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadSignedByte(),

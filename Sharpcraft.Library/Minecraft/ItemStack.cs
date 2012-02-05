@@ -1,5 +1,3 @@
-﻿using LibNbt.Tags;
-
 namespace Sharpcraft.Library.Minecraft
 {
 	/// <summary>
@@ -10,7 +8,7 @@ namespace Sharpcraft.Library.Minecraft
 		/// <summary>
 		/// Contains how many items there are in the stack.
 		/// </summary>
-		public int StackSize;
+		public byte StackSize;
 
 		// TODO figure out what this does
 		/// <summary>
@@ -19,9 +17,9 @@ namespace Sharpcraft.Library.Minecraft
 		public int AnimationsToGo;
 
 		/// <summary>
-		/// The Item this stack contains.
+		/// The ID of the material this stack contains.
 		/// </summary>
-		public Item StackItem;
+		public int ItemID;
 
 		/// <summary>
 		/// The damage values of the stack.
@@ -31,7 +29,7 @@ namespace Sharpcraft.Library.Minecraft
 		/// <summary>
 		/// Will contain an NBT compound.
 		/// </summary>
-		public NbtCompound StackTagCompound;
+		//public NbtCompound StackTagCompound; // TODO implement NBTTagCompound class
 		
 		/// <summary>
 		/// Initializes the ItemStack.
@@ -39,11 +37,13 @@ namespace Sharpcraft.Library.Minecraft
 		/// <param name="itemID">The item ID, defaults to 0</param>
 		/// <param name="stackSize">The stack size, defaults to 0</param>
 		/// <param name="itemDamage">The item damage, defaults to 0</param>
-		public ItemStack(Item item = null, int stackSize = 0, int itemDamage = 0)
+		public ItemStack(int itemID = 0, byte stackSize = 0, int itemDamage = 0)
 		{
-			StackItem = item;
+			ItemID = itemID;
 			StackSize = stackSize;
 			ItemDamage = itemDamage;
 		}
+
+		
 	}
 }
