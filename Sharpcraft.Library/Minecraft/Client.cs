@@ -83,6 +83,7 @@ namespace Sharpcraft.Library.Minecraft
 				return false;
 			}
 			_log.Info("Server responded to login with mapseed " + ((LoginRequestPacketSC)response).MapSeed);
+			ParseLoginRequestSC((LoginRequestPacketSC) response);
 			_log.Info("Creating packet listener...");
 			_listener = new PacketListener(_protocol);
 			_listener.OnPacketReceived += PacketReceived;
@@ -93,6 +94,13 @@ namespace Sharpcraft.Library.Minecraft
 		public bool Disconnect()
 		{
 			return false; // For now
+		}
+
+		public void Exit()
+		{
+			Disconnect();
+			_listener.OnPacketReceived -= PacketReceived;
+			_listener.Stop();
 		}
 
 		public void SendMessage(string message)
@@ -111,6 +119,30 @@ namespace Sharpcraft.Library.Minecraft
 			
 		}
 
+		private void ParseLoginRequestSC(LoginRequestPacketSC packet)
+		{
+			_log.Debug("Updating world, player and server data...");
+			_log.Debug("Setting Player Entity ID to " + packet.EntityID);
+			_player.EntityID = packet.EntityID;
+			_log.Debug("Setting map seed to " + packet.MapSeed);
+			_world.SetSeed(packet.MapSeed);
+			_log.Debug("Setting map type to " + packet.LevelType);
+			_world.SetLevelType(packet.LevelType);
+			_log.Debug("Setting server mode to " + packet.Gamemode);
+			_server.SetMode(packet.Gamemode);
+			_log.Debug("Setting world dimension to " + packet.Dimension);
+			_world.SetDimension(packet.Dimension);
+			_log.Debug("Setting world difficulty to " + packet.Difficulty);
+			_world.SetDifficulty(packet.Difficulty);
+			_log.Debug("Setting world height to " + packet.WorldHeight);
+			_world.SetHeight(packet.WorldHeight);
+			_log.Debug("Setting server max players to " + packet.MaxPlayers);
+			if (_server.Players > packet.MaxPlayers)
+				_server.Players = packet.MaxPlayers;
+			_server.MaxPlayers = packet.MaxPlayers;
+			_log.Debug("World, player and server data successfully updated!");
+		}
+
 		private void PacketReceived(object sender, PacketEventArgs e)
 		{
 			Packet response;
@@ -122,27 +154,7 @@ namespace Sharpcraft.Library.Minecraft
 					_protocol.SendPacket(response);
 					break;
 				case PacketType.LoginRequest:
-					_log.Debug("Client received LoginRequest packet, updating world, player and server data...");
-					var lrPack = (LoginRequestPacketSC) e.Packet;
-					_log.Debug("Setting Player Entity ID to " + lrPack.EntityID);
-					_player.EntityID = lrPack.EntityID;
-					_log.Debug("Setting map seed to " + lrPack.MapSeed);
-					_world.SetSeed(lrPack.MapSeed);
-					_log.Debug("Setting map type to " + lrPack.LevelType);
-					_world.SetLevelType(lrPack.LevelType);
-					_log.Debug("Setting server mode to " + lrPack.Gamemode);
-					_server.SetMode(lrPack.Gamemode);
-					_log.Debug("Setting world dimension to " + lrPack.Dimension);
-					_world.SetDimension(lrPack.Dimension);
-					_log.Debug("Setting world difficulty to " + lrPack.Difficulty);
-					_world.SetDifficulty(lrPack.Difficulty);
-					_log.Debug("Setting world height to " + lrPack.WorldHeight);
-					_world.SetHeight(lrPack.WorldHeight);
-					_log.Debug("Setting server max players to " + lrPack.MaxPlayers);
-					if (_server.Players > lrPack.MaxPlayers)
-						_server.Players = lrPack.MaxPlayers;
-					_server.MaxPlayers = lrPack.MaxPlayers;
-					_log.Debug("World, player and server data successfully updated!");
+					ParseLoginRequestSC((LoginRequestPacketSC) e.Packet);
 					break;
 				case PacketType.SpawnPosition:
 					var spPack = (SpawnPositionPacket) e.Packet;
@@ -170,7 +182,7 @@ namespace Sharpcraft.Library.Minecraft
 					_listener.Stop();
 					break;
 				default:
-					_log.Info("Received packet: " + e.Packet.Type + " but Client is not configured to respond to this packet!");
+					_log.Warn("Received packet: " + e.Packet.Type + " but Client is not configured to respond to this packet!");
 					break;
 			}
 		}

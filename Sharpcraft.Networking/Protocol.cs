@@ -52,9 +52,9 @@ namespace Sharpcraft.Networking
 		/// <returns>The received packet.</returns>
 		public Packet GetPacket()
 		{
-			var packetID = (byte)_stream.ReadByte();
+			var packetID = (byte) _stream.ReadByte();
 			//_log.Debug("Got packet ID: " + packetID); // Spammy debug message
-			if (!Enum.IsDefined(typeof(PacketType), packetID))
+			if (!Enum.IsDefined(typeof(PacketType), (int) packetID))
 				return null;
 			var type = (PacketType) packetID;
 			Packet pack = null;
@@ -124,143 +124,176 @@ namespace Sharpcraft.Networking
 					break;
 				case PacketType.PlayerBlockPlacement:
 					// TODO fix this
-					pack = new PlayerBlockPlacementPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadSignedByte()); // ReadItemStack
+					pack = new PlayerBlockPlacementPacket(_tools.ReadInt32(), _tools.ReadSignedByte(),
+														  _tools.ReadInt32(), _tools.ReadSignedByte()); // ReadItemStack
 					_tools.Skip();
 					break;
 				case PacketType.HoldingChange:
-					pack = null;
+					pack = new HoldingChangePacket(_tools.ReadInt16());
 					break;
 				case PacketType.UseBed:
-					pack = null;
+					pack = new UseBedPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(),
+											_tools.ReadSignedByte(), _tools.ReadInt32());
 					break;
 				case PacketType.Animation:
-					pack = null;
+					pack = new AnimationPacket(_tools.ReadInt32(), _tools.ReadSignedByte());
 					break;
 				case PacketType.NamedEntitySpawn:
-					pack = null;
+					pack = new NamedEntitySpawnPacket(_tools.ReadInt32(), _tools.ReadString(), _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(),
+													  _tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadInt16());
 					break;
 				case PacketType.PickupSpawn:
-					pack = null;
+					pack = new PickupSpawnPacket(_tools.ReadInt32(), _tools.ReadInt16(), _tools.ReadSignedByte(), _tools.ReadInt16(),
+					                             _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadSignedByte(),
+					                             _tools.ReadSignedByte(), _tools.ReadSignedByte());
 					break;
 				case PacketType.CollectItem:
-					pack = null;
+					pack = new CollectItemPacket(_tools.ReadInt32(), _tools.ReadInt32());
 					break;
 				case PacketType.AddObjectVehicle:
-					pack = null;
+					pack = new AddObjectVehiclePacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(),
+					                                  _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(),
+													  _tools.ReadInt16(), _tools.ReadInt16(), _tools.ReadInt16());
 					break;
 				case PacketType.MobSpawn:
-					pack = null;
+					pack = new MobSpawnPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(),
+						_tools.ReadSignedByte(), _tools.ReadSignedByte());
+					_tools.Skip(); // We are supposed to read SlotData into MobSpawnPacket here
 					break;
 				case PacketType.EntityPainting:
-					pack = null;
+					pack = new EntityPaintingPacket(_tools.ReadInt32(), _tools.ReadString(), _tools.ReadInt32(),
+													_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32());
 					break;
 				case PacketType.ExperienceOrb:
-					pack = null;
+					pack = new ExperienceOrbPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(),
+												   _tools.ReadInt32(), _tools.ReadInt16());
 					break;
 				case PacketType.EntityVelocity:
-					pack = null;
+					pack = new EntityVelocityPacket(_tools.ReadInt32(), _tools.ReadInt16(), _tools.ReadInt16(), _tools.ReadInt16());
 					break;
 				case PacketType.DestroyEntity:
-					pack = null;
+					pack = new DestroyEntityPacket(_tools.ReadInt32());
 					break;
 				case PacketType.Entity:
-					pack = null;
+					pack = new EntityPacket(_tools.ReadInt32());
 					break;
 				case PacketType.EntityRelativeMove:
-					pack = null;
+					pack = new EntityRelativeMovePacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadSignedByte(),
+					                                    _tools.ReadSignedByte());
 					break;
 				case PacketType.EntityLook:
-					pack = null;
+					pack = new EntityLookPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadSignedByte());
 					break;
 				case PacketType.EntityLookAndRelativeMove:
-					pack = null;
+					pack = new EntityLookAndRelativeMovePacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadSignedByte(),
+					                                           _tools.ReadSignedByte(), _tools.ReadSignedByte(),
+					                                           _tools.ReadSignedByte());
 					break;
 				case PacketType.EntityTeleport:
-					pack = null;
+					pack = new EntityTeleportPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(),
+					                                _tools.ReadSignedByte(), _tools.ReadSignedByte());
 					break;
 				case PacketType.EntityStatus:
-					pack = null;
+					pack = new EntityStatusPacket(_tools.ReadInt32(), _tools.ReadSignedByte());
 					break;
 				case PacketType.AttachEntity:
-					pack = null;
+					pack = new AttachEntityPacket(_tools.ReadInt32(), _tools.ReadInt32());
 					break;
 				case PacketType.EntityMetadata:
-					pack = null;
+					pack = new EntityMetadataPacket(_tools.ReadInt32());
+					_tools.Skip(); // TODO: We are supposed to read MetaData into EntityMetadataPacket here
 					break;
 				case PacketType.EntityEffect:
-					pack = null;
+					pack = new EntityEffectPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadSignedByte(),
+					                              _tools.ReadInt16());
 					break;
 				case PacketType.RemoveEntityEffect:
-					pack = null;
+					pack = new RemoveEntityEffectPacket(_tools.ReadInt32(), _tools.ReadSignedByte());
 					break;
 				case PacketType.Experience:
-					pack = null;
+					pack = new ExperiencePacket(_tools.ReadSingle(), _tools.ReadInt16(), _tools.ReadInt16());
 					break;
 				case PacketType.PreChunk:
-					pack = null;
+					pack = new PreChunkPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadBoolean());
 					break;
 				case PacketType.MapChunk:
-					pack = null;
+					pack = new MapChunkPacket(_tools.ReadInt32(), _tools.ReadInt16(), _tools.ReadInt32(), _tools.ReadSignedByte(),
+					                          _tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadInt32());
+					_tools.Skip(); // TODO: We are supposed to read a byte array into MapChunkPacket here
 					break;
 				case PacketType.MultiBlockChange:
-					pack = null;
+					pack = new MultiBlockChangePacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt16());
+					_tools.Skip(3); // TODO: We are supposed to read an Int16 array and two byte arrays into MultiBlockChangePacket here
 					break;
 				case PacketType.BlockChange:
-					pack = null;
+					pack = new BlockChangePacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(),
+					                             _tools.ReadSignedByte(), _tools.ReadSignedByte());
 					break;
 				case PacketType.BlockAction:
-					pack = null;
+					pack = new BlockActionPacket(_tools.ReadInt32(), _tools.ReadInt16(), _tools.ReadInt32(), _tools.ReadSignedByte(),
+					                             _tools.ReadSignedByte());
 					break;
 				case PacketType.Explosion:
-					pack = null;
+					pack = new ExplosionPacket(_tools.ReadDouble(), _tools.ReadDouble(), _tools.ReadDouble(), _tools.ReadSingle(),
+					                           _tools.ReadInt32());
+					_tools.Skip(); // TODO: We are supposed to read a byte array into ExplosionPacket here
 					break;
 				case PacketType.SoundParticleEffect:
-					pack = null;
+					pack = new SoundParticleEffectPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadSignedByte(),
+					                                     _tools.ReadInt32(), _tools.ReadInt32());
 					break;
 				case PacketType.NewInvalidState:
-					pack = null;
+					pack = new NewInvalidStatePacket(_tools.ReadSignedByte(), _tools.ReadSignedByte());
 					break;
 				case PacketType.Thunderbolt:
-					pack = null;
+					pack = new ThunderboltPacket(_tools.ReadInt32(), _tools.ReadBoolean(), _tools.ReadInt32(), _tools.ReadInt32(),
+					                             _tools.ReadInt32());
 					break;
 				case PacketType.OpenWindow:
-					pack = null;
+					pack = new OpenWindowPacket(_tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadString(),
+					                            _tools.ReadSignedByte());
 					break;
 				case PacketType.CloseWindow:
-					pack = null;
+					pack = new CloseWindowPacket(_tools.ReadSignedByte());
 					break;
 				case PacketType.SetSlot:
-					pack = null;
+					pack = new SetSlotPacket(_tools.ReadSignedByte(), _tools.ReadInt16());
+					_tools.Skip(); // TODO: We are supposed to read SlotData into SetSlotPacket here
 					break;
 				case PacketType.WindowItems:
-					pack = null;
+					pack = new WindowItemsPacket(_tools.ReadSignedByte(), _tools.ReadInt16());
+					_tools.Skip(); // TODO: We are supposed to read SlotData array into WindowItemsPacket here
 					break;
 				case PacketType.UpdateWindowProperty:
-					pack = null;
+					pack = new UpdateWindowPropertyPacket(_tools.ReadSignedByte(), _tools.ReadInt16(), _tools.ReadInt16());
 					break;
 				case PacketType.Transaction:
-					pack = null;
+					pack = new TransactionPacket(_tools.ReadSignedByte(), _tools.ReadInt16(), _tools.ReadBoolean());
 					break;
 				case PacketType.CreativeInventoryAction:
-					pack = null;
+					pack = new CreativeInventoryActionPacket(_tools.ReadInt16());
+					_tools.Skip(); // TODO: We are supposed to read ClickedItem into CreativeInventoryActionPacket here
 					break;
 				case PacketType.UpdateSign:
-					pack = null;
+					pack = new UpdateSignPacket(_tools.ReadInt32(), _tools.ReadInt16(), _tools.ReadInt32(), _tools.ReadString(),
+					                            _tools.ReadString(), _tools.ReadString(), _tools.ReadString());
 					break;
 				case PacketType.ItemData:
-					pack = null;
+					pack = new ItemDataPacket(_tools.ReadInt16(), _tools.ReadInt16(), _tools.ReadByte());
+					_tools.Skip(); // TODO: We are supposed to read a signed byte array into ItemDataPacket here
 					break;
 				case PacketType.IncrementStatistic:
-					pack = null;
+					pack = new IncrementStatisticPacket(_tools.ReadInt32(), _tools.ReadSignedByte());
 					break;
 				case PacketType.PlayerListItem:
-					pack = null;
+					pack = new PlayerListItemPacket(_tools.ReadString(), _tools.ReadBoolean(), _tools.ReadInt16());
 					break;
 				case PacketType.PluginMessage:
-					pack = null;
+					pack = new PluginMessagePacket(_tools.ReadString(), _tools.ReadInt16());
+					_tools.Skip(); // TODO: We are supposed to read signed byte data array into PluginMessagePacket here
 					break;
 				case PacketType.ServerListPing:
-					pack = null;
+					pack = new ServerListPingPacket(_tools.ReadString());
 					break;
 				case PacketType.DisconnectKick:
 					pack = new DisconnectKickPacket(_tools.ReadString());
