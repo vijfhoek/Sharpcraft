@@ -161,24 +161,6 @@ namespace Sharpcraft.Networking
 				case PacketType.HoldingChange:
 					pack = null;
 					break;
-				case PacketType.UseBed:
-					pack = null;
-					break;
-				case PacketType.Animation:
-					pack = null;
-					break;
-				case PacketType.NamedEntitySpawn:
-					pack = null;
-					break;
-				case PacketType.PickupSpawn:
-					pack = null;
-					break;
-				case PacketType.CollectItem:
-					pack = null;
-					break;
-				case PacketType.AddObjectVehicle:
-					pack = null;
-					break;
 				case PacketType.MobSpawn:
 					pack = null;
 					break;
