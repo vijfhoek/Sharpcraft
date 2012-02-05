@@ -278,8 +278,7 @@ namespace Sharpcraft.Networking
 					pack = new TransactionPacket(_tools.ReadSignedByte(), _tools.ReadInt16(), _tools.ReadBoolean());
 					break;
 				case PacketType.CreativeInventoryAction:
-					pack = new CreativeInventoryActionPacket(_tools.ReadInt16());
-					_tools.Skip(); // TODO: We are supposed to read ClickedItem into CreativeInventoryActionPacket here
+					pack = new CreativeInventoryActionPacket(_tools.ReadInt16(), _tools.ReadSlotData());
 					break;
 				case PacketType.UpdateSign:
 					pack = new UpdateSignPacket(_tools.ReadInt32(), _tools.ReadInt16(), _tools.ReadInt32(), _tools.ReadString(),
