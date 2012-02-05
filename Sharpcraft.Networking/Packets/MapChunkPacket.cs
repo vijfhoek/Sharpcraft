@@ -13,10 +13,10 @@ namespace Sharpcraft.Networking.Packets
 		public sbyte SizeY;
 		public sbyte SizeZ;
 		public Int32 CompressedSize;
-		public byte[] CompressedData;
+		public sbyte[] CompressedData;
 
 		public MapChunkPacket(Int32 x = 0, Int16 y = 0, Int32 z = 0, sbyte sizeX = 0, sbyte sizeY = 0, sbyte sizeZ = 0,
-			Int32 compressedSize = 0, byte[] compressedData = null) : base(PacketType.MapChunk)
+			Int32 compressedSize = 0, sbyte[] compressedData = null) : base(PacketType.MapChunk)
 		{
 			X = x;
 			Y = y;

@@ -5,16 +5,15 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
-using LibNbt;
-using Sharpcraft.Library.Minecraft;
+
 using Sharpcraft.Logging;
 using Sharpcraft.Networking.Enums;
 using Sharpcraft.Networking.Packets;
 
 namespace Sharpcraft.Networking
 {
-	// NOTE: This class is a bit cleaner now!
 	/// <summary>
 	/// The Minecraft protocol.
 	/// </summary>
@@ -160,12 +159,11 @@ namespace Sharpcraft.Networking
 					}
 					break;
 				case PacketType.HoldingChange:
-					pack = null;
+					pack = new HoldingChangePacket(_tools.ReadInt16());
 					break;
 				case PacketType.MobSpawn:
 					pack = new MobSpawnPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(),
-						_tools.ReadSignedByte(), _tools.ReadSignedByte());
-					_tools.Skip(); // We are supposed to read SlotData into MobSpawnPacket here
+						_tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadSlotData());
 					break;
 				case PacketType.EntityPainting:
 					pack = new EntityPaintingPacket(_tools.ReadInt32(), _tools.ReadString(), _tools.ReadInt32(),
@@ -207,8 +205,18 @@ namespace Sharpcraft.Networking
 					pack = new AttachEntityPacket(_tools.ReadInt32(), _tools.ReadInt32());
 					break;
 				case PacketType.EntityMetadata:
-					pack = new EntityMetadataPacket(_tools.ReadInt32());
-					_tools.Skip(); // TODO: We are supposed to read MetaData into EntityMetadataPacket here
+					var entityMetadataPacket = new EntityMetadataPacket(_tools.ReadInt32());
+
+					var metaData = new List<sbyte>();
+					var b = true;
+					while (b)
+					{
+						var value = _tools.ReadSignedByte();
+						if (value == 127) b = false;
+						metaData.Add(value);
+					}
+					entityMetadataPacket.Metadata = metaData.ToArray();
+
 					break;
 				case PacketType.EntityEffect:
 					pack = new EntityEffectPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadSignedByte(),
@@ -224,9 +232,13 @@ namespace Sharpcraft.Networking
 					pack = new PreChunkPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadBoolean());
 					break;
 				case PacketType.MapChunk:
-					pack = new MapChunkPacket(_tools.ReadInt32(), _tools.ReadInt16(), _tools.ReadInt32(), _tools.ReadSignedByte(),
-					                          _tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadInt32());
-					_tools.Skip(); // TODO: We are supposed to read a byte array into MapChunkPacket here
+					var mapChunkPacket = new MapChunkPacket(_tools.ReadInt32(), _tools.ReadInt16(), _tools.ReadInt32(),
+					                                        _tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadSignedByte());
+
+					mapChunkPacket.CompressedSize = _tools.ReadInt32();
+					mapChunkPacket.CompressedData = _tools.ReadSignedBytes(mapChunkPacket.CompressedSize);
+
+					pack = mapChunkPacket;
 					break;
 				case PacketType.MultiBlockChange:
 					var multiBlockChangePacket = new MultiBlockChangePacket(_tools.ReadInt32(), _tools.ReadInt32());

@@ -92,6 +92,13 @@ namespace Sharpcraft.Networking
 			_stream.Read(data, 0, data.Length);
 			return data;
 		}
+
+		public byte[] ReadBytes(int length)
+		{
+			var data = new byte[length];
+			_stream.Read(data, 0, data.Length);
+			return data;
+		}
 		
 		public sbyte[] ReadSignedBytes(short length)
 		{
@@ -100,6 +107,17 @@ namespace Sharpcraft.Networking
 			
 			for (short i = 0; i < length; i++)
 				sdata[length] = (sbyte) data.Length;
+
+			return sdata;
+		}
+
+		public sbyte[] ReadSignedBytes(int length)
+		{
+			var data = ReadBytes(length);
+			var sdata = new sbyte[length];
+
+			for (var i = 0; i < length; i++)
+				sdata[length] = (sbyte)data.Length;
 
 			return sdata;
 		}
