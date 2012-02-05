@@ -268,8 +268,17 @@ namespace Sharpcraft.Networking
 					_tools.Skip(); // TODO: We are supposed to read SlotData into SetSlotPacket here
 					break;
 				case PacketType.WindowItems:
-					pack = new WindowItemsPacket(_tools.ReadSignedByte(), _tools.ReadInt16());
-					_tools.Skip(); // TODO: We are supposed to read SlotData array into WindowItemsPacket here
+					var windowItemsPacket = new WindowItemsPacket(_tools.ReadSignedByte());
+
+					var count = _tools.ReadInt16();
+					windowItemsPacket.Count = count;
+
+					var slotDatas = new SlotData[count]; // Feels horrible to have a plural of a plural...
+					for (short i = 0; i < count; i++)
+						slotDatas[i] = _tools.ReadSlotData();
+					windowItemsPacket.SlotData = slotDatas;
+
+					pack = windowItemsPacket;
 					break;
 				case PacketType.UpdateWindowProperty:
 					pack = new UpdateWindowPropertyPacket(_tools.ReadSignedByte(), _tools.ReadInt16(), _tools.ReadInt16());
@@ -285,12 +294,12 @@ namespace Sharpcraft.Networking
 					                            _tools.ReadString(), _tools.ReadString(), _tools.ReadString());
 					break;
 				case PacketType.ItemData:
-					var packet = new ItemDataPacket(_tools.ReadInt16(), _tools.ReadInt16());
+					var itemDataPacket = new ItemDataPacket(_tools.ReadInt16(), _tools.ReadInt16());
 
-					var len = _tools.ReadByte(); packet.Length = len;
-					packet.Text = _tools.ReadSignedBytes(len);
+					var len = _tools.ReadByte(); itemDataPacket.Length = len;
+					itemDataPacket.Text = _tools.ReadSignedBytes(len);
 
-					pack = packet;
+					pack = itemDataPacket;
 					break;
 				case PacketType.IncrementStatistic:
 					pack = new IncrementStatisticPacket(_tools.ReadInt32(), _tools.ReadSignedByte());
