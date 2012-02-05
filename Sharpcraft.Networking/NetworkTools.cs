@@ -5,9 +5,13 @@
  */
 
 using System;
+using System.IO;
+using System.IO.Compression;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using LibNbt;
+using LibNbt.Tags;
 
 namespace Sharpcraft.Networking
 {
@@ -26,7 +30,7 @@ namespace Sharpcraft.Networking
 
 		public String ReadString()
 		{
-			var bteString = new byte[ReadInt16()*2];
+			var bteString = new byte[ReadInt16()*2 + 2];
 			_stream.Read(bteString, 0, bteString.Length);
 			return Encoding.BigEndianUnicode.GetString(bteString);
 		}
@@ -80,6 +84,30 @@ namespace Sharpcraft.Networking
 			var bte = new byte[64];
 			_stream.Read(bte, 0, bte.Length);
 			return BitConverter.ToDouble(bte, 0);
+		}
+
+		public SlotData ReadSlotData()
+		{
+			var slotData = new SlotData(ReadInt16());
+			if (slotData.ItemID == -1) return null;
+
+			slotData.ItemCount = ReadByte();
+			slotData.ItemDamage = ReadInt16();
+
+			var size = ReadInt16();
+			if (size == -1) return slotData;
+			var data = new byte[size];
+
+			using (var decStream = new GZipStream(_stream, CompressionMode.Decompress)) decStream.Read(data, 0, data.Length);
+			using (var memStream = new MemoryStream(size))
+			{
+				memStream.Write(data, 0, data.Length);
+				var file = new NbtFile(); file.LoadFile(memStream, false);
+				var list = file.Query<NbtCompound>("").Query<NbtList>("ench");
+				slotData.ItemEnchantments = list;
+			}
+
+			return slotData;
 		}
 
 		/*public ItemStack ReadItemStack()

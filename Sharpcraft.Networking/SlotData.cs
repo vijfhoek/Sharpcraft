@@ -10,9 +10,9 @@ namespace Sharpcraft.Networking
 		public short ItemID;
 		public byte ItemCount;
 		public short ItemDamage;
-		public NbtCompound ItemEnchantments;
+		public NbtList ItemEnchantments;
 
-		public SlotData(short itemID = -1, byte itemCount = 0, short itemDamage = 0, NbtCompound itemEnchantments = null)
+		public SlotData(short itemID = -1, byte itemCount = 0, short itemDamage = 0, NbtList itemEnchantments = null)
 		{
 			ItemID = itemID;
 			ItemCount = itemCount;

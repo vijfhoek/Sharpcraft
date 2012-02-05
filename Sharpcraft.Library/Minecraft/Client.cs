@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-
+using System.Linq;
 using Newtonsoft.Json;
 
 using Sharpcraft.Logging;
@@ -23,7 +23,7 @@ namespace Sharpcraft.Library.Minecraft
 		/// <summary>
 		/// A list of the Items that are available in the game.
 		/// </summary>
-		public List<Item> Items { get; private set; }
+		public static List<Item> Items { get; private set; }
 
 		public Client(Server server, Player player)
 		{
@@ -39,6 +39,11 @@ namespace Sharpcraft.Library.Minecraft
 			_protocol = new Protocol(_server.Address, _server.Port);
 			_log.Info("Client initiated on " + _server.Address + ":" + _server.Port + "!");
 			_player = player;
+		}
+
+		public static Item GetItemByID(short id)
+		{
+			return Items.Where(item => item.Id == id).FirstOrDefault();
 		}
 
 		public Server GetServer()

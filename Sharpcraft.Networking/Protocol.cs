@@ -6,7 +6,8 @@
 
 using System;
 using System.Net.Sockets;
-
+using LibNbt;
+using Sharpcraft.Library.Minecraft;
 using Sharpcraft.Logging;
 using Sharpcraft.Networking.Enums;
 using Sharpcraft.Networking.Packets;
@@ -25,7 +26,7 @@ namespace Sharpcraft.Networking
 		/// </summary>
 		private readonly log4net.ILog _log;
 
-		private readonly TcpClient _client;
+		private readonly TcpClient _tcpClient;
 		private readonly NetworkStream _stream;
 		private readonly NetworkTools _tools;
 
@@ -38,10 +39,10 @@ namespace Sharpcraft.Networking
 		{
 			_log = LogManager.GetLogger(this);
 			_log.Debug("Connecting to server.");
-			_client = new TcpClient();
-			_client.Connect(server, port);
+			_tcpClient = new TcpClient();
+			_tcpClient.Connect(server, port);
 			_log.Debug("Getting stream.");
-			_stream = _client.GetStream();
+			_stream = _tcpClient.GetStream();
 			_log.Debug("Initializing tools.");
 			_tools = new NetworkTools(_stream);
 		}
@@ -122,9 +123,39 @@ namespace Sharpcraft.Networking
 					                               _tools.ReadInt32(), _tools.ReadSignedByte());
 					break;
 				case PacketType.PlayerBlockPlacement:
-					// TODO fix this
-					pack = new PlayerBlockPlacementPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadSignedByte()); // ReadItemStack
-					_tools.Skip();
+					pack = new PlayerBlockPlacementPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(),
+					                                      _tools.ReadSignedByte(), _tools.ReadSlotData());
+					break;
+				case PacketType.UseBed:
+					pack = new UseBedPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadSignedByte(),
+					                        _tools.ReadInt32());
+					break;
+				case PacketType.Animation:
+					pack = new AnimationPacket(_tools.ReadInt32(), _tools.ReadSignedByte());
+					break;
+				case PacketType.NamedEntitySpawn:
+					pack = new NamedEntitySpawnPacket(_tools.ReadInt32(), _tools.ReadString(), _tools.ReadInt32(), _tools.ReadInt32(),
+					                                  _tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadSignedByte(),
+					                                  _tools.ReadInt16());
+					break;
+				case PacketType.PickupSpawn:
+					pack = new PickupSpawnPacket(_tools.ReadInt32(), _tools.ReadInt16(), _tools.ReadSignedByte(), _tools.ReadInt16(),
+					                             _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadSignedByte(),
+					                             _tools.ReadSignedByte(), _tools.ReadSignedByte());
+					break;
+				case PacketType.CollectItem:
+					pack = new CollectItemPacket(_tools.ReadInt32(), _tools.ReadInt32());
+					break;
+				case PacketType.AddObjectVehicle:
+					pack = new AddObjectVehiclePacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32());
+					var ftEid = _tools.ReadInt32(); ((AddObjectVehiclePacket)pack).FireballThrowerID = ftEid;
+					if (ftEid > 0)
+					{
+						var aovpPack = (AddObjectVehiclePacket) pack;
+						aovpPack.SpeedX = _tools.ReadInt16();
+						aovpPack.SpeedY = _tools.ReadInt16();
+						aovpPack.SpeedZ = _tools.ReadInt16();
+					}
 					break;
 				case PacketType.DisconnectKick:
 					pack = new DisconnectKickPacket(_tools.ReadString());
