@@ -22,10 +22,11 @@ namespace Sharpcraft.Networking
 			_protocol = protocol;
 			_log.Debug("Creating packet listen thread...");
 			_listenThread = new Thread(ReadPackets) {Name = "PacketListen"};
+			_listenThread.IsBackground = true;
 			_log.Debug("Starting packet listen thread...");
+			_running = true;
 			_listenThread.Start();
 			_log.Info("Packet listen thread started!");
-			_running = true;
 		}
 
 		public event PacketEventHandler OnPacketReceived;
@@ -55,10 +56,10 @@ namespace Sharpcraft.Networking
 					if ((packet = _protocol.GetPacket()) == null)
 						continue;
 
-					_log.Debug("Got packet: " + packet.Type);
-					_log.Debug("Broadcasting packet to subscribers...");
+					_log.Debug("Got packet: " + packet.Type); // Disable completely when all packets are implemented?
+					//_log.Debug("Broadcasting packet to subscribers..."); // Spammy
 					PacketReceived(packet);
-					_log.Debug("Done!");
+					//_log.Debug("Done!"); // Spammy
 				}
 			}
 			catch (ThreadAbortException)

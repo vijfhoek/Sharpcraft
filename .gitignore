@@ -13,15 +13,12 @@
 /Sharpcraft.Library/obj
 /Sharpcraft.Logging/bin
 /Sharpcraft.Logging/obj
-/Sharpcraft.Website/bin
-/Sharpcraft.Website/obj
 /Sharpcraft.Devtools/bin
 /Sharpcraft.Devtools/obj
 /Sharpcraft.Networking/obj
 /Sharpcraft.Networking/bin
 /Sharpcraft.Documentation/obj
 /Sharpcraft.Documentation/working
-/Sharpcraft.Website/Sharpcraft.Website.Publish.xml
 
 /boilerplate_custom
 /docs
@@ -31,3 +28,5 @@
 
 /boilerplate-initializr-2.1.zip
 /custom-initializr-2.1.zip
+
+/Sharpcraft.Website

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Sharpcraft.Library.Minecraft
 {
@@ -99,6 +96,8 @@ namespace Sharpcraft.Library.Minecraft
 		/// </summary>
 		public bool Online;
 
+		public int Mode { get; private set; }
+
 		/// <summary>
 		/// Initialize a new <see cref="Server" />.
 		/// </summary>
@@ -110,10 +109,11 @@ namespace Sharpcraft.Library.Minecraft
 		/// <param name="maxPlayers">Maximum players allowed on the server.</param>
 		/// <param name="ping">Server ping.</param>
 		/// <param name="online">Is the server online?</param>
+		/// <param name="mode">The mode of the server (0 = Survival, 1 = Creative).</param>
 		/// <remarks>name and address are the only required parameters,
 		/// rest is optional and will be set to their default if omitted.</remarks>
 		public Server(string name, string address, ushort port = 25565, string description = "",
-			int players = 0, int maxPlayers = 0, int ping = 0, bool online = false)
+			int players = 0, int maxPlayers = 0, int ping = 0, bool online = false, int mode = 0)
 		{
 			Name = name;
 			Description = description;
@@ -123,6 +123,14 @@ namespace Sharpcraft.Library.Minecraft
 			Players = players;
 			Ping = ping;
 			Online = online;
+			Mode = mode;
+		}
+
+		public void SetMode(int mode)
+		{
+			if (mode < 0 || mode > 1)
+				return;
+			Mode = mode;
 		}
 	}
 }
