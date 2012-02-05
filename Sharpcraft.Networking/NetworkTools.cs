@@ -24,25 +24,28 @@ namespace Sharpcraft.Networking
 			_stream = stream;
 		}
 
-		public String ReadString()
+		public string ReadString()
 		{
-			var bteString = new byte[ReadInt16()*2];
+			Int16 length = ReadInt16();
+			Logging.LogManager.GetLogger(this).Debug("ReadString reading string with length: " + length);
+			Logging.LogManager.GetLogger(this).Debug("Final: " + (length * 2 + 2));
+			var bteString = new byte[length * 2 + 2];
 			_stream.Read(bteString, 0, bteString.Length);
 			return Encoding.BigEndianUnicode.GetString(bteString);
 		}
 
-		public Boolean ReadBoolean()
+		public bool ReadBoolean()
 		{
 			byte[] bte = {(byte) _stream.ReadByte()};
 			return BitConverter.ToBoolean(bte, 0);
 		}
 
-		public Byte ReadByte()
+		public byte ReadByte()
 		{
 			return (byte) _stream.ReadByte();
 		}
 
-		public SByte ReadSignedByte()
+		public sbyte ReadSignedByte()
 		{
 			return (sbyte) _stream.ReadByte();
 		}
@@ -75,7 +78,7 @@ namespace Sharpcraft.Networking
 			return BitConverter.ToSingle(bte, 0);
 		}
 
-		public Double ReadDouble()
+		public double ReadDouble()
 		{
 			var bte = new byte[64];
 			_stream.Read(bte, 0, bte.Length);
@@ -97,19 +100,19 @@ namespace Sharpcraft.Networking
 			return itemStack;
 		}*/
 
-		public void WriteString(String s)
+		public void WriteString(string s)
 		{
 			WriteInt16((Int16)s.Length);
 			var byteString = Encoding.BigEndianUnicode.GetBytes(s);
 			_stream.Write(byteString, 0, byteString.Length);
 		}
 
-		public void WriteBoolean(Boolean b)
+		public void WriteBoolean(bool b)
 		{
 			_stream.WriteByte(Convert.ToByte(b));
 		}
 
-		public void WriteByte(Byte i)
+		public void WriteByte(byte i)
 		{
 			_stream.WriteByte(i);
 		}
@@ -138,7 +141,7 @@ namespace Sharpcraft.Networking
 			_stream.Write(bte, 0, bte.Length);
 		}
 
-		public void WriteDouble(Double d)
+		public void WriteDouble(double d)
 		{
 			var bte = BitConverter.GetBytes(d);
 			_stream.Write(bte, 0, bte.Length);

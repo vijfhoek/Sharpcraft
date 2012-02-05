@@ -139,9 +139,9 @@ namespace Sharpcraft
 			PassBox.PasswordChar = (char) 0x25CF;
 			_auth = new Authenticator(McVersion);
 			_auth.OnLoginEvent += LoginEvent;
-			if (File.Exists(SharpcraftConstants.GitInfoFile))
+			if (File.Exists(Constants.GitInfoFile))
 			{
-				using (var reader = new StreamReader(SharpcraftConstants.GitInfoFile))
+				using (var reader = new StreamReader(Constants.GitInfoFile))
 				{
 					string content = reader.ReadLine();
 					if (!string.IsNullOrEmpty(content))
@@ -162,17 +162,17 @@ namespace Sharpcraft
 
 			VersionLabel.Text = VersionString;
 
-			if (File.Exists(SharpcraftConstants.LauncherSettings))
+			if (File.Exists(Constants.LauncherSettings))
 			{
 				_log.Info("Loading launcher settings from file...");
-				var reader = new StreamReader(SharpcraftConstants.LauncherSettings);
+				var reader = new StreamReader(Constants.LauncherSettings);
 				_settings = new JsonSerializer().Deserialize<LauncherSettings>(new JsonTextReader(reader));
 				_log.Info("Launcher settings loaded successfully!");
 				reader.Close();
 			}
 			else
 			{
-				_settings = new LauncherSettings(SharpcraftConstants.LauncherSettings);
+				_settings = new LauncherSettings(Constants.LauncherSettings);
 			}
 			if (!string.IsNullOrEmpty(_settings.Username))
 			{

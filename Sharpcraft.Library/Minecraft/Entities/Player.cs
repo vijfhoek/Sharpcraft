@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Sharpcraft.Library.Minecraft
+namespace Sharpcraft.Library.Minecraft.Entities
 {
 	/// <summary>
 	/// A minecraft player.
 	/// </summary>
-	public class Player
+	public class Player : Entity
 	{
 		/// <summary>
 		/// Required width on skin.
@@ -42,7 +39,8 @@ namespace Sharpcraft.Library.Minecraft
 		/// <param name="name">Name of the player.</param>
 		/// <param name="skin">The player skin.</param>
 		/// <param name="position">World position of the player (X,Y,Z).</param>
-		public Player(string name, Texture2D skin = null, Vector3 position = new Vector3())
+		public Player(int entityId, string name, Texture2D skin = null, Vector3 position = new Vector3())
+			: base(entityId)
 		{
 			Name = name;
 			_skin = new Skin(skin);

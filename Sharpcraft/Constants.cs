@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Contains various constants used by Sharpcraft.
 	/// </summary>
-	internal static class SharpcraftConstants
+	internal static class Constants
 	{
 		#region Content
 		/// <summary>
