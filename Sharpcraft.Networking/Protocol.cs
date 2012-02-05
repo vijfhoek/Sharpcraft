@@ -156,6 +156,7 @@ namespace Sharpcraft.Networking
 						aovpPack.SpeedX = _tools.ReadInt16();
 						aovpPack.SpeedY = _tools.ReadInt16();
 						aovpPack.SpeedZ = _tools.ReadInt16();
+						pack = aovpPack;
 					}
 					break;
 				case PacketType.HoldingChange:
