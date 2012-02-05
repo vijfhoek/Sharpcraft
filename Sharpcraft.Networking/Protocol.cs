@@ -264,8 +264,7 @@ namespace Sharpcraft.Networking
 					pack = new CloseWindowPacket(_tools.ReadSignedByte());
 					break;
 				case PacketType.SetSlot:
-					pack = new SetSlotPacket(_tools.ReadSignedByte(), _tools.ReadInt16());
-					_tools.Skip(); // TODO: We are supposed to read SlotData into SetSlotPacket here
+					pack = new SetSlotPacket(_tools.ReadSignedByte(), _tools.ReadInt16(), _tools.ReadSlotData());
 					break;
 				case PacketType.WindowItems:
 					var windowItemsPacket = new WindowItemsPacket(_tools.ReadSignedByte());
