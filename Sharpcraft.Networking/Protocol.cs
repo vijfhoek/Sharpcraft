@@ -286,8 +286,12 @@ namespace Sharpcraft.Networking
 					                            _tools.ReadString(), _tools.ReadString(), _tools.ReadString());
 					break;
 				case PacketType.ItemData:
-					pack = new ItemDataPacket(_tools.ReadInt16(), _tools.ReadInt16(), _tools.ReadByte());
-					_tools.Skip(); // TODO: We are supposed to read a signed byte array into ItemDataPacket here
+					var packet = new ItemDataPacket(_tools.ReadInt16(), _tools.ReadInt16());
+
+					var len = _tools.ReadByte(); packet.Length = len;
+					packet.Text = _tools.ReadSignedBytes(len);
+
+					pack = packet;
 					break;
 				case PacketType.IncrementStatistic:
 					pack = new IncrementStatisticPacket(_tools.ReadInt32(), _tools.ReadSignedByte());
