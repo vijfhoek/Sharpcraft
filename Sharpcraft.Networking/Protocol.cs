@@ -273,9 +273,6 @@ namespace Sharpcraft.Networking
 				case PacketType.PluginMessage:
 					pack = null;
 					break;
-				case PacketType.ServerListPing:
-					pack = null;
-					break;
 				case PacketType.DisconnectKick:
 					pack = new DisconnectKickPacket(_tools.ReadString());
 					break;
