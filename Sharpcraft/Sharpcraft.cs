@@ -181,6 +181,8 @@ namespace Sharpcraft
 			client.Connect();
 			_log.Debug("Reached end of debug connection!");
 
+			Exiting += (s, e) => client.Exit();
+
 			/* Commented out by Vijfhoek:
 			 * Removed code seeing that we will add it somewhere else later.
 			_log.Debug("Creating protocol...");
@@ -313,6 +315,7 @@ namespace Sharpcraft
 		/// <param name="args">N/A (Not Used) (See XNA Documentation)</param>
 		protected override void OnExiting(object sender, EventArgs args)
 		{
+			
 			_settings.WriteToFile();
 			base.OnExiting(sender, args);
 		}

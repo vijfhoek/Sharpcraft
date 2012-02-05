@@ -42,7 +42,10 @@ namespace Sharpcraft.Networking
 			_log.Info("PacketListener shutting down...");
 			_running = false;
 			if (_listenThread != null && _listenThread.IsAlive)
-				_listenThread.Join(5000);
+			{
+				_listenThread.Abort();
+				_listenThread.Join(1000);
+			}
 		}
 
 		private void ReadPackets()

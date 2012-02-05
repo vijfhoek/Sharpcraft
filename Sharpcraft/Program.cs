@@ -92,6 +92,7 @@ namespace Sharpcraft
 		[STAThread]
 		static void Main(string[] args)
 		{
+			AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
 #if DEBUG
 			bool debug = true;
 #else
@@ -161,20 +162,7 @@ namespace Sharpcraft
 			}
 			catch(Exception ex)
 			{
-				_log.Fatal("Unknown exception " + ex.GetType() + " thrown. Writing exception info to logs\\exception.log");
-				WriteExceptionToFile(ex);
-				string author = null;
-				using (var reader = new StreamReader(Constants.GitInfoFile))
-				{
-					var readLine = reader.ReadLine();
-					if (readLine != null)
-					{
-						string[] fields = readLine.Split(':');
-						if (fields.Length >= 3)
-							author = fields[2];
-					}
-				}
-				new ExceptionDialog(ex, author).ShowDialog();
+				UnhandledExceptionHandler(null, new UnhandledExceptionEventArgs(ex, false));
 #if DEBUG
 				throw;
 #endif
@@ -231,6 +219,25 @@ namespace Sharpcraft
 			{
 				_log.Error("Unable to write exception info to file.");
 			}
+		}
+
+		private static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
+		{
+			var ex = (Exception) e.ExceptionObject;
+			_log.Fatal("Unknown exception " + ex.GetType() + " thrown. Writing exception info to logs\\exception.log");
+			WriteExceptionToFile(ex);
+			string author = null;
+			using (var reader = new StreamReader(Constants.GitInfoFile))
+			{
+				var readLine = reader.ReadLine();
+				if (readLine != null)
+				{
+					string[] fields = readLine.Split(':');
+					if (fields.Length >= 3)
+						author = fields[2];
+				}
+			}
+			new ExceptionDialog(ex, author).ShowDialog();
 		}
 	}
 #endif
