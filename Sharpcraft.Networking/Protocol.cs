@@ -229,8 +229,31 @@ namespace Sharpcraft.Networking
 					_tools.Skip(); // TODO: We are supposed to read a byte array into MapChunkPacket here
 					break;
 				case PacketType.MultiBlockChange:
-					pack = new MultiBlockChangePacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt16());
-					_tools.Skip(3); // TODO: We are supposed to read an Int16 array and two byte arrays into MultiBlockChangePacket here
+					var multiBlockChangePacket = new MultiBlockChangePacket(_tools.ReadInt32(), _tools.ReadInt32());
+
+					var arraySize = _tools.ReadInt16();
+					multiBlockChangePacket.ArraySize = arraySize;
+
+					var coordinates = new short[arraySize,3];
+					for (short i = 0; i < arraySize; i++)
+					{
+						coordinates[i, 0] = _tools.ReadInt16();
+						coordinates[i, 1] = _tools.ReadInt16();
+						coordinates[i, 2] = _tools.ReadInt16();
+					}
+					multiBlockChangePacket.Coordinates = coordinates;
+
+					var types = new sbyte[arraySize];
+					for (short i = 0; i < arraySize; i++)
+						types[i] = _tools.ReadSignedByte();
+					multiBlockChangePacket.Types = types;
+
+					var metadata = new sbyte[arraySize];
+					for (short i = 0; i < arraySize; i++)
+						metadata[i] = _tools.ReadSignedByte();
+					multiBlockChangePacket.Metadata = metadata;
+
+					pack = multiBlockChangePacket;
 					break;
 				case PacketType.BlockChange:
 					pack = new BlockChangePacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(),
