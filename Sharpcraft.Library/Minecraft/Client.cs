@@ -123,6 +123,11 @@ namespace Sharpcraft.Library.Minecraft
 			
 		}
 
+		public Player GetPlayer()
+		{
+			return _player;
+		}
+
 		private void ParseLoginRequestSC(LoginRequestPacketSC packet)
 		{
 			_log.Debug("Updating world, player and server data...");
@@ -154,7 +159,7 @@ namespace Sharpcraft.Library.Minecraft
 			{
 				case PacketType.KeepAlive:
 					response = new KeepAlivePacket(((KeepAlivePacket)e.Packet).KeepAliveID);
-					_log.Debug("Client received KeepAlive request, sending KeepAlive packet...");
+					//_log.Debug("Client received KeepAlive request, sending KeepAlive packet...");
 					_protocol.SendPacket(response);
 					break;
 				case PacketType.LoginRequest:
@@ -165,6 +170,33 @@ namespace Sharpcraft.Library.Minecraft
 					_log.Debug(string.Format("Received SpawnPosition packet: {0}, {1}, {2}. Updating world spawn...", spPack.X, spPack.Y ,spPack.Z));
 					_world.SetSpawn(spPack.X, spPack.Y, spPack.Z);
 					_log.Debug("Spawn position set!");
+					break;
+				case PacketType.Player:
+					var playerPack = (PlayerPacket) e.Packet;
+					response = new PlayerPacket(playerPack.OnGround);
+					_log.Debug("Updating player OnGround...");
+					_player.SetOnGround(playerPack.OnGround);
+					_log.Debug("Client received Player packet, responding with identical packet...");
+					_protocol.SendPacket(response);
+					break;
+				case PacketType.PlayerPosition:
+					var pPack = (PlayerPositionPacket) e.Packet;
+					response = new PlayerPositionPacket(pPack.X, pPack.Y, pPack.Stance, pPack.Z, pPack.OnGround);
+					_log.Debug("Updating player position...");
+					_player.SetPosition(pPack.X, pPack.Y, pPack.Z);
+					_player.SetStance(pPack.Stance);
+					_player.SetOnGround(pPack.OnGround);
+					_log.Debug("Client received PlayerPosition packet (0x0B), responding with identical packet...");
+					_protocol.SendPacket(response);
+					break;
+				case PacketType.PlayerLook:
+					var lPack = (PlayerLookPacket) e.Packet;
+					response = new PlayerLookPacket(lPack.Yaw, lPack.Pitch, lPack.OnGround);
+					_log.Debug("Updating player look...");
+					_player.SetDirection(lPack.Yaw, lPack.Pitch);
+					_player.SetOnGround(lPack.OnGround);
+					_log.Debug("Client received PlayerLook packet (0x0C), responding with identical packet...");
+					_protocol.SendPacket(response);
 					break;
 				case PacketType.PlayerPositionAndLook:
 					var plPack = (PlayerPositionAndLookPacket) e.Packet;
@@ -178,6 +210,11 @@ namespace Sharpcraft.Library.Minecraft
 						Pitch = plPack.Pitch,
 						OnGround = plPack.OnGround
 					};
+					_log.Debug("Updating player position and look...");
+					_player.SetPosition(plPack.X, plPack.Y, plPack.Z);
+					_player.SetDirection(plPack.Yaw, plPack.Pitch);
+					_player.SetStance(plPack.Stance);
+					_player.SetOnGround(plPack.OnGround);
 					_log.Debug("Client received PlayerPositionAndLook packet (0x0D), responding with identical packet...");
 					_protocol.SendPacket(response);
 					break;
@@ -186,7 +223,7 @@ namespace Sharpcraft.Library.Minecraft
 					_listener.Stop();
 					break;
 				default:
-					_log.Warn("Received packet: " + e.Packet.Type + " but Client is not configured to respond to this packet!");
+					//_log.Warn("Received packet: " + e.Packet.Type + " but Client is not configured to respond to this packet!");
 					break;
 			}
 		}

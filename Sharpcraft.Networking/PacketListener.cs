@@ -54,12 +54,12 @@ namespace Sharpcraft.Networking
 			{
 				while (_running)
 				{
-					_log.Debug("Waiting for packet...");
+					//_log.Debug("Waiting for packet..."); // Spammy
 					Packet packet;
 					if ((packet = _protocol.GetPacket()) == null)
 						continue;
 
-					_log.Debug("Got packet: " + packet.Type); // Disable completely when all packets are implemented?
+					//_log.Debug("Got packet: " + packet.Type); // Disable completely when all packets are implemented?
 					//_log.Debug("Broadcasting packet to subscribers..."); // Spammy
 					PacketReceived(packet);
 					//_log.Debug("Done!"); // Spammy

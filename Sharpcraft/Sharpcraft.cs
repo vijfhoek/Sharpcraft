@@ -103,6 +103,9 @@ namespace Sharpcraft
 		/// </summary>
 		private User _user;
 
+		private Server _server;
+		internal Client Client { get; private set; }
+
 		/// <summary>
 		/// Initializes a new instance of Sharpcraft.
 		/// </summary>
@@ -175,13 +178,12 @@ namespace Sharpcraft
 			// /!\ WARNING /!\
 			// Ugly debug code ahead!
 			_log.Debug("Starting debug connection...");
-			var server = new Server("F16Gaming Test", "localhost", 25565, "The test server", 0, 0, 0, true);
-			var player = new Player(0, "Sharpcraft");
-			var client = new Client(server, player);
-			client.Connect();
+			_server = new Server("F16Gaming Test", "localhost", 25565, "The test server", 0, 0, 0, true);
+			Client = new Client(_server, new Player(0, "Sharpcraft"));
+			Client.Connect();
 			_log.Debug("Reached end of debug connection!");
 
-			Exiting += (s, e) => client.Exit();
+			Exiting += (s, e) => Client.Exit();
 
 			/* Commented out by Vijfhoek:
 			 * Removed code seeing that we will add it somewhere else later.

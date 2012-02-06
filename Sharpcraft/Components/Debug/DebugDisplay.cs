@@ -43,6 +43,8 @@ namespace Sharpcraft.Components.Debug
 			_content = new ContentManager(game.Services, Constants.ContentDirectory);
 			_log.Debug("Creating FrameRateDisplay...");
 			game.Components.Add(new FrameRateDisplay(game));
+			_log.Debug("Creating UserInfoDisplay...");
+			game.Components.Add(new UserInfoDisplay(game));
 			game.Exiting += (s, e) => UnloadContent();
 		}
 
@@ -94,7 +96,7 @@ namespace Sharpcraft.Components.Debug
 			_spriteBatch.DrawString(_font, "M_X: " + Mouse.GetState().X, new Vector2(32, 80), Color.Black);
 			_spriteBatch.DrawString(_font, "M_Y: " + Mouse.GetState().Y, new Vector2(32, 96), Color.Black);
 			if (_graphics.IsFullScreen)
-				_spriteBatch.DrawString(_font, "FULLSCREEN", new Vector2(32, 152), Color.Red);
+				_spriteBatch.DrawString(_font, "FULLSCREEN", new Vector2(32, 200), Color.Red);
 			_spriteBatch.End();
 		}
 	}

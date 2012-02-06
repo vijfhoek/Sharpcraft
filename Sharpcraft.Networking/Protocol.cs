@@ -269,12 +269,12 @@ namespace Sharpcraft.Networking
 					var recordCount = _tools.ReadInt32();
 					explosionPacket.Count = recordCount;
 
-					var records = new sbyte[recordCount,3];
+					var records = new sbyte[recordCount, 3];
 					for (var i = 0; i < recordCount; i++)
 					{
-						records[1, 0] = _tools.ReadSignedByte();
-						records[1, 1] = _tools.ReadSignedByte();
-						records[1, 2] = _tools.ReadSignedByte();
+						records[i, 0] = _tools.ReadSignedByte();
+						records[i, 1] = _tools.ReadSignedByte();
+						records[i, 2] = _tools.ReadSignedByte();
 					}
 					explosionPacket.Records = records;
 
@@ -307,10 +307,10 @@ namespace Sharpcraft.Networking
 					var count = _tools.ReadInt16();
 					windowItemsPacket.Count = count;
 
-					var slotDatas = new SlotData[count]; // Feels horrible to have a plural of a plural...
+					var slotData = new SlotData[count];
 					for (short i = 0; i < count; i++)
-						slotDatas[i] = _tools.ReadSlotData();
-					windowItemsPacket.SlotData = slotDatas;
+						slotData[i] = _tools.ReadSlotData();
+					windowItemsPacket.SlotData = slotData;
 
 					pack = windowItemsPacket;
 					break;
@@ -328,12 +328,12 @@ namespace Sharpcraft.Networking
 					                            _tools.ReadString(), _tools.ReadString(), _tools.ReadString());
 					break;
 				case PacketType.ItemData:
-					var itemDataPacket = new ItemDataPacket(_tools.ReadInt16(), _tools.ReadInt16());
+					pack = new ItemDataPacket(_tools.ReadInt16(), _tools.ReadInt16());
 
-					var len = _tools.ReadByte(); itemDataPacket.Length = len;
-					itemDataPacket.Text = _tools.ReadSignedBytes(len);
+					byte len = _tools.ReadByte();
+					((ItemDataPacket)pack).Length = len;
+					((ItemDataPacket)pack).Text = _tools.ReadSignedBytes(len);
 
-					pack = itemDataPacket;
 					break;
 				case PacketType.IncrementStatistic:
 					pack = new IncrementStatisticPacket(_tools.ReadInt32(), _tools.ReadSignedByte());
@@ -360,7 +360,7 @@ namespace Sharpcraft.Networking
 		/// <param name="packet">The packet to send</param>
 		public void SendPacket(Packet packet)
 		{
-			_log.Debug("Sending packet (ID: " + packet.Type + ")");
+			//_log.Debug("Sending packet (ID: " + packet.Type + ")");
 		
 			var type = packet.Type;
 			var packetID = (byte) packet.Type;
@@ -370,14 +370,14 @@ namespace Sharpcraft.Networking
 				case PacketType.KeepAlive:
 					{
 						var pack = (KeepAlivePacket) packet;
-						_log.Debug("Writing KeepAlive packet (" + pack.KeepAliveID + ")...");
+						//_log.Debug("Writing KeepAlive packet (" + pack.KeepAliveID + ")...");
 						_tools.WriteByte(packetID);
 						_tools.WriteInt32(pack.KeepAliveID);
 					}
 					break;
 				case PacketType.LoginRequest:
 					{
-						_log.Debug("Writing Login Request packet...");
+						//_log.Debug("Writing Login Request packet...");
 						var pack = (LoginRequestPacketCS)packet;
 						_tools.WriteByte(packetID);
 						_tools.WriteInt32(pack.ProtocolVersion);
@@ -393,7 +393,7 @@ namespace Sharpcraft.Networking
 					break;
 				case PacketType.Handshake:
 					{
-						_log.Debug("Writing Handshake packet.");
+						//_log.Debug("Writing Handshake packet.");
 						var pack = (HandshakePacketCS)packet;
 						_tools.WriteByte(packetID);
 						_tools.WriteString(pack.Username);
@@ -417,9 +417,9 @@ namespace Sharpcraft.Networking
 					break;
 			}
 
-			_log.Debug("Sending packet...");
+			//_log.Debug("Sending packet...");
 			_stream.Flush();
-			_log.Debug("Packet sent!");
+			//_log.Debug("Packet sent!");
 		}
 	}
 }
