@@ -121,6 +121,7 @@
   <ItemGroup>
     <Compile Include="Components\Debug\DebugDisplay.cs" />
     <Compile Include="Components\Debug\FrameRateDisplay.cs" />
+    <Compile Include="Components\Debug\UserInfoDisplay.cs" />
     <Compile Include="Launcher.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,7 +202,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.Increment.TimeStamp" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" />
+      <UserProperties BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.TimeStamp" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

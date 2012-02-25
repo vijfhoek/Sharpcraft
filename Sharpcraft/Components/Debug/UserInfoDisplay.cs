@@ -1,10 +1,12 @@
 using System;
+
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
-using Keys = Microsoft.Xna.Framework.Input.Keys;
+using Microsoft.Xna.Framework.Media;
 
 using Sharpcraft.Logging;
 
@@ -13,25 +15,24 @@ namespace Sharpcraft.Components.Debug
 	/// <summary>
 	/// This is a game component that implements IUpdateable.
 	/// </summary>
-	public class FrameRateDisplay : DrawableGameComponent
+	public class UserInfoDisplay : DrawableGameComponent
 	{
-		private readonly log4net.ILog _log;
+		private log4net.ILog _log;
 
 		private readonly ContentManager _content;
 		private SpriteBatch _spriteBatch;
 		private SpriteFont _font;
 
-		private int _fps;
-		private int _frameCount;
-		private TimeSpan _elapsed = TimeSpan.Zero;
+		private bool _userInfoToggling;
+		private bool _userInfoEnabled;
 
-		private bool _fpsToggling;
-		private bool _fpsEnabled;
+		private Sharpcraft sc;
 
-		internal FrameRateDisplay(Game game) : base(game)
+		internal UserInfoDisplay(Game game) : base(game)
 		{
 			_log = LogManager.GetLogger(this);
-			_log.Debug("FrameRateDisplay created!");
+			_log.Debug("UserInfoDisplay created!");
+			sc = (Sharpcraft) game;
 			_content = new ContentManager(game.Services, Constants.ContentDirectory);
 			game.Exiting += (s, e) => UnloadContent();
 		}
@@ -52,7 +53,7 @@ namespace Sharpcraft.Components.Debug
 		/// </summary>
 		protected override void UnloadContent()
 		{
-			_log.Debug("FrameRateDisplay is unloading!");
+			_log.Info("UserInfoDisplay is unloading!");
 			_content.Unload();
 		}
 
@@ -62,40 +63,30 @@ namespace Sharpcraft.Components.Debug
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		public override void Update(GameTime gameTime)
 		{
-			if (Keyboard.GetState().IsKeyDown(Keys.F3) && !_fpsToggling)
+			if (Keyboard.GetState().IsKeyDown(Keys.F3) && !_userInfoToggling)
 			{
-				_fpsToggling = true;
-				_fpsEnabled = !_fpsEnabled;
+				_userInfoToggling = true;
+				_userInfoEnabled = !_userInfoEnabled;
 			}
 
 			if (Keyboard.GetState().IsKeyUp(Keys.F3))
-				_fpsToggling = false;
-
-			_elapsed += gameTime.ElapsedGameTime;
-
-			if (_elapsed >= TimeSpan.FromSeconds(1))
-			{
-				_elapsed -= TimeSpan.FromSeconds(1);
-				_fps = _frameCount;
-				_frameCount = 0;
-			}
+				_userInfoToggling = false;
 		}
 
-		/// <summary>
-		/// This is called when the game should draw itself.
-		/// </summary>
-		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		public override void Draw(GameTime gameTime)
 		{
-			_frameCount++;
-
-			if (!_fpsEnabled)
+			if (!_userInfoEnabled)
 				return;
 
 			_spriteBatch.Begin();
-			_spriteBatch.DrawString(_font, "FPS: " + _fps, new Vector2(32, 32), Color.Black);
-			_spriteBatch.DrawString(_font, "FC:  " + _frameCount, new Vector2(32, 48), Color.Black);
-			_spriteBatch.DrawString(_font, "ELA: " + _elapsed, new Vector2(32, 64), Color.Black);
+			if (sc.Client.GetPlayer() != null)
+			{
+				_spriteBatch.DrawString(_font, "P_X: " + sc.Client.GetPlayer().Position.X, new Vector2(32, 112), Color.Black);
+				_spriteBatch.DrawString(_font, "P_Y: " + sc.Client.GetPlayer().Position.Y, new Vector2(32, 128), Color.Black);
+				_spriteBatch.DrawString(_font, "P_Z: " + sc.Client.GetPlayer().Position.Z, new Vector2(32, 144), Color.Black);
+				_spriteBatch.DrawString(_font, "PDY: " + sc.Client.GetPlayer().Direction.Yaw, new Vector2(32, 160), Color.Black);
+				_spriteBatch.DrawString(_font, "PDP: " + sc.Client.GetPlayer().Direction.Pitch, new Vector2(32, 176), Color.Black);
+			}
 			_spriteBatch.End();
 		}
 	}
