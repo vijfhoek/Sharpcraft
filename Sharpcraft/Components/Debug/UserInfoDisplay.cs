@@ -19,6 +19,7 @@ namespace Sharpcraft.Components.Debug
 	{
 		private log4net.ILog _log;
 
+		private bool _loaded;
 		private readonly ContentManager _content;
 		private SpriteBatch _spriteBatch;
 		private SpriteFont _font;
@@ -45,6 +46,7 @@ namespace Sharpcraft.Components.Debug
 		{
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 			_font = _content.Load<SpriteFont>(Constants.DebugFont);
+			_loaded = true;
 		}
 
 		/// <summary>
@@ -53,8 +55,11 @@ namespace Sharpcraft.Components.Debug
 		/// </summary>
 		protected override void UnloadContent()
 		{
+			if (!_loaded)
+				return;
 			_log.Info("UserInfoDisplay is unloading!");
 			_content.Unload();
+			_loaded = false;
 		}
 
 		/// <summary>
