@@ -9,8 +9,10 @@ TODO: Add some cheesy text here.
 License
 -------
 
-All Rights Reserved until further notice.
 Copyright © 2012 by Sijmen Schoon (Vijfhoek) and Adam Hellberg (F16Gaming).
+
+Sharpcraft is licensed under the [GNU General Public License v3](http://www.gnu.org/copyleft/gpl.html).  
+Please see the file "COPYING" for more information.
 
 Dependencies
 ------------
