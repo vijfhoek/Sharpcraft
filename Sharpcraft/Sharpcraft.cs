@@ -129,9 +129,6 @@ namespace Sharpcraft
 		private Server _server;
 		internal Client Client { get; private set; }
 
-		// Testing
-		private System.Windows.Forms.Label _testLabel;
-
 		/// <summary>
 		/// Initializes a new instance of Sharpcraft.
 		/// </summary>
@@ -210,13 +207,6 @@ namespace Sharpcraft
 			_log.Debug("Reached end of debug connection!");
 
 			Exiting += (s, e) => Client.Exit();
-
-			_testLabel = new System.Windows.Forms.Label();
-			_testLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-			_testLabel.AutoSize = true;
-			_testLabel.Location = new System.Drawing.Point(10, 10);
-			_testLabel.Name = "_testLabel";
-			_testLabel.Text = "Hello, World!";
 		}
 
 		/// <summary>
