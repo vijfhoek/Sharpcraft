@@ -27,7 +27,6 @@
  * "Minecraft" is a trademark of Mojang AB.
  */
 
-using System;
 using System.IO;
 using System.Net;
 using System.Text;

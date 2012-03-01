@@ -27,7 +27,6 @@
  * "Minecraft" is a trademark of Mojang AB.
  */
 
-using System;
 using System.Threading;
 using Sharpcraft.Logging;
 using Sharpcraft.Networking.Packets;
@@ -50,8 +49,7 @@ namespace Sharpcraft.Networking
 			_log.Debug("Setting protocol...");
 			_protocol = protocol;
 			_log.Debug("Creating packet listen thread...");
-			_listenThread = new Thread(ReadPackets) {Name = "PacketListen"};
-			_listenThread.IsBackground = true;
+			_listenThread = new Thread(ReadPackets) {Name = "PacketListen", IsBackground = true};
 			_log.Debug("Starting packet listen thread...");
 			_running = true;
 			_listenThread.Start();

@@ -27,7 +27,6 @@
  * "Minecraft" is a trademark of Mojang AB.
  */
 
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Sharpcraft.Library.Minecraft.Entities
@@ -60,16 +59,22 @@ namespace Sharpcraft.Library.Minecraft.Entities
 		/// <summary>
 		/// The direction this player is looking in.
 		/// </summary>
-		public Direction Direction { get; private set; }
+		public LookDirection Direction { get; private set; }
 
+		/// <summary>
+		/// Current stance of this player.
+		/// </summary>
 		public double Stance { get; private set; }
 
+		/// <summary>
+		/// Whether or not this player is currently on the ground (not falling).
+		/// </summary>
 		public bool OnGround { get; private set; }
 
 		/// <summary>
 		/// Skin used by this player.
 		/// </summary>
-		private Skin _skin;
+		private readonly Skin _skin;
 
 		/// <summary>
 		/// Initialize a new instance of <see cref="Player" />.
@@ -80,13 +85,13 @@ namespace Sharpcraft.Library.Minecraft.Entities
 		/// <param name="position">World position of the player (X,Y,Z).</param>
 		/// <param name="direction">The direction the player is looking in (Yaw, Pitch).</param>
 		/// <param name="stance">The stance of the player.</param>
-		public Player(int entityId, string name, Texture2D skin = null, Position position = null, Direction direction = null, double stance = 0.0)
+		public Player(int entityId, string name, Texture2D skin = null, Position position = null, LookDirection direction = null, double stance = 0.0)
 			: base(entityId)
 		{
 			Name = name;
 			_skin = new Skin(skin);
 			Position = position ?? new Position();
-			Direction = direction ?? new Direction();
+			Direction = direction ?? new LookDirection();
 			Stance = stance;
 			if (_skin.GetTexture() == null)
 				return;
@@ -116,21 +121,38 @@ namespace Sharpcraft.Library.Minecraft.Entities
 			Position = position;
 		}
 
+		/// <summary>
+		/// Set the direction in which this player is heading.
+		/// </summary>
+		/// <param name="yaw">Yaw.</param>
+		/// <param name="pitch">Pitch.</param>
 		public void SetDirection(float yaw, float pitch)
 		{
-			SetDirection(new Direction(yaw, pitch));
+			SetDirection(new LookDirection(yaw, pitch));
 		}
 
-		public void SetDirection(Direction direction)
+		/// <summary>
+		/// Set the direction in which this player is heading.
+		/// </summary>
+		/// <param name="direction"><see cref="Direction" /> object defining the direction.</param>
+		public void SetDirection(LookDirection direction)
 		{
 			Direction = direction;
 		}
 
+		/// <summary>
+		/// Set this player's stance.
+		/// </summary>
+		/// <param name="stance"></param>
 		public void SetStance(double stance)
 		{
 			Stance = stance;
 		}
 
+		/// <summary>
+		/// Set whether or not this player is currently on the ground (not falling).
+		/// </summary>
+		/// <param name="onGround"><c>true</c> if player is on ground (not falling), <c>false</c> otherwise.</param>
 		public void SetOnGround(bool onGround)
 		{
 			OnGround = onGround;

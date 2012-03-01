@@ -29,10 +29,24 @@
 
 namespace Sharpcraft.Library
 {
+	/// <summary>
+	/// Contants related <see cref="Sharpcraft.Library" />.
+	/// </summary>
 	public static class Constants
 	{
+		/// <summary>
+		/// Directory where data is stored.
+		/// </summary>
 		public const string DataDirectory = "data";
+
+		/// <summary>
+		/// Directory where Minecraft data is stored.
+		/// </summary>
 		public static string MinecraftDataDirectory { get { return DataDirectory + "\\minecraft"; } }
+
+		/// <summary>
+		/// File containing item definitions.
+		/// </summary>
 		public static string MinecraftItemFile { get { return MinecraftDataDirectory + "\\items.list"; } }
 	}
 }

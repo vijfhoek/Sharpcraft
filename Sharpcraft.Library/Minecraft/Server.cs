@@ -27,8 +27,6 @@
  * "Minecraft" is a trademark of Mojang AB.
  */
 
-using System;
-
 namespace Sharpcraft.Library.Minecraft
 {
 	/// <summary>
@@ -106,10 +104,7 @@ namespace Sharpcraft.Library.Minecraft
 			get { return _maxPlayers; }
 			set
 			{
-				if (value < 0)
-					_maxPlayers = 0;
-				else
-					_maxPlayers = value;
+				_maxPlayers = value < 0 ? 0 : value;
 				if (Players > _maxPlayers)
 					Players = _maxPlayers;
 			}
@@ -125,6 +120,10 @@ namespace Sharpcraft.Library.Minecraft
 		/// </summary>
 		public bool Online;
 
+		/// <summary>
+		/// Mode of the server.
+		/// 0 = Survival, 1 = Creative.
+		/// </summary>
 		public int Mode { get; private set; }
 
 		/// <summary>
@@ -155,6 +154,10 @@ namespace Sharpcraft.Library.Minecraft
 			Mode = mode;
 		}
 
+		/// <summary>
+		/// Set the mode of this server.
+		/// </summary>
+		/// <param name="mode">Mode to set.</param>
 		public void SetMode(int mode)
 		{
 			if (mode < 0 || mode > 1)

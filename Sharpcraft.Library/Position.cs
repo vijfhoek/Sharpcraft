@@ -29,12 +29,32 @@
 
 namespace Sharpcraft.Library
 {
+	/// <summary>
+	/// XYZ position in the game world.
+	/// </summary>
 	public class Position
 	{
+		/// <summary>
+		/// X position.
+		/// </summary>
 		public double X;
+
+		/// <summary>
+		/// Y position.
+		/// </summary>
 		public double Y;
+
+		/// <summary>
+		/// Z position.
+		/// </summary>
 		public double Z;
 
+		/// <summary>
+		/// Initialize a new <see cref="Position" /> object.
+		/// </summary>
+		/// <param name="x">X position.</param>
+		/// <param name="y">Y position.</param>
+		/// <param name="z">Z position.</param>
 		public Position(double x = 0.0, double y = 0.0, double z = 0.0)
 		{
 			X = x;

@@ -27,9 +27,6 @@
  * "Minecraft" is a trademark of Mojang AB.
  */
 
-using System;
-using System.Collections.Generic;
-
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Sharpcraft.Library.Minecraft

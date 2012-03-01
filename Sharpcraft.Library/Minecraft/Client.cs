@@ -42,6 +42,9 @@ using Sharpcraft.Library.Minecraft.Entities;
 
 namespace Sharpcraft.Library.Minecraft
 {
+	/// <summary>
+	/// The Minecraft client.
+	/// </summary>
 	public class Client
 	{
 		private readonly log4net.ILog _log;
@@ -58,6 +61,11 @@ namespace Sharpcraft.Library.Minecraft
 		/// </summary>
 		public static List<Item> Items { get; private set; }
 
+		/// <summary>
+		/// Initialize a new Minecraft client.
+		/// </summary>
+		/// <param name="server">The server to connect to.</param>
+		/// <param name="player">The player who logged in with the client.</param>
 		public Client(Server server, Player player)
 		{
 			_log = LogManager.GetLogger(this);
@@ -83,16 +91,29 @@ namespace Sharpcraft.Library.Minecraft
 			_world = new World();
 		}
 
+		/// <summary>
+		/// Get an item by its ID.
+		/// </summary>
+		/// <param name="id">ID of the item.</param>
+		/// <returns>The item matching the ID.</returns>
 		public static Item GetItemByID(short id)
 		{
 			return Items.Where(item => item.Id == id).FirstOrDefault();
 		}
 
+		/// <summary>
+		/// Get the server this client is currently connected to.
+		/// </summary>
+		/// <returns>The <see cref="Server"/> object of the current server.</returns>
 		public Server GetServer()
 		{
 			return _server;
 		}
 
+		/// <summary>
+		/// Attempt to connect to the server.
+		/// </summary>
+		/// <returns><c>true</c> if connection succeeded, <c>false</c> otherwise.</returns>
 		public bool Connect()
 		{
 			// We need to create a connection thread
@@ -124,11 +145,18 @@ namespace Sharpcraft.Library.Minecraft
 			return true;
 		}
 
+		/// <summary>
+		/// Disconnect from current server.
+		/// </summary>
+		/// <returns><c>true</c> if disconnect was successful and clean, <c>false</c> otherwise.</returns>
 		public bool Disconnect()
 		{
 			return false; // For now
 		}
 
+		/// <summary>
+		/// Exit client.
+		/// </summary>
 		public void Exit()
 		{
 			Disconnect();
@@ -136,27 +164,48 @@ namespace Sharpcraft.Library.Minecraft
 			_listener.Stop();
 		}
 
+		/// <summary>
+		/// Send a chat message to the server.
+		/// </summary>
+		/// <param name="message">Message to send.</param>
 		public void SendMessage(string message)
 		{
 			var packet = new ChatMessagePacket(message);
 			_protocol.SendPacket(packet);
 		}
 
+		/// <summary>
+		/// Perform an emote.
+		/// </summary>
+		/// <param name="emote">Emote to perform.</param>
+		/// <remarks>Displays as "&lt;player&gt; &lt;emote&gt;.</remarks>
 		public void SendEmote(string emote)
 		{
-			
+
 		}
 
+		/// <summary>
+		/// Send a command to the server.
+		/// </summary>
+		/// <param name="command">Command to send.</param>
 		public void SendCommand(string command)
 		{
-			
+			//NOTE: Is this actually needed? Or does the server parse / commands automatically?
 		}
 
+		/// <summary>
+		/// Get the player associated with this <see cref="Client" />.
+		/// </summary>
+		/// <returns>The <see cref="Player" /> object associated with this <see cref="Client" />.</returns>
 		public Player GetPlayer()
 		{
 			return _player;
 		}
 
+		/// <summary>
+		/// Parse a <see cref="LoginRequestPacketSC" /> packet and update data accordingly.
+		/// </summary>
+		/// <param name="packet">The <see cref="LoginRequestPacketSC" /> to parse.</param>
 		private void ParseLoginRequestSC(LoginRequestPacketSC packet)
 		{
 			_log.Debug("Updating world, player and server data...");
@@ -181,6 +230,11 @@ namespace Sharpcraft.Library.Minecraft
 			_log.Debug("World, player and server data successfully updated!");
 		}
 
+		/// <summary>
+		/// Handles all packets received.
+		/// </summary>
+		/// <param name="sender">N/A (Not Used) (See MSDN)</param>
+		/// <param name="e"><see cref="PacketEventArgs" /> containing the packet and other info.</param>
 		private void PacketReceived(object sender, PacketEventArgs e)
 		{
 			Packet response;

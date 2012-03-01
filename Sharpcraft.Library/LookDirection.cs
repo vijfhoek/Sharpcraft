@@ -29,12 +29,27 @@
 
 namespace Sharpcraft.Library
 {
-	public class Direction
+	/// <summary>
+	/// Specifies what direction a player/mob is looking in.
+	/// </summary>
+	public class LookDirection
 	{
+		/// <summary>
+		/// Yaw.
+		/// </summary>
 		public float Yaw;
+
+		/// <summary>
+		/// Pitch.
+		/// </summary>
 		public float Pitch;
 
-		public Direction(float yaw = 0.0f, float pitch = 0.0f)
+		/// <summary>
+		/// Initialize a new <see cref="LookDirection" /> object.
+		/// </summary>
+		/// <param name="yaw">Yaw.</param>
+		/// <param name="pitch">Pitch.</param>
+		public LookDirection(float yaw = 0.0f, float pitch = 0.0f)
 		{
 			Yaw = yaw;
 			Pitch = pitch;

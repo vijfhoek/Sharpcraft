@@ -34,6 +34,11 @@ using System.Windows.Forms;
 
 namespace Sharpcraft.Forms
 {
+	/// <summary>
+	/// Dialog used to generate GitHub issue messages.
+	/// User will be directed to the issues page of Sharpcraft on GitHub
+	/// where they can post the generated text.
+	/// </summary>
 	public partial class GitHubDialog : Form
 	{
 		private readonly string _author;
@@ -50,6 +55,12 @@ namespace Sharpcraft.Forms
 		private readonly DateTime _time;
 		private readonly string _systemInfo;
 
+		/// <summary>
+		/// Initializes a new GitHub dialog.
+		/// </summary>
+		/// <param name="ex">The exception thrown.</param>
+		/// <param name="author">Author of this Sharpcraft release.</param>
+		/// <param name="systemInfo">Whether or not to include user's system info.</param>
 		public GitHubDialog(Exception ex, string author, bool systemInfo)
 		{
 			InitializeComponent();

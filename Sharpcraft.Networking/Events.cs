@@ -57,8 +57,15 @@ namespace Sharpcraft.Networking
 	/// </summary>
 	public class PacketEventArgs : EventArgs
 	{
+		/// <summary>
+		/// The <see cref="Packet" /> that was received.
+		/// </summary>
 		public Packet Packet { get; private set; }
 
+		/// <summary>
+		/// Initialize a new instance of <see cref="PacketEventArgs" />.
+		/// </summary>
+		/// <param name="packet"></param>
 		internal PacketEventArgs(Packet packet)
 		{
 			Packet = packet;

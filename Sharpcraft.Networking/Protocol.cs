@@ -29,8 +29,9 @@
 
 using System;
 using System.Net.Sockets;
+
 using LibNbt;
-using Sharpcraft.Library.Minecraft;
+
 using Sharpcraft.Logging;
 using Sharpcraft.Networking.Enums;
 using Sharpcraft.Networking.Packets;

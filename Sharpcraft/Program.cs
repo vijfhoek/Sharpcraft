@@ -39,7 +39,6 @@ using Microsoft.Win32.SafeHandles;
 
 using Sharpcraft.Forms;
 using Sharpcraft.Logging;
-using Sharpcraft.Library.Configuration;
 
 namespace Sharpcraft
 {

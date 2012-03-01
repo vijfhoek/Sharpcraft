@@ -27,17 +27,22 @@
  * "Minecraft" is a trademark of Mojang AB.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace Sharpcraft.Library.Minecraft.Entities
 {
+	/// <summary>
+	/// A Minecraft entity.
+	/// </summary>
 	public class Entity
 	{
+		/// <summary>
+		/// ID of this entity.
+		/// </summary>
 		public int EntityID;
 
+		/// <summary>
+		/// Initialize a new <see cref="Entity" />.
+		/// </summary>
+		/// <param name="entityId">ID of this entity.</param>
 		public Entity(int entityId)
 		{
 			EntityID = entityId;

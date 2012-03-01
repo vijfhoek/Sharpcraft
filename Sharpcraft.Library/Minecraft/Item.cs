@@ -50,6 +50,9 @@ namespace Sharpcraft.Library.Minecraft
 		/// </summary>
 		public int Data { get; private set; }
 
+		/// <summary>
+		/// Whether or not this item can be damaged.
+		/// </summary>
 		public bool Damageable { get; private set; }
 
 		/// <summary>

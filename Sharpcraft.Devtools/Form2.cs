@@ -17,7 +17,7 @@ namespace Sharpcraft.Devtools
 			InitializeComponent();
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		private void Button1Click(object sender, EventArgs e)
 		{
 			listBox1.Items.Clear();
 			if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
@@ -30,7 +30,7 @@ namespace Sharpcraft.Devtools
 			}
 		}
 
-		private void button2_Click(object sender, EventArgs e)
+		private void Button2Click(object sender, EventArgs e)
 		{
 			if (listBox1.Items.Count <= 0)
 				return;
