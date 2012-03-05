@@ -15,8 +15,9 @@ namespace Sharpcraft.Components.Debug
 	/// </summary>
 	public class FrameRateDisplay : DrawableGameComponent
 	{
-		private log4net.ILog _log;
+		private readonly log4net.ILog _log;
 
+		private bool _loaded;
 		private readonly ContentManager _content;
 		private SpriteBatch _spriteBatch;
 		private SpriteFont _font;
@@ -44,6 +45,7 @@ namespace Sharpcraft.Components.Debug
 		{
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 			_font = _content.Load<SpriteFont>(Constants.DebugFont);
+			_loaded = true;
 		}
 
 		/// <summary>
@@ -52,8 +54,11 @@ namespace Sharpcraft.Components.Debug
 		/// </summary>
 		protected override void UnloadContent()
 		{
+			if (!_loaded)
+				return;
 			_log.Debug("FrameRateDisplay is unloading!");
 			_content.Unload();
+			_loaded = false;
 		}
 
 		/// <summary>

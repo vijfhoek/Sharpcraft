@@ -1,13 +1,41 @@
-﻿/* 
- * Sharpcraft.Protocol
- * Copyright (c) 2012 by Sijmen Schoon and Adam Hellberg.
- * All Rights Reserved.
+﻿/*
+ * Protocol.cs
+ * 
+ * Copyright © 2011-2012 by Sijmen Schoon and Adam Hellberg.
+ * 
+ * This file is part of Sharpcraft.
+ * 
+ * Sharpcraft is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Sharpcraft is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Sharpcraft.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
+ * any of its employees and/or licensors.
+ * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * any harm caused, direct or indirect, to your Minecraft account
+ * via the use of Sharpcraft.
+ * 
+ * "Minecraft" is a trademark of Mojang AB.
  */
 
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 
+<<<<<<< HEAD
+=======
+using LibNbt;
+
+>>>>>>> 64a42e1f261131fd1596e748f057f00e58112ce3
 using Sharpcraft.Logging;
 using Sharpcraft.Networking.Enums;
 using Sharpcraft.Networking.Packets;
@@ -69,13 +97,12 @@ namespace Sharpcraft.Networking
 					{
 						EntityID = _tools.ReadInt32(),
 						NotUsed = _tools.ReadString(),
-						MapSeed = _tools.ReadInt64(),
 						LevelType = _tools.ReadString(),
 						Gamemode = _tools.ReadInt32(),
-						Dimension = (sbyte) _stream.ReadByte(),
-						Difficulty = (sbyte) _stream.ReadByte(),
-						WorldHeight = (byte) _stream.ReadByte(),
-						MaxPlayers = (byte) _stream.ReadByte()
+						Dimension = _tools.ReadInt32(),
+						Difficulty = _tools.ReadSignedByte(),
+						WorldHeight = _tools.ReadByte(),
+						MaxPlayers = _tools.ReadByte()
 					};
 					break;
 				case PacketType.Handshake:
@@ -100,8 +127,8 @@ namespace Sharpcraft.Networking
 					pack = new UpdateHealthPacket(_tools.ReadInt16(), _tools.ReadInt16(), _tools.ReadSingle());
 					break;
 				case PacketType.Respawn:
-					pack = new RespawnPacket(_tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadSignedByte(),
-					                         _tools.ReadInt16(), _tools.ReadInt64(), _tools.ReadString());
+					pack = new RespawnPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadSignedByte(),
+					                         _tools.ReadInt16(), _tools.ReadString());
 					break;
 				case PacketType.Player:
 					pack = new PlayerPacket(_tools.ReadBoolean());
@@ -163,7 +190,12 @@ namespace Sharpcraft.Networking
 					break;
 				case PacketType.MobSpawn:
 					pack = new MobSpawnPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(),
+<<<<<<< HEAD
 						_tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadSlotData());
+=======
+						_tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadSignedByte());
+					_tools.Skip(); // We are supposed to read SlotData into MobSpawnPacket here
+>>>>>>> 64a42e1f261131fd1596e748f057f00e58112ce3
 					break;
 				case PacketType.EntityPainting:
 					pack = new EntityPaintingPacket(_tools.ReadInt32(), _tools.ReadString(), _tools.ReadInt32(),
@@ -197,6 +229,9 @@ namespace Sharpcraft.Networking
 				case PacketType.EntityTeleport:
 					pack = new EntityTeleportPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(),
 					                                _tools.ReadSignedByte(), _tools.ReadSignedByte());
+					break;
+				case PacketType.EntityHeadLook:
+					pack = new EntityHeadLookPacket(_tools.ReadInt32(), _tools.ReadSignedByte());
 					break;
 				case PacketType.EntityStatus:
 					pack = new EntityStatusPacket(_tools.ReadInt32(), _tools.ReadSignedByte());
@@ -281,12 +316,12 @@ namespace Sharpcraft.Networking
 					var recordCount = _tools.ReadInt32();
 					explosionPacket.Count = recordCount;
 
-					var records = new sbyte[recordCount,3];
+					var records = new sbyte[recordCount, 3];
 					for (var i = 0; i < recordCount; i++)
 					{
-						records[1, 0] = _tools.ReadSignedByte();
-						records[1, 1] = _tools.ReadSignedByte();
-						records[1, 2] = _tools.ReadSignedByte();
+						records[i, 0] = _tools.ReadSignedByte();
+						records[i, 1] = _tools.ReadSignedByte();
+						records[i, 2] = _tools.ReadSignedByte();
 					}
 					explosionPacket.Records = records;
 
@@ -319,10 +354,10 @@ namespace Sharpcraft.Networking
 					var count = _tools.ReadInt16();
 					windowItemsPacket.Count = count;
 
-					var slotDatas = new SlotData[count]; // Feels horrible to have a plural of a plural...
+					var slotData = new SlotData[count];
 					for (short i = 0; i < count; i++)
-						slotDatas[i] = _tools.ReadSlotData();
-					windowItemsPacket.SlotData = slotDatas;
+						slotData[i] = _tools.ReadSlotData();
+					windowItemsPacket.SlotData = slotData;
 
 					pack = windowItemsPacket;
 					break;
@@ -340,12 +375,12 @@ namespace Sharpcraft.Networking
 					                            _tools.ReadString(), _tools.ReadString(), _tools.ReadString());
 					break;
 				case PacketType.ItemData:
-					var itemDataPacket = new ItemDataPacket(_tools.ReadInt16(), _tools.ReadInt16());
+					pack = new ItemDataPacket(_tools.ReadInt16(), _tools.ReadInt16());
 
-					var len = _tools.ReadByte(); itemDataPacket.Length = len;
-					itemDataPacket.Text = _tools.ReadSignedBytes(len);
+					byte len = _tools.ReadByte();
+					((ItemDataPacket)pack).Length = len;
+					((ItemDataPacket)pack).Text = _tools.ReadSignedBytes(len);
 
-					pack = itemDataPacket;
 					break;
 				case PacketType.IncrementStatistic:
 					pack = new IncrementStatisticPacket(_tools.ReadInt32(), _tools.ReadSignedByte());
@@ -372,7 +407,7 @@ namespace Sharpcraft.Networking
 		/// <param name="packet">The packet to send</param>
 		public void SendPacket(Packet packet)
 		{
-			_log.Debug("Sending packet (ID: " + packet.Type + ")");
+			//_log.Debug("Sending packet (ID: " + packet.Type + ")");
 		
 			var type = packet.Type;
 			var packetID = (byte) packet.Type;
@@ -382,14 +417,14 @@ namespace Sharpcraft.Networking
 				case PacketType.KeepAlive:
 					{
 						var pack = (KeepAlivePacket) packet;
-						_log.Debug("Writing KeepAlive packet (" + pack.KeepAliveID + ")...");
+						//_log.Debug("Writing KeepAlive packet (" + pack.KeepAliveID + ")...");
 						_tools.WriteByte(packetID);
 						_tools.WriteInt32(pack.KeepAliveID);
 					}
 					break;
 				case PacketType.LoginRequest:
 					{
-						_log.Debug("Writing Login Request packet...");
+						//_log.Debug("Writing Login Request packet...");
 						var pack = (LoginRequestPacketCS)packet;
 						_tools.WriteByte(packetID);
 						_tools.WriteInt32(pack.ProtocolVersion);
@@ -405,11 +440,11 @@ namespace Sharpcraft.Networking
 					break;
 				case PacketType.Handshake:
 					{
-						_log.Debug("Writing Handshake packet.");
+						//_log.Debug("Writing Handshake packet.");
 						var pack = (HandshakePacketCS)packet;
 						_tools.WriteByte(packetID);
-						_tools.WriteString(pack.Username);
-					}
+						_tools.WriteString(pack.UsernameAndHost);
+					} 
 					break;
 				case PacketType.ChatMessage:
 					{
@@ -429,9 +464,9 @@ namespace Sharpcraft.Networking
 					break;
 			}
 
-			_log.Debug("Sending packet...");
+			//_log.Debug("Sending packet...");
 			_stream.Flush();
-			_log.Debug("Packet sent!");
+			//_log.Debug("Packet sent!");
 		}
 	}
 }

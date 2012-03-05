@@ -8,6 +8,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Steam", "Sharpcraft.Steam\Sharpcraft.Steam.csproj", "{C3DF80BE-E42E-4CE2-9CA0-EBA36EFAD79F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EFCE1283-8A9D-4233-AC10-9C49071A67B6}"
+<<<<<<< HEAD
+=======
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		COPYING = COPYING
+		README.md = README.md
+	EndProjectSection
+>>>>>>> 64a42e1f261131fd1596e748f057f00e58112ce3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpcraft.Forms", "Sharpcraft.Forms\Sharpcraft.Forms.csproj", "{5B58612A-455C-4A60-8B2C-196F274E7EBA}"
 EndProject
@@ -154,8 +162,8 @@ Global
 		{123CC25E-E77E-4B8B-B65F-9E3477754FEF} = {D6275296-90AF-4F6B-B5FC-EFE28EB1F800}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_UpdateFileVersion = False
-		BuildVersion_UpdateAssemblyVersion = False
 		BuildVersion_BuildVersioningStyle = None.None.Increment.TimeStamp
+		BuildVersion_UpdateAssemblyVersion = False
+		BuildVersion_UpdateFileVersion = False
 	EndGlobalSection
 EndGlobal

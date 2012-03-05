@@ -121,6 +121,7 @@
   <ItemGroup>
     <Compile Include="Components\Debug\DebugDisplay.cs" />
     <Compile Include="Components\Debug\FrameRateDisplay.cs" />
+    <Compile Include="Components\Debug\UserInfoDisplay.cs" />
     <Compile Include="Launcher.cs">
       <SubType>Form</SubType>
     </Compile>
