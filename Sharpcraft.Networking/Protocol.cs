@@ -1,13 +1,37 @@
-﻿/* 
- * Sharpcraft.Protocol
- * Copyright (c) 2012 by Sijmen Schoon and Adam Hellberg.
- * All Rights Reserved.
+﻿/*
+ * Protocol.cs
+ * 
+ * Copyright © 2011-2012 by Sijmen Schoon and Adam Hellberg.
+ * 
+ * This file is part of Sharpcraft.
+ * 
+ * Sharpcraft is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Sharpcraft is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Sharpcraft.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
+ * any of its employees and/or licensors.
+ * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * any harm caused, direct or indirect, to your Minecraft account
+ * via the use of Sharpcraft.
+ * 
+ * "Minecraft" is a trademark of Mojang AB.
  */
 
 using System;
 using System.Net.Sockets;
+
 using LibNbt;
-using Sharpcraft.Library.Minecraft;
+
 using Sharpcraft.Logging;
 using Sharpcraft.Networking.Enums;
 using Sharpcraft.Networking.Packets;
@@ -70,13 +94,12 @@ namespace Sharpcraft.Networking
 					{
 						EntityID = _tools.ReadInt32(),
 						NotUsed = _tools.ReadString(),
-						MapSeed = _tools.ReadInt64(),
 						LevelType = _tools.ReadString(),
 						Gamemode = _tools.ReadInt32(),
-						Dimension = (sbyte) _stream.ReadByte(),
-						Difficulty = (sbyte) _stream.ReadByte(),
-						WorldHeight = (byte) _stream.ReadByte(),
-						MaxPlayers = (byte) _stream.ReadByte()
+						Dimension = _tools.ReadInt32(),
+						Difficulty = _tools.ReadSignedByte(),
+						WorldHeight = _tools.ReadByte(),
+						MaxPlayers = _tools.ReadByte()
 					};
 					break;
 				case PacketType.Handshake:
@@ -101,8 +124,8 @@ namespace Sharpcraft.Networking
 					pack = new UpdateHealthPacket(_tools.ReadInt16(), _tools.ReadInt16(), _tools.ReadSingle());
 					break;
 				case PacketType.Respawn:
-					pack = new RespawnPacket(_tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadSignedByte(),
-					                         _tools.ReadInt16(), _tools.ReadInt64(), _tools.ReadString());
+					pack = new RespawnPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadSignedByte(),
+					                         _tools.ReadInt16(), _tools.ReadString());
 					break;
 				case PacketType.Player:
 					pack = new PlayerPacket(_tools.ReadBoolean());
@@ -164,7 +187,7 @@ namespace Sharpcraft.Networking
 					break;
 				case PacketType.MobSpawn:
 					pack = new MobSpawnPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(),
-						_tools.ReadSignedByte(), _tools.ReadSignedByte());
+						_tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadSignedByte());
 					_tools.Skip(); // We are supposed to read SlotData into MobSpawnPacket here
 					break;
 				case PacketType.EntityPainting:
@@ -199,6 +222,9 @@ namespace Sharpcraft.Networking
 				case PacketType.EntityTeleport:
 					pack = new EntityTeleportPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(),
 					                                _tools.ReadSignedByte(), _tools.ReadSignedByte());
+					break;
+				case PacketType.EntityHeadLook:
+					pack = new EntityHeadLookPacket(_tools.ReadInt32(), _tools.ReadSignedByte());
 					break;
 				case PacketType.EntityStatus:
 					pack = new EntityStatusPacket(_tools.ReadInt32(), _tools.ReadSignedByte());
@@ -396,8 +422,8 @@ namespace Sharpcraft.Networking
 						//_log.Debug("Writing Handshake packet.");
 						var pack = (HandshakePacketCS)packet;
 						_tools.WriteByte(packetID);
-						_tools.WriteString(pack.Username);
-					}
+						_tools.WriteString(pack.UsernameAndHost);
+					} 
 					break;
 				case PacketType.ChatMessage:
 					{

@@ -53,51 +53,7 @@ with.
     <CharacterRegions>
       <CharacterRegion>
         <Start>A</Start>
-        <End>A</End>
-      </CharacterRegion>
-      <CharacterRegion>
-        <Start>C</Start>
-        <End>C</End>
-      </CharacterRegion>
-      <CharacterRegion>
-        <Start>E</Start>
-        <End>E</End>
-      </CharacterRegion>
-      <CharacterRegion>
-        <Start>L</Start>
-        <End>L</End>
-      </CharacterRegion>
-      <CharacterRegion>
-        <Start>M</Start>
-        <End>M</End>
-      </CharacterRegion>
-      <CharacterRegion>
-        <Start>N</Start>
-        <End>N</End>
-      </CharacterRegion>
-      <CharacterRegion>
-        <Start>F</Start>
-        <End>F</End>
-      </CharacterRegion>
-      <CharacterRegion>
-        <Start>P</Start>
-        <End>P</End>
-      </CharacterRegion>
-      <CharacterRegion>
-        <Start>R</Start>
-        <End>R</End>
-      </CharacterRegion>
-      <CharacterRegion>
-        <Start>S</Start>
-        <End>S</End>
-      </CharacterRegion>
-      <CharacterRegion>
-        <Start>U</Start>
-        <End>U</End>
-      </CharacterRegion>
-      <CharacterRegion>
-        <Start>X</Start>
-        <End>Z</End>
+        <End>z</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>.</Start>

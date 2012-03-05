@@ -94,6 +94,7 @@
     <Compile Include="Packets\EntityActionPacket.cs" />
     <Compile Include="Packets\EntityEffectPacket.cs" />
     <Compile Include="Packets\EntityEquipmentPacket.cs" />
+    <Compile Include="Packets\EntityHeadLookPacket.cs" />
     <Compile Include="Packets\EntityLookPacket.cs" />
     <Compile Include="Packets\EntityLookAndRelativeMovePacket.cs" />
     <Compile Include="Packets\EntityMetadataPacket.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Packets\TransactionPacket.cs" />
     <Compile Include="Packets\UpdateHealthPacket.cs" />
     <Compile Include="Packets\UpdateSignPacket.cs" />
+    <Compile Include="Packets\UpdateTileEntityPacket.cs" />
     <Compile Include="Packets\UpdateWindowPropertyPacket.cs" />
     <Compile Include="Packets\UseBedPacket.cs" />
     <Compile Include="Packets\UseEntityPacket.cs" />
@@ -185,7 +187,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.Increment.TimeStamp" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.TimeStamp" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
