@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -35,9 +35,9 @@ namespace Sharpcraft.Networking.Packets
 {
 	public class SpawnPositionPacket : Packet
 	{
-		public Int32 X;
-		public Int32 Y;
-		public Int32 Z;
+		public int X;
+		public int Y;
+		public int Z;
 
 		public SpawnPositionPacket(Int32 x = 0, Int32 y = 0, Int32 z = 0) : base(PacketType.SpawnPosition)
 		{

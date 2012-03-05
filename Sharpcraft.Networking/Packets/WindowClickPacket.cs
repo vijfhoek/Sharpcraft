@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -36,9 +36,9 @@ namespace Sharpcraft.Networking.Packets
 	public class WindowClickPacket : Packet
 	{
 		public sbyte WindowID;
-		public Int16 Slot;
+		public short Slot;
 		public sbyte RightClick;
-		public Int16 ActionNumber;
+		public short ActionNumber;
 		public bool Shift;
 		public object ClickedItem; // TODO: SlotData: http://wiki.vg/Slot_Data
 

@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -35,13 +35,13 @@ namespace Sharpcraft.Networking.Packets
 {
 	public class PickupSpawnPacket : Packet
 	{
-		public Int32 EntityID;
-		public Int16 Item;
+		public int EntityID;
+		public short Item;
 		public sbyte Count;
-		public Int16 DamageData;
-		public Int32 X;
-		public Int32 Y;
-		public Int32 Z;
+		public short DamageData;
+		public int X;
+		public int Y;
+		public int Z;
 		public sbyte Rotation;
 		public sbyte Pitch;
 		public sbyte Roll;

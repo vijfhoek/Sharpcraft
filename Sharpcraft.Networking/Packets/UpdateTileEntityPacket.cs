@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -35,13 +35,13 @@ namespace Sharpcraft.Networking.Packets
 {
 	public class UpdateTileEntityPacket : Packet
 	{
-		public Int32 X;
-		public Int16 Y;
-		public Int32 Z;
+		public int X;
+		public short Y;
+		public int Z;
 		public sbyte Action;
-		public Int32 Custom1;
-		public Int32 Custom2;
-		public Int32 Custom3;
+		public int Custom1;
+		public int Custom2;
+		public int Custom3;
 
 		public UpdateTileEntityPacket(Int32 x = 0, Int16 y = 0, Int32 z = 0, sbyte action = 0,
 			Int32 custom1 = 0, Int32 custom2 = 0, Int32 custom3 = 0) : base(PacketType.UpdateTileEntity)

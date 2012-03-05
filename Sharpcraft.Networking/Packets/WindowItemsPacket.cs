@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -36,7 +36,7 @@ namespace Sharpcraft.Networking.Packets
 	public class WindowItemsPacket : Packet
 	{
 		public sbyte WindowID;
-		public Int16 Count;
+		public short Count;
 		public object[] SlotData; // TODO: Array of SlotData: http://wiki.vg/Slot_Data
 
 		public WindowItemsPacket(sbyte windowId = 0, Int16 count = 0, object[] slotData = null) : base(PacketType.WindowItems)

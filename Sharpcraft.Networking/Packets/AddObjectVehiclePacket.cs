@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -35,15 +35,15 @@ namespace Sharpcraft.Networking.Packets
 {
 	public class AddObjectVehiclePacket : Packet
 	{
-		public Int32 EntityID;
+		public int EntityID;
 		public sbyte ObjectType;
-		public Int32 X;
-		public Int32 Y;
-		public Int32 Z;
-		public Int32 FireballThrowerID;
-		public Int16 SpeedX;
-		public Int16 SpeedY;
-		public Int16 SpeedZ;
+		public int X;
+		public int Y;
+		public int Z;
+		public int FireballThrowerID;
+		public short SpeedX;
+		public short SpeedY;
+		public short SpeedZ;
 
 		public AddObjectVehiclePacket(Int32 entityId = 0, sbyte objectType = 0, Int32 x = 0, Int32 y = 0, Int32 z = 0,
 			Int32 fireballThrowerId = 0, Int16 speedX = 0, Int16 speedY = 0, Int16 speedZ = 0) : base(PacketType.AddObjectVehicle)

@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -89,21 +89,21 @@ namespace Sharpcraft.Networking
 			return (sbyte) _stream.ReadByte();
 		}
 
-		public Int16 ReadInt16()
+		public short ReadInt16()
 		{
 			var bte = new byte[2];
 			_stream.Read(bte, 0, bte.Length);
 			return IPAddress.NetworkToHostOrder(BitConverter.ToInt16(bte, 0));
 		}
 
-		public Int32 ReadInt32()
+		public int ReadInt32()
 		{
 			var bte = new byte[4];
 			_stream.Read(bte, 0, bte.Length);
 			return IPAddress.NetworkToHostOrder(BitConverter.ToInt32(bte, 0));
 		}
 
-		public Int64 ReadInt64()
+		public long ReadInt64()
 		{
 			var bte = new byte[8];
 			_stream.Read(bte, 0, bte.Length);

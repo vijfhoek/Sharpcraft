@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -31,11 +31,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 
-<<<<<<< HEAD
-=======
-using LibNbt;
-
->>>>>>> 64a42e1f261131fd1596e748f057f00e58112ce3
 using Sharpcraft.Logging;
 using Sharpcraft.Networking.Enums;
 using Sharpcraft.Networking.Packets;
@@ -174,7 +169,8 @@ namespace Sharpcraft.Networking
 					pack = new CollectItemPacket(_tools.ReadInt32(), _tools.ReadInt32());
 					break;
 				case PacketType.AddObjectVehicle:
-					pack = new AddObjectVehiclePacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32());
+					pack = new AddObjectVehiclePacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(),
+					                                  _tools.ReadInt32(), _tools.ReadInt32());
 					var ftEid = _tools.ReadInt32(); ((AddObjectVehiclePacket)pack).FireballThrowerID = ftEid;
 					if (ftEid > 0)
 					{
@@ -189,13 +185,9 @@ namespace Sharpcraft.Networking
 					pack = new HoldingChangePacket(_tools.ReadInt16());
 					break;
 				case PacketType.MobSpawn:
-					pack = new MobSpawnPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(),
-<<<<<<< HEAD
-						_tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadSlotData());
-=======
-						_tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadSignedByte());
-					_tools.Skip(); // We are supposed to read SlotData into MobSpawnPacket here
->>>>>>> 64a42e1f261131fd1596e748f057f00e58112ce3
+					pack = new MobSpawnPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadInt32(),
+					                          _tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadSignedByte(),
+					                          _tools.ReadSignedByte(), _tools.ReadSlotData());
 					break;
 				case PacketType.EntityPainting:
 					pack = new EntityPaintingPacket(_tools.ReadInt32(), _tools.ReadString(), _tools.ReadInt32(),

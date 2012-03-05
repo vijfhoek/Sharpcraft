@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -34,10 +34,10 @@ namespace Sharpcraft.Networking.Packets
 {
 	public class RespawnPacket : Packet
 	{
-		public Int32 Dimension;
+		public int Dimension;
 		public sbyte Difficulty;
 		public sbyte Creative;
-		public Int16 WorldHeight;
+		public short WorldHeight;
 		public string LevelType;
 
 		public RespawnPacket(Int32 dimension = 0, sbyte difficulty = 0, sbyte creative = 0, short height = 0, string levelType = null)

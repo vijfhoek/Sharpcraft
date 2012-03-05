@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -35,11 +35,11 @@ namespace Sharpcraft.Networking.Packets
 {
 	public class SoundParticleEffectPacket : Packet
 	{
-		public Int32 EffectID;
-		public Int32 X;
+		public int EffectID;
+		public int X;
 		public sbyte Y;
-		public Int32 Z;
-		public Int32 Data;
+		public int Z;
+		public int Data;
 
 		public SoundParticleEffectPacket(Int32 effectId = 0, Int32 x = 0, sbyte y = 0, Int32 z = 0, Int32 data = 0)
 			: base(PacketType.SoundParticleEffect)

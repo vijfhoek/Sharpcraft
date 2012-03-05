@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -35,11 +35,11 @@ namespace Sharpcraft.Networking.Packets
 {
 	public class LoginRequestPacketSC : Packet
 	{
-		public Int32 EntityID;
+		public int EntityID;
 		public string NotUsed;
 		public string LevelType;
-		public Int32 Gamemode;
-		public Int32 Dimension;
+		public int Gamemode;
+		public int Dimension;
 		public sbyte Difficulty;
 		public byte WorldHeight;
 		public byte MaxPlayers;

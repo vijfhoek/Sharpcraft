@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -35,7 +35,7 @@ namespace Sharpcraft.Networking.Packets
 {
 	public class CreativeInventoryActionPacket : Packet
 	{
-		public Int16 Slot;
+		public short Slot;
 		public SlotData ClickedItem;
 
 		public CreativeInventoryActionPacket(Int16 slot = 0, SlotData clickedItem = null) : base(PacketType.CreativeInventoryAction)

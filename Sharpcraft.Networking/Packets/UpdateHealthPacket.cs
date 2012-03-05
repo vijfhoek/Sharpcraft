@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -34,8 +34,8 @@ namespace Sharpcraft.Networking.Packets
 {
 	public class UpdateHealthPacket : Packet
 	{
-		public Int16 Health;
-		public Int16 Food;
+		public short Health;
+		public short Food;
 		public float Saturation;
 
 		public UpdateHealthPacket(short health = 0, short food = 0, float saturation = 0.0f) : base(PacketType.UpdateHealth)

@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -35,14 +35,14 @@ namespace Sharpcraft.Networking.Packets
 {
 	public class NamedEntitySpawnPacket : Packet
 	{
-		public Int32 EntityID;
+		public int EntityID;
 		public string PlayerName;
-		public Int32 X;
-		public Int32 Y;
-		public Int32 Z;
+		public int X;
+		public int Y;
+		public int Z;
 		public sbyte Rotation;
 		public sbyte Pitch;
-		public Int16 CurrentItem;
+		public short CurrentItem;
 
 		public NamedEntitySpawnPacket(Int32 entityId = 0, string playerName = null, Int32 x = 0, Int32 y = 0, Int32 z = 0,
 			sbyte rotation = 0, sbyte pitch = 0, Int16 currentItem = 0) : base(PacketType.NamedEntitySpawn)

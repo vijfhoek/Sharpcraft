@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -39,7 +39,7 @@ namespace Sharpcraft.Networking.Packets
 		public double Y;
 		public double Z;
 		public float Unknown; // Radius?
-		public Int32 Count;
+		public int Count;
 		public sbyte[,] Records;
 
 		public ExplosionPacket(double x = 0.0, double y = 0.0, double z = 0.0, float unknown = 0.0f,

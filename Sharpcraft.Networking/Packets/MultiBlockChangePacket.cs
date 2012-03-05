@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -35,9 +35,9 @@ namespace Sharpcraft.Networking.Packets
 {
 	public class MultiBlockChangePacket : Packet
 	{
-		public Int32 ChunkX;
-		public Int32 ChunkZ;
-		public Int16 ArraySize;
+		public int ChunkX;
+		public int ChunkZ;
+		public short ArraySize;
 		public Int16[,] Coordinates;
 		public sbyte[] Types;
 		public sbyte[] Metadata; // Should this be a Metadata array?

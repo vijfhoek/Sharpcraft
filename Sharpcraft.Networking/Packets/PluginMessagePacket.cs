@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -36,7 +36,7 @@ namespace Sharpcraft.Networking.Packets
 	public class PluginMessagePacket : Packet
 	{
 		public string Channel;
-		public Int16 Length;
+		public short Length;
 		public sbyte[] Data;
 
 		public PluginMessagePacket(string channel = null, Int16 length = 0, sbyte[] data = null)

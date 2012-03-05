@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -36,7 +36,7 @@ namespace Sharpcraft.Networking.Packets
 	public class TransactionPacket : Packet
 	{
 		public sbyte WindowID;
-		public Int16 Action;
+		public short Action;
 		public bool Accepted;
 
 		public TransactionPacket(sbyte windowId = 0, Int16 action = 0, bool accepted = false) : base(PacketType.Transaction)

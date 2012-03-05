@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -36,9 +36,9 @@ namespace Sharpcraft.Networking.Packets
 	public class PlayerDiggingPacket : Packet
 	{
 		public sbyte Status;
-		public Int32 X;
+		public int X;
 		public sbyte Y;
-		public Int32 Z;
+		public int Z;
 		public sbyte Face;
 
 		public PlayerDiggingPacket(sbyte status = 0, Int32 x = 0, sbyte y = 0, Int32 z = 0, sbyte face = 0) : base(PacketType.PlayerDigging)

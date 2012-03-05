@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -36,8 +36,8 @@ namespace Sharpcraft.Networking.Packets
 	public class UpdateWindowPropertyPacket : Packet
 	{
 		public sbyte WindowID;
-		public Int16 Property;
-		public Int16 Value;
+		public short Property;
+		public short Value;
 
 		public UpdateWindowPropertyPacket(sbyte windowId = 0, Int16 property = 0, Int16 value = 0) : base(PacketType.UpdateWindowProperty)
 		{

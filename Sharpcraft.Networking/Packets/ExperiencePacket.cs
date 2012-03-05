@@ -20,7 +20,7 @@
  * 
  * Disclaimer: Sharpcraft is in no way affiliated with Mojang AB and/or
  * any of its employees and/or licensors.
- * Sijmen Schoon and Adam Hellberg does not take responsibility for
+ * Sijmen Schoon and Adam Hellberg do not take responsibility for
  * any harm caused, direct or indirect, to your Minecraft account
  * via the use of Sharpcraft.
  * 
@@ -36,8 +36,8 @@ namespace Sharpcraft.Networking.Packets
 	public class ExperiencePacket : Packet
 	{
 		public float Bar;
-		public Int16 Level;
-		public Int16 Total;
+		public short Level;
+		public short Total;
 
 		public ExperiencePacket(float bar = 0.0f, Int16 level = 0, Int16 total = 0) : base(PacketType.Experience)
 		{
