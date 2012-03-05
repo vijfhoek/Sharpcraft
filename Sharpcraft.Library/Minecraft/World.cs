@@ -36,11 +36,11 @@ namespace Sharpcraft.Library.Minecraft
 		public long Seed { get; private set; }
 		public string LevelType { get; private set; }
 		public Vector3 Spawn { get; private set; }
-		public sbyte Dimension { get; private set; }
+		public int Dimension { get; private set; }
 		public sbyte Difficulty { get; private set; }
 		public byte Height { get; private set; }
 		
-		public World(long seed = 0, string type = null, sbyte dimension = 0, sbyte difficulty = 0, byte height = 0)
+		public World(long seed = 0, string type = null, int dimension = 0, sbyte difficulty = 0, byte height = 0)
 		{
 			Seed = seed;
 			LevelType = type;
@@ -62,7 +62,7 @@ namespace Sharpcraft.Library.Minecraft
 				LevelType = type;
 		}
 
-		public void SetDimension(sbyte dimension)
+		public void SetDimension(int dimension)
 		{
 			Dimension = dimension;
 		}

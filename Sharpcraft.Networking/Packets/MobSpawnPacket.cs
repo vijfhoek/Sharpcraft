@@ -42,10 +42,11 @@ namespace Sharpcraft.Networking.Packets
 		public Int32 Z;
 		public sbyte Yaw;
 		public sbyte Pitch;
+		public sbyte HeadYaw;
 		public object Metadata; // TODO: Implement metadata class! http://wiki.vg/Entities
 
 		public MobSpawnPacket(Int32 entityId = 0, sbyte mobType = 0, Int32 x = 0, Int32 y = 0, Int32 z = 0,
-			sbyte yaw = 0, sbyte pitch = 0, object metadata = null) : base(PacketType.MobSpawn)
+			sbyte yaw = 0, sbyte pitch = 0, sbyte headYaw = 0, object metadata = null) : base(PacketType.MobSpawn)
 		{
 			EntityID = entityId;
 			MobType = mobType;
@@ -54,6 +55,7 @@ namespace Sharpcraft.Networking.Packets
 			Z = z;
 			Yaw = yaw;
 			Pitch = pitch;
+			HeadYaw = headYaw;
 			Metadata = metadata;
 		}
 	}

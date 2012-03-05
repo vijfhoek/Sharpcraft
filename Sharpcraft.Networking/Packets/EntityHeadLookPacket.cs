@@ -1,5 +1,5 @@
 ﻿/*
- * Constants.cs
+ * EntityHeadLookPacket.cs
  * 
  * Copyright © 2011-2012 by Sijmen Schoon and Adam Hellberg.
  * 
@@ -27,16 +27,21 @@
  * "Minecraft" is a trademark of Mojang AB.
  */
 
-namespace Sharpcraft.Networking
+using System;
+
+using Sharpcraft.Networking.Enums;
+
+namespace Sharpcraft.Networking.Packets
 {
-	/// <summary>
-	/// Constants related to Networking or the Minecraft Protocol.
-	/// </summary>
-	public static class Constants
+	public class EntityHeadLookPacket : Packet
 	{
-		/// <summary>
-		/// Current protocol version.
-		/// </summary>
-		public const int ProtocolVersion = 28;
+		public Int32 EntityID;
+		public sbyte HeadYaw;
+
+		public EntityHeadLookPacket(Int32 entityId = 0, sbyte headYaw = 0) : base(PacketType.EntityHeadLook)
+		{
+			EntityID = entityId;
+			HeadYaw = headYaw;
+		}
 	}
 }

@@ -33,11 +33,11 @@ namespace Sharpcraft.Networking.Packets
 {
 	public class HandshakePacketCS : Packet
 	{
-		public string Username;
+		public string UsernameAndHost;
 
-		public HandshakePacketCS(string username = null) : base(PacketType.Handshake)
+		public HandshakePacketCS(string usernameAndHost = null) : base(PacketType.Handshake)
 		{
-			Username = username;
+			UsernameAndHost = usernameAndHost;
 		}
 	}
 }

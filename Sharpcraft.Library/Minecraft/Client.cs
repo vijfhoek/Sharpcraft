@@ -47,6 +47,8 @@ namespace Sharpcraft.Library.Minecraft
 	/// </summary>
 	public class Client
 	{
+		private const string HandshakeFormat = "{0};{1}:{2}";
+
 		private readonly log4net.ILog _log;
 
 		private readonly Protocol _protocol;
@@ -118,7 +120,7 @@ namespace Sharpcraft.Library.Minecraft
 		{
 			// We need to create a connection thread
 			_log.Info("Connecting to " + _server.Address + ":" + _server.Port + "...");
-			_protocol.SendPacket(new HandshakePacketCS(_player.Name));
+			_protocol.SendPacket(new HandshakePacketCS(string.Format(HandshakeFormat, _player.Name, _server.Address, _server.Port)));
 			_log.Info("Waiting for handshake response...");
 			Packet response = _protocol.GetPacket();
 			if (!(response is HandshakePacketSC))
@@ -136,7 +138,6 @@ namespace Sharpcraft.Library.Minecraft
 				_log.Warn("Incorrect packet type sent as response! Expected LoginRequestPacketSC, got " + response.GetType());
 				return false;
 			}
-			_log.Info("Server responded to login with mapseed " + ((LoginRequestPacketSC)response).MapSeed);
 			ParseLoginRequestSC((LoginRequestPacketSC) response);
 			_log.Info("Creating packet listener...");
 			_listener = new PacketListener(_protocol);
@@ -211,8 +212,6 @@ namespace Sharpcraft.Library.Minecraft
 			_log.Debug("Updating world, player and server data...");
 			_log.Debug("Setting Player Entity ID to " + packet.EntityID);
 			_player.EntityID = packet.EntityID;
-			_log.Debug("Setting map seed to " + packet.MapSeed);
-			_world.SetSeed(packet.MapSeed);
 			_log.Debug("Setting map type to " + packet.LevelType);
 			_world.SetLevelType(packet.LevelType);
 			_log.Debug("Setting server mode to " + packet.Gamemode);

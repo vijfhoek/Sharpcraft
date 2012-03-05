@@ -94,13 +94,12 @@ namespace Sharpcraft.Networking
 					{
 						EntityID = _tools.ReadInt32(),
 						NotUsed = _tools.ReadString(),
-						MapSeed = _tools.ReadInt64(),
 						LevelType = _tools.ReadString(),
 						Gamemode = _tools.ReadInt32(),
-						Dimension = (sbyte) _stream.ReadByte(),
-						Difficulty = (sbyte) _stream.ReadByte(),
-						WorldHeight = (byte) _stream.ReadByte(),
-						MaxPlayers = (byte) _stream.ReadByte()
+						Dimension = _tools.ReadInt32(),
+						Difficulty = _tools.ReadSignedByte(),
+						WorldHeight = _tools.ReadByte(),
+						MaxPlayers = _tools.ReadByte()
 					};
 					break;
 				case PacketType.Handshake:
@@ -125,8 +124,8 @@ namespace Sharpcraft.Networking
 					pack = new UpdateHealthPacket(_tools.ReadInt16(), _tools.ReadInt16(), _tools.ReadSingle());
 					break;
 				case PacketType.Respawn:
-					pack = new RespawnPacket(_tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadSignedByte(),
-					                         _tools.ReadInt16(), _tools.ReadInt64(), _tools.ReadString());
+					pack = new RespawnPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadSignedByte(),
+					                         _tools.ReadInt16(), _tools.ReadString());
 					break;
 				case PacketType.Player:
 					pack = new PlayerPacket(_tools.ReadBoolean());
@@ -188,7 +187,7 @@ namespace Sharpcraft.Networking
 					break;
 				case PacketType.MobSpawn:
 					pack = new MobSpawnPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(),
-						_tools.ReadSignedByte(), _tools.ReadSignedByte());
+						_tools.ReadSignedByte(), _tools.ReadSignedByte(), _tools.ReadSignedByte());
 					_tools.Skip(); // We are supposed to read SlotData into MobSpawnPacket here
 					break;
 				case PacketType.EntityPainting:
@@ -223,6 +222,9 @@ namespace Sharpcraft.Networking
 				case PacketType.EntityTeleport:
 					pack = new EntityTeleportPacket(_tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(), _tools.ReadInt32(),
 					                                _tools.ReadSignedByte(), _tools.ReadSignedByte());
+					break;
+				case PacketType.EntityHeadLook:
+					pack = new EntityHeadLookPacket(_tools.ReadInt32(), _tools.ReadSignedByte());
 					break;
 				case PacketType.EntityStatus:
 					pack = new EntityStatusPacket(_tools.ReadInt32(), _tools.ReadSignedByte());
@@ -420,8 +422,8 @@ namespace Sharpcraft.Networking
 						//_log.Debug("Writing Handshake packet.");
 						var pack = (HandshakePacketCS)packet;
 						_tools.WriteByte(packetID);
-						_tools.WriteString(pack.Username);
-					}
+						_tools.WriteString(pack.UsernameAndHost);
+					} 
 					break;
 				case PacketType.ChatMessage:
 					{

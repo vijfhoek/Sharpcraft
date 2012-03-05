@@ -1,5 +1,5 @@
 ﻿/*
- * Constants.cs
+ * UpdateTileEntityPacket.cs
  * 
  * Copyright © 2011-2012 by Sijmen Schoon and Adam Hellberg.
  * 
@@ -27,16 +27,32 @@
  * "Minecraft" is a trademark of Mojang AB.
  */
 
-namespace Sharpcraft.Networking
+using System;
+
+using Sharpcraft.Networking.Enums;
+
+namespace Sharpcraft.Networking.Packets
 {
-	/// <summary>
-	/// Constants related to Networking or the Minecraft Protocol.
-	/// </summary>
-	public static class Constants
+	public class UpdateTileEntityPacket : Packet
 	{
-		/// <summary>
-		/// Current protocol version.
-		/// </summary>
-		public const int ProtocolVersion = 28;
+		public Int32 X;
+		public Int16 Y;
+		public Int32 Z;
+		public sbyte Action;
+		public Int32 Custom1;
+		public Int32 Custom2;
+		public Int32 Custom3;
+
+		public UpdateTileEntityPacket(Int32 x = 0, Int16 y = 0, Int32 z = 0, sbyte action = 0,
+			Int32 custom1 = 0, Int32 custom2 = 0, Int32 custom3 = 0) : base(PacketType.UpdateTileEntity)
+		{
+			X = x;
+			Y = y;
+			Z = z;
+			Action = action;
+			Custom1 = custom1;
+			Custom2 = custom2;
+			Custom3 = custom3;
+		}
 	}
 }
