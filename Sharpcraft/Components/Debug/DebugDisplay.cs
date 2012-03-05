@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 
@@ -22,6 +16,7 @@ namespace Sharpcraft.Components.Debug
 	{
 		private readonly log4net.ILog _log;
 
+		private bool _loaded;
 		private readonly GraphicsDeviceManager _graphics;
 		private readonly ContentManager _content;
 		private SpriteBatch _spriteBatch;
@@ -55,6 +50,7 @@ namespace Sharpcraft.Components.Debug
 		{
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 			_font = _content.Load<SpriteFont>(Constants.DebugFont);
+			_loaded = true;
 		}
 
 		/// <summary>
@@ -62,8 +58,11 @@ namespace Sharpcraft.Components.Debug
 		/// </summary>
 		protected override void UnloadContent()
 		{
+			if (!_loaded)
+				return;
 			_log.Debug("DebugDisplay is unloading!");
 			_content.Unload();
+			_loaded = false;
 		}
 
 		/// <summary>

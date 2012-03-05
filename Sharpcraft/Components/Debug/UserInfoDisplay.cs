@@ -1,12 +1,9 @@
 using System;
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 using Sharpcraft.Logging;
 
@@ -19,6 +16,7 @@ namespace Sharpcraft.Components.Debug
 	{
 		private log4net.ILog _log;
 
+		private bool _loaded;
 		private readonly ContentManager _content;
 		private SpriteBatch _spriteBatch;
 		private SpriteFont _font;
@@ -26,13 +24,13 @@ namespace Sharpcraft.Components.Debug
 		private bool _userInfoToggling;
 		private bool _userInfoEnabled;
 
-		private Sharpcraft sc;
+		private readonly Sharpcraft _sc;
 
 		internal UserInfoDisplay(Game game) : base(game)
 		{
 			_log = LogManager.GetLogger(this);
 			_log.Debug("UserInfoDisplay created!");
-			sc = (Sharpcraft) game;
+			_sc = (Sharpcraft) game;
 			_content = new ContentManager(game.Services, Constants.ContentDirectory);
 			game.Exiting += (s, e) => UnloadContent();
 		}
@@ -45,6 +43,7 @@ namespace Sharpcraft.Components.Debug
 		{
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 			_font = _content.Load<SpriteFont>(Constants.DebugFont);
+			_loaded = true;
 		}
 
 		/// <summary>
@@ -53,8 +52,11 @@ namespace Sharpcraft.Components.Debug
 		/// </summary>
 		protected override void UnloadContent()
 		{
+			if (!_loaded)
+				return;
 			_log.Info("UserInfoDisplay is unloading!");
 			_content.Unload();
+			_loaded = false;
 		}
 
 		/// <summary>
@@ -79,13 +81,13 @@ namespace Sharpcraft.Components.Debug
 				return;
 
 			_spriteBatch.Begin();
-			if (sc.Client.GetPlayer() != null)
+			if (_sc.Client.GetPlayer() != null)
 			{
-				_spriteBatch.DrawString(_font, "P_X: " + sc.Client.GetPlayer().Position.X, new Vector2(32, 112), Color.Black);
-				_spriteBatch.DrawString(_font, "P_Y: " + sc.Client.GetPlayer().Position.Y, new Vector2(32, 128), Color.Black);
-				_spriteBatch.DrawString(_font, "P_Z: " + sc.Client.GetPlayer().Position.Z, new Vector2(32, 144), Color.Black);
-				_spriteBatch.DrawString(_font, "PDY: " + sc.Client.GetPlayer().Direction.Yaw, new Vector2(32, 160), Color.Black);
-				_spriteBatch.DrawString(_font, "PDP: " + sc.Client.GetPlayer().Direction.Pitch, new Vector2(32, 176), Color.Black);
+				_spriteBatch.DrawString(_font, "P_X: " + _sc.Client.GetPlayer().Position.X, new Vector2(32, 112), Color.Black);
+				_spriteBatch.DrawString(_font, "P_Y: " + _sc.Client.GetPlayer().Position.Y, new Vector2(32, 128), Color.Black);
+				_spriteBatch.DrawString(_font, "P_Z: " + _sc.Client.GetPlayer().Position.Z, new Vector2(32, 144), Color.Black);
+				_spriteBatch.DrawString(_font, "PDY: " + _sc.Client.GetPlayer().Direction.Yaw, new Vector2(32, 160), Color.Black);
+				_spriteBatch.DrawString(_font, "PDP: " + _sc.Client.GetPlayer().Direction.Pitch, new Vector2(32, 176), Color.Black);
 			}
 			_spriteBatch.End();
 		}

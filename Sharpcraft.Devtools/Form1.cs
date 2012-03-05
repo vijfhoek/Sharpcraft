@@ -15,7 +15,7 @@ namespace Sharpcraft.Devtools
 {
 	public partial class Form1 : Form
 	{
-		private List<Item> _itemList;
+		private readonly List<Item> _itemList;
 
 		public Form1()
 		{
@@ -24,7 +24,7 @@ namespace Sharpcraft.Devtools
 			//listBox1.DataSource = _itemList;
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		private void Button1Click(object sender, EventArgs e)
 		{
 			listView1.Items.Clear();
 			string name = textBox1.Text;
@@ -41,7 +41,7 @@ namespace Sharpcraft.Devtools
 			return a.Id.CompareTo(b.Id);
 		}
 
-		private void button2_Click(object sender, EventArgs e)
+		private void Button2Click(object sender, EventArgs e)
 		{
 			_itemList.Sort(Compare);
 			foreach (var item in _itemList)
