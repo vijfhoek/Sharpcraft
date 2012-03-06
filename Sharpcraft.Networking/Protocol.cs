@@ -187,7 +187,7 @@ namespace Sharpcraft.Networking
 				case PacketType.MobSpawn:
 					pack = new MobSpawnPacket(_tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadInt32(), _tools.ReadInt32(),
 					                          _tools.ReadInt32(), _tools.ReadSignedByte(), _tools.ReadSignedByte(),
-					                          _tools.ReadSignedByte(), _tools.ReadSlotData());
+					                          _tools.ReadSignedByte(), _tools.ReadEntityMetadata());
 					break;
 				case PacketType.EntityPainting:
 					pack = new EntityPaintingPacket(_tools.ReadInt32(), _tools.ReadString(), _tools.ReadInt32(),

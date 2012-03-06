@@ -47,7 +47,8 @@ namespace Sharpcraft.Networking.Packets
 		public Dictionary<int, object> Metadata;
 
 		public MobSpawnPacket(Int32 entityId = 0, sbyte mobType = 0, Int32 x = 0, Int32 y = 0, Int32 z = 0,
-			sbyte yaw = 0, sbyte pitch = 0, sbyte headYaw = 0, object metadata = null) : base(PacketType.MobSpawn)
+		                      sbyte yaw = 0, sbyte pitch = 0, sbyte headYaw = 0, Dictionary<int, object> metadata = null)
+									: base(PacketType.MobSpawn)
 		{
 			EntityID = entityId;
 			MobType = mobType;
