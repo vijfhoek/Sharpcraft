@@ -206,9 +206,11 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>mkdir $(TargetDir)\data
-mkdir $(TargetDir)\data\minecraft
-copy $(SolutionDir)\data\minecraft\items.list $(TargetDir)\data\minecraft\items.list</PreBuildEvent>
+    <PreBuildEvent>
+		rmdir /S "$(TargetDir)data\minecraft"
+		mkdir "$(TargetDir)data\minecraft"
+		copy "$(SolutionDir)data\minecraft\items.list" "$(TargetDir)data\minecraft\items.list"
+	</PreBuildEvent>
   </PropertyGroup>
   <!--
       To modify your build process, add your task inside one of the targets below and uncomment it. 

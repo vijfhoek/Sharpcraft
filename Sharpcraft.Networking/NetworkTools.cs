@@ -28,6 +28,8 @@
  */
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
@@ -170,18 +172,65 @@ namespace Sharpcraft.Networking
 
 			var size = ReadInt16();
 			if (size == -1) return slotData;
-			var data = new byte[size];
 
-			using (var decStream = new GZipStream(_stream, CompressionMode.Decompress)) decStream.Read(data, 0, data.Length);
-			using (var memStream = new MemoryStream(size))
-			{
-				memStream.Write(data, 0, data.Length);
-				var file = new NbtFile(); file.LoadFile(memStream, false);
-				var list = file.Query<NbtCompound>("").Query<NbtList>("ench");
-				slotData.ItemEnchantments = list;
-			}
+			var file = new NbtFile();
+			file.LoadFile(_stream, true);
+			var list = file.Query<NbtCompound>("").Query<NbtList>("ench");
+			slotData.ItemEnchantments = list;
 
 			return slotData;
+		}
+
+		public Dictionary<int, object> ReadEntityMetadata()
+		{
+			var objects = new Dictionary<int, object>();
+			var x = ReadByte();
+
+			while (x != 127)
+			{
+				var index = x & 0x1F;	// Lower 5 bits
+				var ty = x >> 5;		// Upper 3 bits
+				object val;
+
+				switch (ty)
+				{
+					case 0:
+						val = ReadByte();
+						break;
+					case 1:
+						val = ReadInt16();
+						break;
+					case 2:
+						val = ReadInt32();
+						break;
+					case 3:
+						val = ReadSingle();
+						break;
+					case 4:
+						val = ReadString();
+						break;
+					case 5:
+						{
+							var dict = new Dictionary<string, object>();
+							dict.Add("id", ReadInt16());
+							dict.Add("count", ReadByte());
+							dict.Add("damage", ReadInt16());
+							val = dict;
+						}
+						break;
+					case 6:
+						val = new[] { ReadInt32(), ReadInt32(), ReadInt32() };
+						break;
+					default:
+						val = null;
+						break;
+				}
+				objects.Add(index, val);
+
+				x = ReadByte();
+			}
+
+			return objects;
 		}
 
 		/*public ItemStack ReadItemStack()

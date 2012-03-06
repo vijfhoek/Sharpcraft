@@ -28,7 +28,8 @@
  */
 
 using System;
-
+using System.Collections;
+using System.Collections.Generic;
 using Sharpcraft.Networking.Enums;
 
 namespace Sharpcraft.Networking.Packets
@@ -43,7 +44,7 @@ namespace Sharpcraft.Networking.Packets
 		public sbyte Yaw;
 		public sbyte Pitch;
 		public sbyte HeadYaw;
-		public object Metadata; // TODO: Implement metadata class! http://wiki.vg/Entities
+		public Dictionary<int, object> Metadata;
 
 		public MobSpawnPacket(Int32 entityId = 0, sbyte mobType = 0, Int32 x = 0, Int32 y = 0, Int32 z = 0,
 			sbyte yaw = 0, sbyte pitch = 0, sbyte headYaw = 0, object metadata = null) : base(PacketType.MobSpawn)

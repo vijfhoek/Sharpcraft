@@ -126,6 +126,7 @@ namespace Sharpcraft.Library.Minecraft
 			if (!(response is HandshakePacketSC))
 			{
 				_log.Warn("Incorrect packet type sent as response! Expected HandshakePacketSC, got " + response.GetType());
+				if (response is DisconnectKickPacket) _log.Warn("Kick message: " + ((DisconnectKickPacket)response).Reason);
 				return false;
 			}
 			_log.Info("Server responded to Handshake with " + ((HandshakePacketSC)response).ConnectionHash);
@@ -161,18 +162,23 @@ namespace Sharpcraft.Library.Minecraft
 		public void Exit()
 		{
 			Disconnect();
-			_listener.OnPacketReceived -= PacketReceived;
-			_listener.Stop();
+			try
+			{
+				_listener.OnPacketReceived -= PacketReceived;
+				_listener.Stop();
+			}
+			catch
+			{
+			}
 		}
 
 		/// <summary>
 		/// Send a chat message to the server.
 		/// </summary>
 		/// <param name="message">Message to send.</param>
-		public void SendMessage(string message)
+		public void SendChatMessage(string message)
 		{
-			var packet = new ChatMessagePacket(message);
-			_protocol.SendPacket(packet);
+			_protocol.SendPacket(new ChatMessagePacket(message));
 		}
 
 		/// <summary>
@@ -191,7 +197,9 @@ namespace Sharpcraft.Library.Minecraft
 		/// <param name="command">Command to send.</param>
 		public void SendCommand(string command)
 		{
-			//NOTE: Is this actually needed? Or does the server parse / commands automatically?
+			//NOTE(F16Gaming): Is this actually needed? Or does the server parse / commands automatically?
+			//NOTE(Vijfhoek): It does AFAIK
+			SendChatMessage(command);
 		}
 
 		/// <summary>
