@@ -176,16 +176,6 @@ namespace Sharpcraft.Library.Minecraft
 		}
 
 		/// <summary>
-		/// Perform an emote.
-		/// </summary>
-		/// <param name="emote">Emote to perform.</param>
-		/// <remarks>Displays as "&lt;player&gt; &lt;emote&gt;.</remarks>
-		public void SendEmote(string emote)
-		{
-
-		}
-
-		/// <summary>
 		/// Get the player associated with this <see cref="Client" />.
 		/// </summary>
 		/// <returns>The <see cref="Player" /> object associated with this <see cref="Client" />.</returns>
