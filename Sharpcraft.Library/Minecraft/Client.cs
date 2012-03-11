@@ -186,17 +186,6 @@ namespace Sharpcraft.Library.Minecraft
 		}
 
 		/// <summary>
-		/// Send a command to the server.
-		/// </summary>
-		/// <param name="command">Command to send.</param>
-		public void SendCommand(string command)
-		{
-			//NOTE(F16Gaming): Is this actually needed? Or does the server parse / commands automatically?
-			//NOTE(Vijfhoek): It does AFAIK
-			SendChatMessage(command);
-		}
-
-		/// <summary>
 		/// Get the player associated with this <see cref="Client" />.
 		/// </summary>
 		/// <returns>The <see cref="Player" /> object associated with this <see cref="Client" />.</returns>
