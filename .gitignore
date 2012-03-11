@@ -1,6 +1,7 @@
 /_ReSharper.Sharpcraft
 *.suo
 *.user
+*.cachefile
 /Sharpcraft/bin
 /Sharpcraft/obj
 /Sharpcraft.Steam/bin
