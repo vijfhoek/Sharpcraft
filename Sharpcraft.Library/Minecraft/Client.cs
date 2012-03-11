@@ -162,14 +162,8 @@ namespace Sharpcraft.Library.Minecraft
 		public void Exit()
 		{
 			Disconnect();
-			try
-			{
-				_listener.OnPacketReceived -= PacketReceived;
-				_listener.Stop();
-			}
-			catch
-			{
-			}
+			_listener.OnPacketReceived -= PacketReceived;
+			_listener.Stop();
 		}
 
 		/// <summary>
