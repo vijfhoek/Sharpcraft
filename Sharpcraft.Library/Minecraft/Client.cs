@@ -1,7 +1,7 @@
 /*
  * Client.cs
  * 
- * Copyright © 2011-2012 by Sijmen Schoon and Adam Hellberg.
+ * Copyright ï¿½ 2011-2012 by Sijmen Schoon and Adam Hellberg.
  * 
  * This file is part of Sharpcraft.
  * 
@@ -195,11 +195,12 @@ namespace Sharpcraft.Library.Minecraft
 		/// Send a command to the server.
 		/// </summary>
 		/// <param name="command">Command to send.</param>
+		
 		public void SendCommand(string command)
 		{
 			//NOTE(F16Gaming): Is this actually needed? Or does the server parse / commands automatically?
 			//NOTE(Vijfhoek): It does AFAIK
-			SendChatMessage(command);
+			SendChatMessage("/" + command);
 		}
 
 		/// <summary>
