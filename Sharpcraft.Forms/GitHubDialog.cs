@@ -29,6 +29,7 @@
 
 using System;
 using System.Text;
+using System.Threading;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -115,7 +116,7 @@ namespace Sharpcraft.Forms
 
 		private void ClipboardButtonClick(object sender, EventArgs e)
 		{
-			Clipboard.SetText(IssueBox.Text);
+			SetClipboardText(IssueBox.Text);
 			StatusLabel.Text = "Successfully copied text to clipboard!";
 		}
 
@@ -127,6 +128,21 @@ namespace Sharpcraft.Forms
 		private void IssueBoxClick(object sender, EventArgs e)
 		{
 			IssueBox.SelectAll();
+		}
+
+		private void SetClipboardText(string value)
+		{
+			if (Thread.CurrentThread.GetApartmentState() == ApartmentState.MTA)
+			{
+				var t = new Thread(() => Clipboard.SetText(value));
+				t.SetApartmentState(ApartmentState.STA);
+				t.Start();
+				t.Join();
+			}
+			else
+			{
+				Clipboard.SetText(value);
+			}
 		}
 	}
 }
