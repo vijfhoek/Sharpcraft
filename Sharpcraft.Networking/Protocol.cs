@@ -454,6 +454,11 @@ namespace Sharpcraft.Networking
 						_tools.WriteBoolean(pack.IsLeftClick);
 					}
 					break;
+				case PacketType.DisconnectKick:
+					{
+						_log.Debug("Shutting down Network Stream.");
+						_stream.close(); //Automatic shutdown of connection
+					}
 			}
 
 			//_log.Debug("Sending packet...");
