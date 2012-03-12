@@ -1,7 +1,7 @@
 /*
  * Client.cs
  * 
- * Copyright © 2011-2012 by Sijmen Schoon and Adam Hellberg.
+ * Copyright ï¿½ 2011-2012 by Sijmen Schoon and Adam Hellberg.
  * 
  * This file is part of Sharpcraft.
  * 
@@ -151,17 +151,9 @@ namespace Sharpcraft.Library.Minecraft
 		/// Disconnect from current server.
 		/// </summary>
 		/// <returns><c>true</c> if disconnect was successful and clean, <c>false</c> otherwise.</returns>
-		public bool Disconnect()
+		public void Disconnect()
 		{
-			return false; // For now
-		}
-
-		/// <summary>
-		/// Exit client.
-		/// </summary>
-		public void Exit()
-		{
-			Disconnect();
+			_protocol.SendPacket(new DisconnectKickPacket());
 			_listener.OnPacketReceived -= PacketReceived;
 			_listener.Stop();
 		}
