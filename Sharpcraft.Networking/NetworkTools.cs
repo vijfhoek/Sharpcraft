@@ -66,7 +66,10 @@ namespace Sharpcraft.Networking
 					return string.Empty;
 				}
 				_stream.Read(bteString, 0, bteString.Length);
-				return Encoding.BigEndianUnicode.GetString(bteString);
+				
+				
+				Encoding enc = new UnicodeEncoding(true, true, true);
+				return enc.GetString(bteString); 
 			}
 			catch (OverflowException)
 			{
