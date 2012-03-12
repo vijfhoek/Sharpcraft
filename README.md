@@ -14,6 +14,11 @@ Copyright © 2012 by Sijmen Schoon (Vijfhoek) and Adam Hellberg (F16Gaming).
 Sharpcraft is licensed under the [GNU General Public License v3](http://www.gnu.org/copyleft/gpl.html).  
 Please see the file "COPYING" for more information.
 
+Other Info
+----------
+
+The ToDo list for Sharpcraft is located at [Trello](https://trello.com/board/sharpcraft-client/4f2ddd058ef221945bb8f5cf).
+
 Dependencies
 ------------
 
