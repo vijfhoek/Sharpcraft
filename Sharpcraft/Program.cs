@@ -256,7 +256,11 @@ namespace Sharpcraft
 				{
 					string[] fields = readLine.Split(':');
 					if (fields.Length >= 3)
+					{
 						author = fields[2];
+						if (author.Contains(" "))
+							author = author.Split(' ')[0];
+					}
 				}
 			}
 			new ExceptionDialog(ex, author).ShowDialog();
