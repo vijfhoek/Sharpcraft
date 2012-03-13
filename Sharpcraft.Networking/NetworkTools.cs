@@ -57,7 +57,7 @@ namespace Sharpcraft.Networking
 		{
 			try
 			{
-				var bteString = new byte[ReadInt16() * 2 + 2];
+				var bteString = new byte[ReadInt16() * 2];
 				if (bteString.Length <= 0)
 				{
 					Logging.LogManager.GetLogger(this).Error("Tried to create BYTE ARRAY with a length of " + bteString.Length + "."
