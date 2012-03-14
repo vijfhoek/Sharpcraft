@@ -421,8 +421,8 @@ namespace Sharpcraft.Networking
 						_tools.WriteByte(packetID);
 						_tools.WriteInt32(pack.ProtocolVersion);
 						_tools.WriteString(pack.Username);
-						_tools.WriteInt64(0);						// Not Used
-						_tools.WriteString(String.Empty);           // Not Used
+						_tools.WriteString(String.Empty);   				// Not Used
+						_tools.WriteInt64(0);		        			// Not Used
 						_tools.WriteInt32(0);						// Not Used
 						_tools.WriteByte(0);						// Not Used
 						_tools.WriteByte(0);						// Not Used
