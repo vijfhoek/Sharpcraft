@@ -162,8 +162,17 @@ namespace Sharpcraft.Library.Minecraft
 		public void Exit()
 		{
 			Disconnect();
-			_listener.OnPacketReceived -= PacketReceived;
-			_listener.Stop();
+			try
+			{
+				_listener.OnPacketReceived -= PacketReceived;
+				_listener.Stop();
+			}
+			catch (NullReferenceException ex)
+			{
+				_log.Warn("Tried to shut down PacketListener when _listener == NULL! This is most likely due to an outdated server.");
+				_log.Warn("Exception: " + ex.GetType() + ", message: " + ex.Message);
+				_log.Warn("Stack Trace:\n" + ex.StackTrace);
+			}
 		}
 
 		/// <summary>
