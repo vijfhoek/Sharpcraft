@@ -122,6 +122,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="GUI\Label.cs" />
     <Compile Include="LookDirection.cs" />
+    <Compile Include="Minecraft\ChatMessage.cs" />
     <Compile Include="Minecraft\Client.cs" />
     <Compile Include="Minecraft\ClientEvents.cs" />
     <Compile Include="Minecraft\Item.cs" />
@@ -171,7 +172,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.Increment.TimeStamp" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.TimeStamp" />
     </VisualStudio>
   </ProjectExtensions>
   <!--
