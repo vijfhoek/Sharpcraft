@@ -50,8 +50,13 @@ namespace Sharpcraft.Library
 		public static string MinecraftItemFile { get { return MinecraftDataDirectory + "\\items.list"; } }
 
 		/// <summary>
-		/// Regex string used to validate chat messages.
+		/// Regex pattern to filter out username and message from a chat message.
 		/// </summary>
-		public const string ChatMessageRegex = @"[^\sa-zA-Z0-9\\\[\]\(\)!""#\$%&'\*\+,\-\.\/:;<=>\?@\^_\{\}\|~¦ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»]";
+		public const string ChatMessageFilterRegex = @"^<(\w+)>\s+(.+)$";
+
+		/// <summary>
+		/// Regex pattern to validate chat messages.
+		/// </summary>
+		public const string ValidChatMessageRegex = @"[^ a-zA-Z0-9\\\[\]\(\)!""#\$%&'\*\+,\-\.\/:;<=>\?@\^_\{\}\|~¦ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»]";
 	}
 }

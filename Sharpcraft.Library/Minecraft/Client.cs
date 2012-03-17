@@ -97,7 +97,7 @@ namespace Sharpcraft.Library.Minecraft
 			_world = new World();
 		}
 
-		private void ChatMessageReceived(string message)
+		private void ChatMessageReceived(ChatMessage message)
 		{
 			if (OnChatMessageReceived == null)
 				return;
@@ -199,7 +199,7 @@ namespace Sharpcraft.Library.Minecraft
 				return;
 			}
 #elif DEBUG
-			var matches = Regex.Matches(message, Constants.ChatMessageRegex);
+			var matches = Regex.Matches(message, Constants.ValidChatMessageRegex);
 			if (matches.Count > 0)
 			{
 				var sb = new System.Text.StringBuilder("Received chat message containing illegal characters: ");
@@ -210,7 +210,7 @@ namespace Sharpcraft.Library.Minecraft
 				_log.Debug(sb.ToString());
 			}
 #endif
-			ChatMessageReceived(message);
+			ChatMessageReceived(new ChatMessage(message));
 		}
 
 		/// <summary>
@@ -219,14 +219,14 @@ namespace Sharpcraft.Library.Minecraft
 		/// <param name="message">Message to send.</param>
 		public void SendChatMessage(string message)
 		{
-			if (!Regex.IsMatch(message, Constants.ChatMessageRegex))
+			if (!Regex.IsMatch(message, Constants.ValidChatMessageRegex))
 			{
 				_protocol.SendPacket(new ChatMessagePacket(message));
 				return;
 			}
 			_log.Warn("Tried to send chat message containing illegal characters, aborting SendMessage.");
 #if DEBUG
-			var matches = Regex.Matches(message, Constants.ChatMessageRegex);
+			var matches = Regex.Matches(message, Constants.ValidChatMessageRegex);
 			var sb = new System.Text.StringBuilder("Illegal characters found: ");
 			foreach (var match in matches)
 			{

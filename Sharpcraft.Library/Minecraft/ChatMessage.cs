@@ -1,5 +1,5 @@
 ﻿/*
- * ClientEvents.cs
+ * ChatMessage.cs
  * 
  * Copyright © 2011-2012 by Sijmen Schoon and Adam Hellberg.
  * 
@@ -27,29 +27,51 @@
  * "Minecraft" is a trademark of Mojang AB.
  */
 
-using System;
+using System.Text.RegularExpressions;
 
 namespace Sharpcraft.Library.Minecraft
 {
 	/// <summary>
-	/// Event args for Chat Message Received event.
+	/// Filters a raw chat message to retrieve username and message sent.
 	/// </summary>
-	public class ChatMessageReceivedEventArgs : EventArgs
+	public class ChatMessage
 	{
 		/// <summary>
-		/// The chat message received.
+		/// The name of the user who sent the message.
 		/// </summary>
-		public readonly ChatMessage Message;
+		public string User { get; private set; }
+		
+		/// <summary>
+		/// The contents of the message.
+		/// </summary>
+		public string Message { get; private set; }
 
-		internal ChatMessageReceivedEventArgs(ChatMessage message)
+		/// <summary>
+		/// Initialize a new <see cref="ChatMessage" /> object.
+		/// </summary>
+		/// <param name="raw"></param>
+		public ChatMessage(string raw)
 		{
-			Message = message;
+			ParseRawString(raw);
+		}
+
+		/// <summary>
+		/// Parse a raw message to extract username and message.
+		/// </summary>
+		/// <param name="raw">The raw message to parse, as sent by the server.</param>
+		private void ParseRawString(string raw)
+		{
+			Match match = new Regex(Constants.ChatMessageFilterRegex, RegexOptions.IgnoreCase).Match(raw);
+			if (match.Success)
+			{
+				User = match.Groups[1].ToString();
+				Message = match.Groups[2].ToString();
+			}
+			else
+			{
+				User = string.Empty;
+				Message = raw;
+			}
 		}
 	}
-
-	/// <summary>
-	/// Event handler for Chat Message Received.
-	/// </summary>
-	/// <param name="e">The <see cref="ChatMessageReceivedEventArgs" /> object.</param>
-	public delegate void ChatMessageReceivedEventHandler(ChatMessageReceivedEventArgs e);
 }
