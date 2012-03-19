@@ -40,18 +40,22 @@ namespace Sharpcraft.Networking.Enums
 		/// Crouch action.
 		/// </summary>
 		Crouch		= 1,
+
 		/// <summary>
 		/// Uncrouch action.
 		/// </summary>
 		Uncrouch	= 2,
+
 		/// <summary>
 		/// Leave bed action.
 		/// </summary>
 		LeaveBed	= 3,
+
 		/// <summary>
 		/// Start sprinting action.
 		/// </summary>
 		StartSprint	= 4,
+
 		/// <summary>
 		/// Stop sprinting action.
 		/// </summary>

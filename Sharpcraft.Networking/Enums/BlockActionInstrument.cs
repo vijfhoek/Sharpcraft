@@ -38,18 +38,22 @@ namespace Sharpcraft.Networking.Enums
 		/// The harp.
 		/// </summary>
 		Harp			= 0,
+
 		/// <summary>
 		/// The double bass.
 		/// </summary>
 		DoubleBass		= 1,
+
 		/// <summary>
 		/// The snare drum.
 		/// </summary>
 		SnareDrum		= 2,
+
 		/// <summary>
 		/// The clicks/sticks.
 		/// </summary>
 		ClicksSticks	= 3,
+
 		/// <summary>
 		/// The bass drum.
 		/// </summary>

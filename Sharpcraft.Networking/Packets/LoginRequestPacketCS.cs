@@ -33,11 +33,26 @@ using Sharpcraft.Networking.Enums;
 
 namespace Sharpcraft.Networking.Packets
 {
+	/// <summary>
+	/// Login request packet sent by client when connecting to a server.
+	/// </summary>
 	public class LoginRequestPacketCS : Packet
 	{
-		public int ProtocolVersion;
-		public string Username;
+		/// <summary>
+		/// Protocol version that the CLIENT supports.
+		/// </summary>
+		public readonly int ProtocolVersion;
 
+		/// <summary>
+		/// Username of the connecting client.
+		/// </summary>
+		public readonly string Username;
+
+		/// <summary>
+		/// Initialize a new <see cref="LoginRequestPacketCS" />.
+		/// </summary>
+		/// <param name="protocolVersion">Protocol version of the client.</param>
+		/// <param name="username">Username of the connecting client.</param>
 		public LoginRequestPacketCS(Int32 protocolVersion = 0, string username = null) : base(PacketType.LoginRequest)
 		{
 			ProtocolVersion = protocolVersion;

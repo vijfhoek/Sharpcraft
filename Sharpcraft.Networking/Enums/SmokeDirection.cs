@@ -35,14 +35,49 @@ namespace Sharpcraft.Networking.Enums
 	/// <remarks>http://wiki.vg/Protocol#Effects_2</remarks>
 	public enum SmokeDirection
 	{
+		/// <summary>
+		/// Direction South-East.
+		/// </summary>
 		SouthEast	= 0,
+
+		/// <summary>
+		/// Direction South.
+		/// </summary>
 		South		= 1,
+
+		/// <summary>
+		/// Direction South-West.
+		/// </summary>
 		SouthWest	= 2,
+
+		/// <summary>
+		/// DIrection East.
+		/// </summary>
 		East		= 3,
+
+		/// <summary>
+		/// Direction Up (or Middle).
+		/// </summary>
 		UpOrMiddle	= 4,
+
+		/// <summary>
+		/// Direction West.
+		/// </summary>
 		West		= 5,
+		
+		/// <summary>
+		/// Direction North-East.
+		/// </summary>
 		NorthEast	= 6,
+
+		/// <summary>
+		/// Direction North.
+		/// </summary>
 		North		= 7,
+
+		/// <summary>
+		/// Direction North-West.
+		/// </summary>
 		NorthWest	= 8
 	}
 }

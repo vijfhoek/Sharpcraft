@@ -35,24 +35,55 @@ namespace Sharpcraft.Networking.Enums
 	/// <remarks>http://wiki.vg/Protocol#Effects</remarks>
 	public enum EntityEffect
 	{
+		/// <summary>
+		/// Increases players speed and FOV.
+		/// </summary>
 		MoveSpeed		=  1,
+
+		/// <summary>
+		/// Decreases player speed and FOV.
+		/// </summary>
 		MoveSlowDown	=  2,
+
+		/// <summary>
+		/// Increases player dig speed.
+		/// </summary>
 		DigSpeed		=  3,
-		DigSlowDown		=  4,
-		DamageBoost		=  5,
-		Heal			=  6,
-		Harm			=  7,
-		Jump			=  8,
-		Confusion		=  9,
+
+		/// <summary>
+		/// Decreases player dig speed.
+		/// </summary>
+		/// <remarks>
+		/// Caused by golden apple.
+		/// Health regenerates over 600-tick (30s) period.
+		/// </remarks>
 		Regeneration	= 10,
 		Resistance		= 11,
 		FireResistance	= 12,
+
+		/// <summary>
+		/// Bubbles do not decrease underwater.
+		/// </summary>
 		WaterBreathing	= 13,
 		Invisibility	= 14,
 		Blindness		= 15,
 		NightVision		= 16,
+
+		/// <summary>
+		/// Food bar turns green.
+		/// </summary>
+		/// <remarks>
+		/// Caused by poisoning from Rotten Flesh or Raw Chicken.
+		/// </remarks>
 		Hunger			= 17,
 		Weakness		= 18,
+
+		/// <summary>
+		/// Hearts turn yellow.
+		/// </summary>
+		/// <remarks>
+		/// Caused by poisoning from cave (blue) spider.
+		/// </remarks>
 		Poison			= 19
 	}
 }
