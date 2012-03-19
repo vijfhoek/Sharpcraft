@@ -456,9 +456,9 @@ namespace Sharpcraft.Networking
 					break;
 				case PacketType.DisconnectKick:
 					{
-						 var pack = (DisconnectOrKick)packet;
+						 var pack = (DisconnectKickPacket)packet;
 						_tools.WriteByte(packetID);
-						_tools.WriteString(pack.reason);
+						_tools.WriteString(pack.Reason);
 					}
 					break;				
 				default:
