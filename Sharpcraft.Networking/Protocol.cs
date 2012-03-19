@@ -454,6 +454,13 @@ namespace Sharpcraft.Networking
 						_tools.WriteBoolean(pack.IsLeftClick);
 					}
 					break;
+				case PacketType.DisconnectKick:
+					{
+						 var pack = (DisconnectOrKick)packet;
+						_tools.WriteByte(packetID);
+						_tools.WriteString(pack.reason);
+					}
+					break;				
 			}
 
 			//_log.Debug("Sending packet...");
