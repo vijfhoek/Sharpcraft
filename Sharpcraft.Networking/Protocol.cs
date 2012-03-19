@@ -96,7 +96,7 @@ namespace Sharpcraft.Networking
 						Gamemode = _tools.ReadInt32(),
 						Dimension = _tools.ReadInt32(),
 						Difficulty = _tools.ReadSignedByte(),
-						WorldHeight = _tools.ReadByte(),
+						WorldHeight = _tools.ReadByte(), // Not Used
 						MaxPlayers = _tools.ReadByte()
 					};
 					break;
@@ -421,8 +421,8 @@ namespace Sharpcraft.Networking
 						_tools.WriteByte(packetID);
 						_tools.WriteInt32(pack.ProtocolVersion);
 						_tools.WriteString(pack.Username);
-						_tools.WriteString(String.Empty);   				// Not Used
-						_tools.WriteInt64(0);		        			// Not Used
+						_tools.WriteString(String.Empty);   		// Not Used
+						_tools.WriteInt64(0);		        		// Not Used
 						_tools.WriteInt32(0);						// Not Used
 						_tools.WriteByte(0);						// Not Used
 						_tools.WriteByte(0);						// Not Used
@@ -454,6 +454,9 @@ namespace Sharpcraft.Networking
 						_tools.WriteBoolean(pack.IsLeftClick);
 					}
 					break;
+				default:
+					_log.Warn(packet.Type + " has not been implemented in SendPacket, aborting...");
+					return;
 			}
 
 			//_log.Debug("Sending packet...");

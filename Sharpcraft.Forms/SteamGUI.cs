@@ -55,6 +55,13 @@ namespace Sharpcraft.Forms
 		/// &lt;number of online friends&gt;/&lt;total number of friends&gt;
 		/// </summary>
 		private const string FriendFormat = "{0}/{1}";
+
+		private string _mcServerName;
+		private string _mcServerAddress;
+		private short _mcServerPort;
+		private int _mcServerPlayers;
+		private int _mcServerMaxPlayers;
+
 		/// <summary>
 		/// Empty delegate used for invoking.
 		/// </summary>
@@ -83,6 +90,8 @@ namespace Sharpcraft.Forms
 			SteamManager.FriendList.OnFriendsUpdate += UpdateData;
 			_log.Debug("SteamGUI is registering to OnSteamClose event...");
 			SteamManager.OnSteamClose += SteamClose;
+			_log.Debug("SteamGUI is registering to OnMinecraftData event...");
+			SteamManager.OnMinecraftData += UpdateMinecraftdata;
 			_log.Info("SteamGUI loaded!");
 		}
 
@@ -136,6 +145,21 @@ namespace Sharpcraft.Forms
 			}
 		}
 
+		private void UpdateMinecraftdata(SteamMinecraftDataEventArgs e)
+		{
+			_mcServerName = e.ServerName;
+			_mcServerAddress = e.ServerAddress;
+			_mcServerPort = e.ServerPort;
+			_mcServerPlayers = e.Players;
+			_mcServerMaxPlayers = e.MaxPlayers;
+			_log.Info("Updated Minecraft data!");
+		}
+
+		private bool MinecraftDataValid()
+		{
+			return !string.IsNullOrEmpty(_mcServerName) && !string.IsNullOrEmpty(_mcServerAddress) && _mcServerMaxPlayers > 0;
+		}
+
 		/// <summary>
 		/// SendButton click handler. Sends a message to currently selected Steam friend with Minecraft server info.
 		/// </summary>
@@ -143,7 +167,14 @@ namespace Sharpcraft.Forms
 		/// <param name="e">N/A (Not Used) (See MSDN)</param>
 		private void SendButtonClick(object sender, EventArgs e)
 		{
-			SteamManager.FriendList.GetFriendBySteamId(friendList.SelectedItems[0].Tag.ToString()).SendMessage("[Sharpcraft] This is a test message, please stay calm.");
+			if (!MinecraftDataValid())
+			{
+				MessageBox.Show("You are not currently connected to any Minecraft server.", "Not Connected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				return;
+			}
+			string msg = string.Format("Join me on {0} Minecraft server! Server details: {1}:{2}, {3}/{4} players.",
+			                           _mcServerName, _mcServerAddress, _mcServerPort, _mcServerPlayers, _mcServerMaxPlayers);
+			SteamManager.FriendList.GetFriendBySteamId(friendList.SelectedItems[0].Tag.ToString()).SendMessage(msg);
 		}
 
 		/// <summary>

@@ -31,6 +31,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 using Newtonsoft.Json;
 
@@ -47,8 +48,6 @@ namespace Sharpcraft.Library.Minecraft
 	/// </summary>
 	public class Client
 	{
-		private const string HandshakeFormat = "{0};{1}:{2}";
-
 		private readonly log4net.ILog _log;
 
 		private readonly Protocol _protocol;
@@ -63,6 +62,11 @@ namespace Sharpcraft.Library.Minecraft
 		/// </summary>
 		public static List<Item> Items { get; private set; }
 
+		/// <summary>
+		/// This event fires when the client receives a chat message from the server.
+		/// </summary>
+		public event ChatMessageReceivedEventHandler OnChatMessageReceived;
+		
 		/// <summary>
 		/// Initialize a new Minecraft client.
 		/// </summary>
@@ -93,6 +97,13 @@ namespace Sharpcraft.Library.Minecraft
 			_world = new World();
 		}
 
+		private void ChatMessageReceived(ChatMessage message)
+		{
+			if (OnChatMessageReceived == null)
+				return;
+			OnChatMessageReceived(new ChatMessageReceivedEventArgs(message));
+		}
+
 		/// <summary>
 		/// Get an item by its ID.
 		/// </summary>
@@ -120,13 +131,14 @@ namespace Sharpcraft.Library.Minecraft
 		{
 			// We need to create a connection thread
 			_log.Info("Connecting to " + _server.Address + ":" + _server.Port + "...");
-			_protocol.SendPacket(new HandshakePacketCS(string.Format(HandshakeFormat, _player.Name, _server.Address, _server.Port)));
+			_protocol.SendPacket(new HandshakePacketCS(string.Format(Networking.Constants.HandshakeFormat, _player.Name, _server.Address, _server.Port)));
 			_log.Info("Waiting for handshake response...");
 			Packet response = _protocol.GetPacket();
 			if (!(response is HandshakePacketSC))
 			{
 				_log.Warn("Incorrect packet type sent as response! Expected HandshakePacketSC, got " + response.GetType());
-				if (response is DisconnectKickPacket) _log.Warn("Kick message: " + ((DisconnectKickPacket)response).Reason);
+				if (response is DisconnectKickPacket)
+					_log.Warn("Kick message: " + ((DisconnectKickPacket)response).Reason);
 				return false;
 			}
 			_log.Info("Server responded to Handshake with " + ((HandshakePacketSC)response).ConnectionHash);
@@ -175,13 +187,54 @@ namespace Sharpcraft.Library.Minecraft
 			}
 		}
 
+		private void ReceiveMessage(string message)
+		{
+			//NOTE: For some reason, Notchian client chokes/crashes when illegal characters are contained in the chat message.
+			//^     Sharpcraft client should be able to handle illegal characters just fine.
+			//^     We still add a check in RELEASE mode in order to make Client behave as (un?)expected by the server.
+#if RELEASE
+			if (Regex.IsMatch(message, Constants.ChatMessageRegex))
+			{
+				_log.Warn("Received chat message containing illegal characters, aborting ReceiveMessage.");
+				return;
+			}
+#elif DEBUG
+			var matches = Regex.Matches(message, Constants.ValidChatMessageRegex);
+			if (matches.Count > 0)
+			{
+				var sb = new System.Text.StringBuilder("Received chat message containing illegal characters: ");
+				foreach (var match in matches)
+				{
+					sb.Append(match + " ");
+				}
+				_log.Debug(sb.ToString());
+			}
+#endif
+			ChatMessageReceived(new ChatMessage(message));
+		}
+
 		/// <summary>
 		/// Send a chat message to the server.
 		/// </summary>
 		/// <param name="message">Message to send.</param>
 		public void SendChatMessage(string message)
 		{
-			_protocol.SendPacket(new ChatMessagePacket(message));
+			if (!Regex.IsMatch(message, Constants.ValidChatMessageRegex))
+			{
+				_protocol.SendPacket(new ChatMessagePacket(message));
+				return;
+			}
+			_log.Warn("Tried to send chat message containing illegal characters, aborting SendMessage.");
+#if DEBUG
+			var matches = Regex.Matches(message, Constants.ValidChatMessageRegex);
+			var sb = new System.Text.StringBuilder("Illegal characters found: ");
+			foreach (var match in matches)
+			{
+				sb.Append(match + " ");
+			}
+			_log.Debug(sb.ToString());
+#endif
+			return;
 		}
 
 		/// <summary>
@@ -210,8 +263,6 @@ namespace Sharpcraft.Library.Minecraft
 			_world.SetDimension(packet.Dimension);
 			_log.Debug("Setting world difficulty to " + packet.Difficulty);
 			_world.SetDifficulty(packet.Difficulty);
-			_log.Debug("Setting world height to " + packet.WorldHeight);
-			_world.SetHeight(packet.WorldHeight);
 			_log.Debug("Setting server max players to " + packet.MaxPlayers);
 			if (_server.Players > packet.MaxPlayers)
 				_server.Players = packet.MaxPlayers;
@@ -236,6 +287,9 @@ namespace Sharpcraft.Library.Minecraft
 					break;
 				case PacketType.LoginRequest:
 					ParseLoginRequestSC((LoginRequestPacketSC) e.Packet);
+					break;
+				case PacketType.ChatMessage:
+					ReceiveMessage(((ChatMessagePacket) e.Packet).Message);
 					break;
 				case PacketType.SpawnPosition:
 					var spPack = (SpawnPositionPacket) e.Packet;

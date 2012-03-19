@@ -1,5 +1,5 @@
 ﻿/*
- * LoginRequestPacketCS.cs
+ * ClientEvents.cs
  * 
  * Copyright © 2011-2012 by Sijmen Schoon and Adam Hellberg.
  * 
@@ -29,34 +29,27 @@
 
 using System;
 
-using Sharpcraft.Networking.Enums;
-
-namespace Sharpcraft.Networking.Packets
+namespace Sharpcraft.Library.Minecraft
 {
 	/// <summary>
-	/// Login request packet sent by client when connecting to a server.
+	/// Event args for Chat Message Received event.
 	/// </summary>
-	public class LoginRequestPacketCS : Packet
+	public class ChatMessageReceivedEventArgs : EventArgs
 	{
 		/// <summary>
-		/// Protocol version that the CLIENT supports.
+		/// The chat message received.
 		/// </summary>
-		public readonly int ProtocolVersion;
+		public readonly ChatMessage Message;
 
-		/// <summary>
-		/// Username of the connecting client.
-		/// </summary>
-		public readonly string Username;
-
-		/// <summary>
-		/// Initialize a new <see cref="LoginRequestPacketCS" />.
-		/// </summary>
-		/// <param name="protocolVersion">Protocol version of the client.</param>
-		/// <param name="username">Username of the connecting client.</param>
-		public LoginRequestPacketCS(Int32 protocolVersion = 0, string username = null) : base(PacketType.LoginRequest)
+		internal ChatMessageReceivedEventArgs(ChatMessage message)
 		{
-			ProtocolVersion = protocolVersion;
-			Username = username;
+			Message = message;
 		}
 	}
+
+	/// <summary>
+	/// Event handler for Chat Message Received.
+	/// </summary>
+	/// <param name="e">The <see cref="ChatMessageReceivedEventArgs" /> object.</param>
+	public delegate void ChatMessageReceivedEventHandler(ChatMessageReceivedEventArgs e);
 }

@@ -27,10 +27,12 @@
  * "Minecraft" is a trademark of Mojang AB.
  */
 
+using Sharpcraft.Networking.Packets;
+
 namespace Sharpcraft.Networking.Enums
 {
 	/// <summary>
-	/// Different sound/particle effects.
+	/// Different sound/particle effects sent by <see cref="SoundParticleEffectPacket" />.
 	/// </summary>
 	/// <remarks>http://wiki.vg/Protocol#Effects_2</remarks>
 	public enum SoundParticleEffect
@@ -40,14 +42,54 @@ namespace Sharpcraft.Networking.Enums
 		BowFire			= 1002,
 		DoorToggle		= 1003,
 		Extinguish		= 1004,
+
+		/// <summary>
+		/// Sound of a record playing.
+		/// </summary>
+		/// <remarks>Data property will contain Record ID.</remarks>
 		RecordPlay		= 1005,
+
+		/// <summary>
+		/// Sound of Ghast firing.
+		/// </summary>
 		Charge			= 1007,
+
+		/// <summary>
+		/// Sound of Blaze firing.
+		/// </summary>
 		FireballA		= 1008,
+
+		/// <summary>
+		/// Sound of Blaze firing.
+		/// </summary>
 		FireballB		= 1009,
+
+		/// <summary>
+		/// Smoke effect.
+		/// </summary>
+		/// <remarks>Data property contains direction of smoke.</remarks>
 		Smoke			= 2000,
+
+		/// <summary>
+		/// Sound/Particle effect of block breaking.
+		/// </summary>
+		/// <remarks>Data property contains Block ID broken.</remarks>
 		BlockBreak		= 2001,
+
+		/// <summary>
+		/// Particle animation and sound of using potion.
+		/// </summary>
+		/// <remarks>Data property contains Potion ID.</remarks>
 		SplashPotion	= 2002,
+
+		/// <summary>
+		/// Particle animation of portal.
+		/// </summary>
 		Portal			= 2003,
+
+		/// <summary>
+		/// Particle animation of Blaze(?) (fire + smoke).
+		/// </summary>
 		Blaze			= 2004
 	}
 }

@@ -31,10 +31,21 @@ using Sharpcraft.Networking.Enums;
 
 namespace Sharpcraft.Networking.Packets
 {
+	/// <summary>
+	/// Two-way packet for sending/receiving chat messages.
+	/// </summary>
 	public class ChatMessagePacket : Packet
 	{
+		/// <summary>
+		/// The message that was sent or received.
+		/// </summary>
+		/// <remarks>Prefixed with username if sent Server -> Client.</remarks>
 		public string Message;
 
+		/// <summary>
+		/// Initialize a new <see cref="ChatMessagePacket" />.
+		/// </summary>
+		/// <param name="message">The message sent or received.</param>
 		public ChatMessagePacket(string message = null) : base(PacketType.ChatMessage)
 		{
 			Message = message;
