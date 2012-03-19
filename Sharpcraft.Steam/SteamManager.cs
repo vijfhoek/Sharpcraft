@@ -48,6 +48,11 @@ namespace Sharpcraft.Steam
 		private static log4net.ILog _log;
 
 		/// <summary>
+		/// Whether or not <see cref="SteamManager" /> is enabled.
+		/// </summary>
+		public static bool Enabled { get; private set; }
+
+		/// <summary>
 		/// Timer for checking Steam process status.
 		/// </summary>
 		private static Timer _steamWatcher;
@@ -133,6 +138,11 @@ namespace Sharpcraft.Steam
 		/// <returns><c>true</c> if everything initialized properly, <c>false</c> otherwise.</returns>
 		public static bool Init()
 		{
+			if (Enabled)
+			{
+				_log.Warn("Tried to call Init method when SteamManager has already been initialized! Aborting...");
+				return false;
+			}
 			_log = LogManager.GetLogger(typeof(SteamManager));
 			try
 			{
@@ -170,6 +180,7 @@ namespace Sharpcraft.Steam
 			}
 			_log.Info("SteamManager has been initialized!");
 			SteamLoaded = true;
+			Enabled = true;
 			return true;
 		}
 
@@ -196,6 +207,7 @@ namespace Sharpcraft.Steam
 				Client = null;
 				_log.Info("Steam components unloaded, setting SteamLoaded to FALSE.");
 				SteamLoaded = false;
+				Enabled = false;
 			}
 			_log.Debug("Close(); ## END ##");
 		}
@@ -218,6 +230,7 @@ namespace Sharpcraft.Steam
 				FriendList = null;
 				_steamWatcher.Dispose();
 				SteamLoaded = false;
+				Enabled = false;
 			}
 		}
 

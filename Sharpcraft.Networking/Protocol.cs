@@ -96,7 +96,7 @@ namespace Sharpcraft.Networking
 						Gamemode = _tools.ReadInt32(),
 						Dimension = _tools.ReadInt32(),
 						Difficulty = _tools.ReadSignedByte(),
-						WorldHeight = _tools.ReadByte(),
+						WorldHeight = _tools.ReadByte(), // Not Used
 						MaxPlayers = _tools.ReadByte()
 					};
 					break;

@@ -41,7 +41,7 @@ namespace Sharpcraft.Networking.Packets
 		public int Gamemode;
 		public int Dimension;
 		public sbyte Difficulty;
-		public byte WorldHeight;
+		public byte WorldHeight; // NOT USED
 		public byte MaxPlayers;
 
 		public LoginRequestPacketSC(Int32 entityId = 0, string notUsed = "", string levelType = null, Int32 gamemode = 0,

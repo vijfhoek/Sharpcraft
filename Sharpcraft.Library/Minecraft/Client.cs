@@ -263,8 +263,6 @@ namespace Sharpcraft.Library.Minecraft
 			_world.SetDimension(packet.Dimension);
 			_log.Debug("Setting world difficulty to " + packet.Difficulty);
 			_world.SetDifficulty(packet.Difficulty);
-			_log.Debug("Setting world height to " + packet.WorldHeight);
-			_world.SetHeight(packet.WorldHeight);
 			_log.Debug("Setting server max players to " + packet.MaxPlayers);
 			if (_server.Players > packet.MaxPlayers)
 				_server.Players = packet.MaxPlayers;
