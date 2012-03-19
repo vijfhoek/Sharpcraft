@@ -1,5 +1,5 @@
 ﻿/*
- * EntityEffect.cs
+ * ChatMessage.cs
  * 
  * Copyright © 2011-2012 by Sijmen Schoon and Adam Hellberg.
  * 
@@ -27,63 +27,51 @@
  * "Minecraft" is a trademark of Mojang AB.
  */
 
-namespace Sharpcraft.Networking.Enums
+using System.Text.RegularExpressions;
+
+namespace Sharpcraft.Library.Minecraft
 {
 	/// <summary>
-	/// The different entity effects.
+	/// Filters a raw chat message to retrieve username and message sent.
 	/// </summary>
-	/// <remarks>http://wiki.vg/Protocol#Effects</remarks>
-	public enum EntityEffect
+	public class ChatMessage
 	{
 		/// <summary>
-		/// Increases players speed and FOV.
+		/// The name of the user who sent the message.
 		/// </summary>
-		MoveSpeed		=  1,
+		public string User { get; private set; }
+		
+		/// <summary>
+		/// The contents of the message.
+		/// </summary>
+		public string Message { get; private set; }
 
 		/// <summary>
-		/// Decreases player speed and FOV.
+		/// Initialize a new <see cref="ChatMessage" /> object.
 		/// </summary>
-		MoveSlowDown	=  2,
+		/// <param name="raw"></param>
+		public ChatMessage(string raw)
+		{
+			ParseRawString(raw);
+		}
 
 		/// <summary>
-		/// Increases player dig speed.
+		/// Parse a raw message to extract username and message.
 		/// </summary>
-		DigSpeed		=  3,
-
-		/// <summary>
-		/// Decreases player dig speed.
-		/// </summary>
-		/// <remarks>
-		/// Caused by golden apple.
-		/// Health regenerates over 600-tick (30s) period.
-		/// </remarks>
-		Regeneration	= 10,
-		Resistance		= 11,
-		FireResistance	= 12,
-
-		/// <summary>
-		/// Bubbles do not decrease underwater.
-		/// </summary>
-		WaterBreathing	= 13,
-		Invisibility	= 14,
-		Blindness		= 15,
-		NightVision		= 16,
-
-		/// <summary>
-		/// Food bar turns green.
-		/// </summary>
-		/// <remarks>
-		/// Caused by poisoning from Rotten Flesh or Raw Chicken.
-		/// </remarks>
-		Hunger			= 17,
-		Weakness		= 18,
-
-		/// <summary>
-		/// Hearts turn yellow.
-		/// </summary>
-		/// <remarks>
-		/// Caused by poisoning from cave (blue) spider.
-		/// </remarks>
-		Poison			= 19
+		/// <param name="raw">The raw message to parse, as sent by the server.</param>
+		private void ParseRawString(string raw)
+		{
+			Match match = new Regex(Constants.ChatMessageFilterRegex, RegexOptions.IgnoreCase).Match(raw);
+			if (match.Success)
+			{
+				User = match.Groups[1].ToString();
+				Message = match.Groups[2].ToString();
+			}
+			else
+			{
+				User = string.Empty;
+				Message = raw;
+			}
+		}
 	}
 }

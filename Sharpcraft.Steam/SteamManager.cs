@@ -48,6 +48,11 @@ namespace Sharpcraft.Steam
 		private static log4net.ILog _log;
 
 		/// <summary>
+		/// Whether or not <see cref="SteamManager" /> is enabled.
+		/// </summary>
+		public static bool Enabled { get; private set; }
+
+		/// <summary>
 		/// Timer for checking Steam process status.
 		/// </summary>
 		private static Timer _steamWatcher;
@@ -66,14 +71,17 @@ namespace Sharpcraft.Steam
 		/// The interface for the Steam client.
 		/// </summary>
 		private static ISteamClient010 Client { get; set; }
+
 		/// <summary>
 		/// The interface for Steam friends.
 		/// </summary>
 		internal static ISteamFriends002 Friends { get; private set; }
+
 		/// <summary>
 		/// Steam client pipe.
 		/// </summary>
 		private static int Pipe { get; set; }
+
 		/// <summary>
 		/// Steam user.
 		/// </summary>
@@ -88,8 +96,14 @@ namespace Sharpcraft.Steam
 		/// Event fired when the Steam client has closed.
 		/// </summary>
 		public static event SteamCloseEventHandler OnSteamClose;
+
 		/// <summary>
-		/// Method called when the Steam client has closed, calls <see cref="OnSteamClose" /> to notify listeners.
+		/// Event fired when new Minecraft data is available.
+		/// </summary>
+		public static event SteamMinecraftDataEventHandler OnMinecraftData;
+
+		/// <summary>
+		/// Method called when the Steam client has closed, fires <see cref="OnSteamClose" /> to notify listeners.
 		/// </summary>
 		private static void SteamClose()
 		{
@@ -107,12 +121,28 @@ namespace Sharpcraft.Steam
 		}
 
 		/// <summary>
+		/// Method called to update Minecraft data and broadcast it to any event listeners.
+		/// </summary>
+		/// <param name="e">The <see cref="SteamMinecraftDataEventArgs" /> containing the data.</param>
+		public static void UpdateMinecraftData(SteamMinecraftDataEventArgs e)
+		{
+			if (OnMinecraftData == null)
+				return;
+			OnMinecraftData(e);
+		}
+
+		/// <summary>
 		/// Initializes the <c>SteamManager</c>.
 		/// This MUST be called before other Steam operations are executed.
 		/// </summary>
 		/// <returns><c>true</c> if everything initialized properly, <c>false</c> otherwise.</returns>
 		public static bool Init()
 		{
+			if (Enabled)
+			{
+				_log.Warn("Tried to call Init method when SteamManager has already been initialized! Aborting...");
+				return false;
+			}
 			_log = LogManager.GetLogger(typeof(SteamManager));
 			try
 			{
@@ -150,6 +180,7 @@ namespace Sharpcraft.Steam
 			}
 			_log.Info("SteamManager has been initialized!");
 			SteamLoaded = true;
+			Enabled = true;
 			return true;
 		}
 
@@ -176,6 +207,7 @@ namespace Sharpcraft.Steam
 				Client = null;
 				_log.Info("Steam components unloaded, setting SteamLoaded to FALSE.");
 				SteamLoaded = false;
+				Enabled = false;
 			}
 			_log.Debug("Close(); ## END ##");
 		}
@@ -198,6 +230,7 @@ namespace Sharpcraft.Steam
 				FriendList = null;
 				_steamWatcher.Dispose();
 				SteamLoaded = false;
+				Enabled = false;
 			}
 		}
 
