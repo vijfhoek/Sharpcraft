@@ -31,10 +31,11 @@
 
 using System;
 using System.IO;
-using System.Reflection;
 using System.Threading;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+
 using Microsoft.Win32.SafeHandles;
 
 using Sharpcraft.Forms;
@@ -181,6 +182,11 @@ namespace Sharpcraft
 			catch(FileNotFoundException ex)
 			{
 				_log.Fatal("Required file \"" + ex.FileName + "\" not found! Application is exiting...");
+			}
+			catch(IOException ex)
+			{
+				_log.Fatal("IO Operation failed: " + ex.Message);
+				_log.Fatal("Application is exiting...");
 			}
 			catch(Exception ex)
 			{
