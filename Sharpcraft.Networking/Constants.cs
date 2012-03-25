@@ -37,7 +37,7 @@ namespace Sharpcraft.Networking
 		/// <summary>
 		/// Current protocol version.
 		/// </summary>
-		public const int ProtocolVersion = 28;
+		public const int ProtocolVersion = 29;
 
 		/// <summary>
 		/// The handshake format to be used when sending a <see cref="Sharpcraft.Networking.Packets.HandshakePacketCS" />.
