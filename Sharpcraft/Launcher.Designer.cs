@@ -27,6 +27,8 @@
  * "Minecraft" is a trademark of Mojang AB.
  */
 
+using Sharpcraft.Controls;
+
 namespace Sharpcraft
 {
 	partial class Launcher
@@ -63,8 +65,8 @@ namespace Sharpcraft
 			this.NewsLabel = new System.Windows.Forms.Label();
 			this.LoginPanel = new System.Windows.Forms.Panel();
 			this.LoginLabel = new System.Windows.Forms.Label();
-			this.PassBox = new System.Windows.Forms.TextBox();
-			this.UserBox = new System.Windows.Forms.TextBox();
+			this.PassBox = new TextBoxExtended();
+			this.UserBox = new TextBoxExtended();
 			this.RememberCheckbox = new System.Windows.Forms.CheckBox();
 			this.RegisterLink = new System.Windows.Forms.LinkLabel();
 			this.LoginButton = new System.Windows.Forms.Button();
@@ -243,8 +245,8 @@ namespace Sharpcraft
 		private System.Windows.Forms.Label NewsLabel;
 		private System.Windows.Forms.Panel LoginPanel;
 		private System.Windows.Forms.Label LoginLabel;
-		private System.Windows.Forms.TextBox PassBox;
-		private System.Windows.Forms.TextBox UserBox;
+		private TextBoxExtended PassBox;
+		private TextBoxExtended UserBox;
 		private System.Windows.Forms.CheckBox RememberCheckbox;
 		private System.Windows.Forms.LinkLabel RegisterLink;
 		private System.Windows.Forms.Button LoginButton;
