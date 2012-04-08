@@ -388,6 +388,13 @@ namespace Sharpcraft.Networking
 				case PacketType.DisconnectKick:
 					pack = new DisconnectKickPacket(_tools.ReadString());
 					break;
+				default:
+					//Throw exception?
+					pack = null; //Add checks to see if packet == null
+					_log.Debug("Unknown packet!");
+					_stream.Flush(); //Flush data of unknown packet
+					break;
+					
 			}
 
 			return pack;
